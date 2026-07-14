@@ -209,3 +209,13 @@ Native tool behavior still varies by OS version and upstream repository. Siorb r
 - **Validation:** Local planner tests and repository verification follow this recorded entry.
 - **Known limitations or blockers:** Native Windows CI must rerun to confirm both MSVC architectures with the corrected fixture.
 - **Next starting point:** Validate the planner fixture locally, push it, refresh Dependabot, and confirm the native Windows matrix.
+
+### 2026-07-14 08:22 UTC — 019f5d0a-6e2c-7b73-a060-91c6dc9dcca2
+
+- **Objective:** Make Pages and Dependabot workflows deterministic with the pinned Rust toolchain.
+- **Work completed:** Installed the `rustfmt` and `clippy` components before Cargo runs in CI project gates, Pages, and native packaging.
+- **Key files changed:** `.github/workflows/{ci,pages,packaging}.yml` and `README.md`.
+- **Decisions:** Preserve the pinned minimal toolchain while resolving the components explicitly instead of relying on Rustup's on-demand installation.
+- **Validation:** Workflow syntax and repository verification follow this recorded entry.
+- **Known limitations or blockers:** The GitHub-hosted project-gate retry and native Windows matrix are still required for final remote confirmation.
+- **Next starting point:** Validate the workflow files, push the toolchain setup repair, refresh Dependabot, and monitor the remote gates.
