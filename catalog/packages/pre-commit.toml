@@ -1,0 +1,85 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "pre-commit"
+name = "pre-commit"
+description = "Framework for installing and running repository hooks consistently."
+aliases = ["precommit"]
+deprecated_aliases = []
+search_terms = ["git hooks", "code quality", "automation"]
+homepage = "https://pre-commit.com/"
+upstream = "pre-commit.com"
+license = "MIT"
+categories = ["developer-tools"]
+capabilities = ["software-development"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://formulae.brew.sh/formula/pre-commit", "https://packages.debian.org/stable/pre-commit", "https://packages.fedoraproject.org/pkgs/pre-commit/pre-commit/", "https://archlinux.org/packages/?q=pre-commit"]
+reviewed_at = "2026-07-14"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "pre-commit-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "pre-commit"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/pre-commit"
+reviewed_at = "2026-07-14"
+
+[[sources]]
+id = "pre-commit-apt"
+platform = "debian"
+backend = "apt"
+package_id = "pre-commit"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/stable/pre-commit"
+reviewed_at = "2026-07-14"
+
+[[sources]]
+id = "pre-commit-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "pre-commit"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/pkgs/pre-commit/pre-commit/"
+reviewed_at = "2026-07-14"
+
+[[sources]]
+id = "pre-commit-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "pre-commit"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=pre-commit"
+reviewed_at = "2026-07-14"

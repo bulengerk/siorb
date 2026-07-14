@@ -1,0 +1,100 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "cppcheck"
+name = "Cppcheck"
+description = "Static analysis tool for finding defects in C and C++ code."
+aliases = ["cpp-static-analyzer"]
+deprecated_aliases = []
+search_terms = ["c++", "static analysis", "code quality"]
+homepage = "https://cppcheck.sourceforge.io/"
+upstream = "cppcheck.sourceforge.io"
+license = "GPL-3.0-or-later"
+categories = ["developer-tools"]
+capabilities = ["software-development"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/tree/master/manifests/c/Cppcheck/Cppcheck", "https://formulae.brew.sh/formula/cppcheck", "https://packages.debian.org/stable/cppcheck", "https://packages.fedoraproject.org/pkgs/cppcheck/cppcheck/", "https://archlinux.org/packages/?q=cppcheck"]
+reviewed_at = "2026-07-14"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "cppcheck-winget"
+platform = "windows"
+backend = "winget"
+package_id = "Cppcheck.Cppcheck"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/tree/master/manifests/c/Cppcheck/Cppcheck"
+reviewed_at = "2026-07-14"
+
+[[sources]]
+id = "cppcheck-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "cppcheck"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/cppcheck"
+reviewed_at = "2026-07-14"
+
+[[sources]]
+id = "cppcheck-apt"
+platform = "debian"
+backend = "apt"
+package_id = "cppcheck"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/stable/cppcheck"
+reviewed_at = "2026-07-14"
+
+[[sources]]
+id = "cppcheck-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "cppcheck"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/pkgs/cppcheck/cppcheck/"
+reviewed_at = "2026-07-14"
+
+[[sources]]
+id = "cppcheck-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "cppcheck"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=cppcheck"
+reviewed_at = "2026-07-14"

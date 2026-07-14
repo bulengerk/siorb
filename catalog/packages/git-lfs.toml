@@ -1,0 +1,100 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "git-lfs"
+name = "Git LFS"
+description = "Git extension for versioning large files through lightweight pointers."
+aliases = ["git-large-file-storage"]
+deprecated_aliases = []
+search_terms = ["git lfs", "large files", "version control"]
+homepage = "https://git-lfs.com/"
+upstream = "git-lfs.com"
+license = "MIT"
+categories = ["developer-tools"]
+capabilities = ["software-development"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/tree/master/manifests/g/GitHub/GitLFS", "https://formulae.brew.sh/formula/git-lfs", "https://packages.debian.org/stable/git-lfs", "https://packages.fedoraproject.org/pkgs/git-lfs/git-lfs/", "https://archlinux.org/packages/?q=git-lfs"]
+reviewed_at = "2026-07-14"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "git-lfs-winget"
+platform = "windows"
+backend = "winget"
+package_id = "GitHub.GitLFS"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/tree/master/manifests/g/GitHub/GitLFS"
+reviewed_at = "2026-07-14"
+
+[[sources]]
+id = "git-lfs-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "git-lfs"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/git-lfs"
+reviewed_at = "2026-07-14"
+
+[[sources]]
+id = "git-lfs-apt"
+platform = "debian"
+backend = "apt"
+package_id = "git-lfs"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/stable/git-lfs"
+reviewed_at = "2026-07-14"
+
+[[sources]]
+id = "git-lfs-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "git-lfs"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/pkgs/git-lfs/git-lfs/"
+reviewed_at = "2026-07-14"
+
+[[sources]]
+id = "git-lfs-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "git-lfs"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=git-lfs"
+reviewed_at = "2026-07-14"

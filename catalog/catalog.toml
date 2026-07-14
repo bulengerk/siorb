@@ -1,10 +1,10 @@
 # Stable identity for the bundled, offline-first Siorb catalog.
 schema_version = "1"
 id = "siorb-community"
-version = "2026.07.13.1"
-version_number = 2026071301
-generated_at = "2026-07-13T00:00:00Z"
+version = "2026.07.14.1"
+version_number = 2026071401
+generated_at = "2026-07-14T00:00:00Z"
 signature_status = "bundled-trusted"
-reviewed_at = "2026-07-13"
+reviewed_at = "2026-07-14"
 top_packages = ["firefox", "chromium", "vscode", "vim", "neovim", "git", "curl", "wget", "ripgrep", "fd", "jq", "python", "nodejs", "rust", "go", "docker", "podman", "kubectl", "helm", "terraform", "sqlite", "postgresql", "vlc", "obs-studio", "libreoffice"]
 required_top_platforms = ["windows", "macos", "debian", "fedora", "arch", "opensuse", "alpine"]

@@ -1,0 +1,70 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "act"
+name = "act"
+description = "Local runner for testing GitHub Actions workflows with containers."
+aliases = ["nektos-act"]
+deprecated_aliases = []
+search_terms = ["github actions", "ci", "workflow testing"]
+homepage = "https://nektosact.com/"
+upstream = "github.com/nektos/act"
+license = "MIT"
+categories = ["developer-tools"]
+capabilities = ["software-development"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/tree/master/manifests/n/nektos/act", "https://formulae.brew.sh/formula/act", "https://archlinux.org/packages/?q=act"]
+reviewed_at = "2026-07-14"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "act-winget"
+platform = "windows"
+backend = "winget"
+package_id = "nektos.act"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/tree/master/manifests/n/nektos/act"
+reviewed_at = "2026-07-14"
+
+[[sources]]
+id = "act-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "act"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/act"
+reviewed_at = "2026-07-14"
+
+[[sources]]
+id = "act-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "act"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=act"
+reviewed_at = "2026-07-14"

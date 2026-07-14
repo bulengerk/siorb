@@ -8,14 +8,14 @@
       "targets.json": {
         "version": 1,
         "length": 572,
-        "sha256": "7e20335333c73e546c854c097cbf353f5601f32112aed7ffbdb0e98ff6eb1aea"
+        "sha256": "2a88c79b79cb97de931f26f0622ca5e83ddd5fc08f21092087039dba9a3adfcd"
       }
     }
   },
   "signatures": [
     {
       "key_id": "dev-snapshot",
-      "signature": "+FOR5in984/1Blqom/s5njqipAM8LRTO/yhODiVMSAkrFGecvaXEVyk/vJ9E7FJj0nfBRZlEsD/omOD1hPrrBw=="
+      "signature": "lGZtUNiqVrOR7mSuyWsZaXIv0x+naWArNTaJ7OYqls1wzeUgw5y6f/r5zKQhm70WO5YDeQJYcekDcAZL1ujnBg=="
     }
   ]
 }

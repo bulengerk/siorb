@@ -1,0 +1,100 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "nasm"
+name = "NASM"
+description = "Portable assembler and disassembler for the x86 architecture family."
+aliases = ["netwide-assembler"]
+deprecated_aliases = []
+search_terms = ["x86 assembler", "assembly language", "native development"]
+homepage = "https://www.nasm.us/"
+upstream = "nasm.us"
+license = "BSD-2-Clause"
+categories = ["developer-tools"]
+capabilities = ["software-development"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/tree/master/manifests/n/NASM/NASM", "https://formulae.brew.sh/formula/nasm", "https://packages.debian.org/stable/nasm", "https://packages.fedoraproject.org/pkgs/nasm/nasm/", "https://archlinux.org/packages/?q=nasm"]
+reviewed_at = "2026-07-14"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "nasm-winget"
+platform = "windows"
+backend = "winget"
+package_id = "NASM.NASM"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/tree/master/manifests/n/NASM/NASM"
+reviewed_at = "2026-07-14"
+
+[[sources]]
+id = "nasm-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "nasm"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/nasm"
+reviewed_at = "2026-07-14"
+
+[[sources]]
+id = "nasm-apt"
+platform = "debian"
+backend = "apt"
+package_id = "nasm"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/stable/nasm"
+reviewed_at = "2026-07-14"
+
+[[sources]]
+id = "nasm-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "nasm"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/pkgs/nasm/nasm/"
+reviewed_at = "2026-07-14"
+
+[[sources]]
+id = "nasm-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "nasm"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=nasm"
+reviewed_at = "2026-07-14"

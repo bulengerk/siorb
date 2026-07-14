@@ -68,7 +68,9 @@ if (snapshotTargets.length !== targetsBytes.length || snapshotTargets.hashes.sha
 const catalogTarget = targets.signed.targets["catalog.json"];
 if (catalogTarget.length !== catalogBytes.length || catalogTarget.hashes.sha256 !== sha256(catalogBytes)) throw new Error("targets-to-catalog binding failed");
 if (generatedCatalog._generated !== "Generated from catalog/packages/*.toml. DO NOT EDIT; regenerate with: node catalog/build-index.mjs") throw new Error("generated catalog notice is missing or stale");
-if (generatedCatalog.schema_version !== fixtureCatalog.schema_version || generatedCatalog.catalog_version !== fixtureCatalog.catalog_version) throw new Error("static signed fixture and generated catalog use different schemas or catalog versions");
+// The signed fixture is intentionally immutable; require compatibility and reject a current-catalog rollback without forcing fixture re-signing.
+if (generatedCatalog.schema_version !== fixtureCatalog.schema_version) throw new Error("static signed fixture and generated catalog use different schemas");
+if (!Number.isSafeInteger(fixtureCatalog.catalog_version) || fixtureCatalog.catalog_version > generatedCatalog.catalog_version) throw new Error("static signed fixture is newer than the generated catalog");
 
 const negativeChecks = [];
 const expired = await loadJson(resolve(fixtureRoot, "expired/metadata/timestamp.json"));

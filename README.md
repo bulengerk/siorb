@@ -269,3 +269,23 @@ Native tool behavior still varies by OS version and upstream repository. Siorb r
 - **Validation:** GitHub workflow dispatch parsing and repository verification follow this recorded entry.
 - **Known limitations or blockers:** The refreshed workflow must be dispatched and complete on native macOS and Windows runners.
 - **Next starting point:** Validate workflow parsing, push the correction, refresh Dependabot, and monitor the native matrix.
+
+### 2026-07-14 14:53 UTC — 019f5d0a-6e2c-7b73-a060-91c6dc9dcca2
+
+- **Objective:** Expand the bundled catalog with high-value tools for software developers.
+- **Work completed:** Added ten reviewed developer packages, regenerated runtime/TUF data and the static website, and made immutable signed fixtures compatible with monotonic catalog updates.
+- **Key files changed:** `catalog/catalog.toml`, `catalog/packages/`, `catalog/fixtures/runtime-tuf/`, `catalog/verify-fixtures.mjs`, `catalog/{generated,index}.json`, `website/public/`, and `README.md`.
+- **Decisions:** Accepted only confirmed native repository IDs, declared conservative architecture support, and kept the static signed TUF fixture immutable while rejecting schema drift and catalog rollback.
+- **Validation:** Passed catalog generation, site generation, catalog/TUF gates, runtime search checks, workspace build, formatting, strict Clippy, and all workspace tests; full repository verification follows this entry.
+- **Known limitations or blockers:** Package availability outside the explicitly reviewed platform and architecture mappings remains intentionally undeclared.
+- **Next starting point:** Run final repository verification and review the complete generated diff before committing.
+
+### 2026-07-14 14:57 UTC — 019f5d0a-6e2c-7b73-a060-91c6dc9dcca2
+
+- **Objective:** Publish the reviewed developer-tool catalog expansion to the main repository branch.
+- **Work completed:** Prepared the package manifests, catalog metadata, runtime TUF fixtures, generated site, and verifier adjustment as one atomic change.
+- **Key files changed:** `catalog/`, `website/public/`, and `README.md`.
+- **Decisions:** Keep source manifests and all derived artifacts in the same commit so the bundled catalog and Pages output cannot drift.
+- **Validation:** Workspace build, formatting, strict Clippy, workspace tests, catalog/TUF tests, runtime searches, and repository verification passed before publication; final verification follows this entry.
+- **Known limitations or blockers:** The remote push remains pending until the verified commit is created.
+- **Next starting point:** Run final verification, commit the complete catalog update, and push `main` to `origin`.
