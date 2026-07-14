@@ -239,3 +239,13 @@ Native tool behavior still varies by OS version and upstream repository. Siorb r
 - **Validation:** Local executor tests, lint, and repository verification follow this recorded entry.
 - **Known limitations or blockers:** The native macOS ARM matrix must rerun to verify the centralized fixture on the hosted runner.
 - **Next starting point:** Validate the executor suite locally, push it, refresh Dependabot, and confirm the full native matrix.
+
+### 2026-07-14 08:37 UTC — 019f5d0a-6e2c-7b73-a060-91c6dc9dcca2
+
+- **Objective:** Repair the macOS ARM policy-loader fixture failure.
+- **Work completed:** Made the policy-loader test create its private fixture under a canonical repository-local directory on macOS.
+- **Key files changed:** `crates/siorb-policy/src/lib.rs` and `README.md`.
+- **Decisions:** Retained strict policy parent-link rejection and moved only the positive test fixture away from macOS's system `/var` link.
+- **Validation:** Local policy tests and repository verification follow this recorded entry.
+- **Known limitations or blockers:** Native macOS ARM CI must rerun to confirm this final fixture adjustment.
+- **Next starting point:** Validate, push, refresh Dependabot, and confirm the native macOS test matrix.
