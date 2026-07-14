@@ -3012,7 +3012,7 @@ mod tests {
             return;
         };
         let state = StateStore::new(temporary.path().join("state"));
-        assert!(state.is_ok());
+        assert!(state.is_ok(), "state initialization failed: {state:?}");
         let Some(state) = state.ok() else {
             return;
         };
@@ -3084,7 +3084,7 @@ mod tests {
             return;
         };
         let state = StateStore::new(temporary.path().join("state"));
-        assert!(state.is_ok());
+        assert!(state.is_ok(), "state initialization failed: {state:?}");
         let Some(state) = state.ok() else {
             return;
         };
