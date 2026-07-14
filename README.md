@@ -149,3 +149,13 @@ Native tool behavior still varies by OS version and upstream repository. Siorb r
 - **Validation:** Passed formatting, the CLI unit suite, and `cargo xtask verify` after recording this entry.
 - **Known limitations or blockers:** A native Windows rerun is required to report and then resolve the remaining platform-specific initialization error.
 - **Next starting point:** Push this diagnostic improvement, refresh a Dependabot branch, and inspect the native Windows test output.
+
+### 2026-07-14 07:54 UTC — 019f5d0a-6e2c-7b73-a060-91c6dc9dcca2
+
+- **Objective:** Resolve the native Windows state-store ownership failure found on the refreshed Dependabot check.
+- **Work completed:** Allowed the built-in Administrators SID as a trusted state-file owner and retained explicit current-user access checks.
+- **Key files changed:** `crates/siorb-state/src/lib.rs` and `README.md`.
+- **Decisions:** Accepted only the current user or the Administrators SID as owner; arbitrary groups and users remain rejected.
+- **Validation:** Passed formatting, strict Windows-target Clippy for both MSVC architectures, and local `siorb-state` plus `siorb-cli` tests.
+- **Known limitations or blockers:** The final native Windows rerun is still required after pushing this ownership adjustment.
+- **Next starting point:** Push the adjustment, refresh Dependabot branches, and confirm both Windows MSVC matrices pass.
