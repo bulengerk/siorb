@@ -189,3 +189,13 @@ Native tool behavior still varies by OS version and upstream repository. Siorb r
 - **Validation:** Passed fixture/catalog gates, CLI tests, packaging smoke test, formatting, and attribute checks; full repository verification follows this entry.
 - **Known limitations or blockers:** Native Windows CI must rerun from a checkout containing the new attributes.
 - **Next starting point:** Run full verification, push the fixes, refresh Dependabot, and confirm both Windows matrices plus repository gates.
+
+### 2026-07-14 08:13 UTC — 019f5d0a-6e2c-7b73-a060-91c6dc9dcca2
+
+- **Objective:** Make the fake-backend E2E harness valid on every native platform.
+- **Work completed:** Disabled the Unix text-fixture backend tests on Windows, where a text file cannot validly emulate a PE executable.
+- **Key files changed:** `crates/siorb-cli/tests/e2e.rs` and `README.md`.
+- **Decisions:** Retained native Windows catalog, state, CLI, and packaging coverage rather than treating an invalid fixture as a package manager.
+- **Validation:** Passed formatting and the full local CLI E2E suite; native Windows rerun follows after this entry.
+- **Known limitations or blockers:** Windows backend-invocation semantics require a real signed PE fixture and are not asserted by the portable text-fixture route.
+- **Next starting point:** Run full verification, push the harness adjustment, refresh Dependabot, and confirm the native Windows matrix.
