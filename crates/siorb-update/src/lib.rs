@@ -1399,7 +1399,7 @@ fn atomic_write(path: &Path, bytes: &[u8]) -> Result<()> {
     {
         use atomicwrites::{AllowOverwrite, AtomicFile};
 
-        return AtomicFile::new(path, AllowOverwrite)
+        AtomicFile::new(path, AllowOverwrite)
             .write(|file| {
                 file.write_all(bytes)?;
                 file.write_all(b"\n")?;
@@ -1408,7 +1408,7 @@ fn atomic_write(path: &Path, bytes: &[u8]) -> Result<()> {
             .map_err(|error| {
                 let error: std::io::Error = error.into();
                 update_error("update.state.replace", error.to_string())
-            });
+            })
     }
     #[cfg(not(windows))]
     {

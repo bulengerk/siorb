@@ -7,9 +7,9 @@ use std::io::{BufRead, BufReader, Read, Write};
 use std::path::{Path, PathBuf};
 
 use serde::{Deserialize, Serialize};
-use siorb_core::{
-    ErrorKind, InstalledPackage, Result, Scope, SiorbError, correlation_id, unix_timestamp,
-};
+#[cfg(not(windows))]
+use siorb_core::correlation_id;
+use siorb_core::{ErrorKind, InstalledPackage, Result, Scope, SiorbError, unix_timestamp};
 
 const STATE_SCHEMA: &str = "1.0";
 
@@ -651,7 +651,7 @@ fn validate_windows_path_security(path: &Path) -> Result<()> {
         SeObjectType::SE_FILE_OBJECT,
         SecurityInformation::Owner | SecurityInformation::Dacl,
     )
-    .map_err(|error| windows_security_unavailable(path, error))?;
+    .map_err(|error| windows_security_unavailable(path, &error))?;
     validate_windows_security_descriptor(&descriptor, path)
 }
 
@@ -664,7 +664,7 @@ fn validate_windows_handle_security(file: &File, path: &Path) -> Result<()> {
         SeObjectType::SE_FILE_OBJECT,
         SecurityInformation::Owner | SecurityInformation::Dacl,
     )
-    .map_err(|error| windows_security_unavailable(path, error))?;
+    .map_err(|error| windows_security_unavailable(path, &error))?;
     validate_windows_security_descriptor(&descriptor, path)
 }
 
@@ -677,7 +677,7 @@ fn validate_windows_security_descriptor(
     use windows_permissions::{LocalBox, Sid, Trustee};
 
     let current = windows_permissions::utilities::current_process_sid()
-        .map_err(|error| windows_security_unavailable(path, error))?;
+        .map_err(|error| windows_security_unavailable(path, &error))?;
     let owner = descriptor.owner().ok_or_else(|| {
         state_error(
             "state.permissions.ownership_unavailable",
@@ -786,7 +786,7 @@ fn validate_windows_security_descriptor(
 }
 
 #[cfg(windows)]
-fn windows_security_unavailable(path: &Path, error: std::io::Error) -> SiorbError {
+fn windows_security_unavailable(path: &Path, error: &std::io::Error) -> SiorbError {
     state_error(
         "state.permissions.ownership_unavailable",
         format!(
