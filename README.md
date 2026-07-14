@@ -159,3 +159,23 @@ Native tool behavior still varies by OS version and upstream repository. Siorb r
 - **Validation:** Passed formatting, strict Windows-target Clippy for both MSVC architectures, and local `siorb-state` plus `siorb-cli` tests.
 - **Known limitations or blockers:** The final native Windows rerun is still required after pushing this ownership adjustment.
 - **Next starting point:** Push the adjustment, refresh Dependabot branches, and confirm both Windows MSVC matrices pass.
+
+### 2026-07-14 07:58 UTC — 019f5d0a-6e2c-7b73-a060-91c6dc9dcca2
+
+- **Objective:** Prevent Dependabot pull requests from failing the human/Codex session-log contract.
+- **Work completed:** Made the repository verifier exempt only Dependabot-authored pull requests from the new-session requirement.
+- **Key files changed:** `crates/siorb-xtask/src/repository.rs` and `README.md`.
+- **Decisions:** Read the pull-request author from GitHub's event payload rather than trusting the mutable workflow actor.
+- **Validation:** Passed formatter, xtask unit tests, and strict xtask Clippy; full repository verification follows this entry.
+- **Known limitations or blockers:** The exemption is intentionally limited to GitHub pull-request events whose author is exactly `dependabot[bot]`.
+- **Next starting point:** Run full verification, push the verifier update, and refresh Dependabot branches.
+
+### 2026-07-14 08:00 UTC — 019f5d0a-6e2c-7b73-a060-91c6dc9dcca2
+
+- **Objective:** Complete Dependabot verifier handling and expose the remaining Windows catalog-verification failure.
+- **Work completed:** Added exact Dependabot event detection to xtask and actionable context to the signed-catalog test assertion.
+- **Key files changed:** `crates/siorb-{cli,xtask}/src/` and `README.md`.
+- **Decisions:** Preserve strict verification behavior while surfacing typed errors directly from the native CI log.
+- **Validation:** Passed formatting plus focused CLI and xtask unit suites; full repository verification follows this entry.
+- **Known limitations or blockers:** The final Windows catalog-verification error must be observed on the refreshed native runner.
+- **Next starting point:** Run repository verification, push the changes, refresh the representative Dependabot branch, and repair the reported native error.
