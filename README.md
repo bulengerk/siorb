@@ -249,3 +249,13 @@ Native tool behavior still varies by OS version and upstream repository. Siorb r
 - **Validation:** Local policy tests and repository verification follow this recorded entry.
 - **Known limitations or blockers:** Native macOS ARM CI must rerun to confirm this final fixture adjustment.
 - **Next starting point:** Validate, push, refresh Dependabot, and confirm the native macOS test matrix.
+
+### 2026-07-14 08:39 UTC — 019f5d0a-6e2c-7b73-a060-91c6dc9dcca2
+
+- **Objective:** Make native CI temporary paths safe and deterministic across runner platforms.
+- **Work completed:** Set the workspace-test `TMPDIR` to GitHub Actions' runner-managed temporary directory.
+- **Key files changed:** `.github/workflows/ci.yml` and `README.md`.
+- **Decisions:** Keep application-level link defenses unchanged while ensuring test fixtures never inherit macOS's `/var` symlinked temporary root.
+- **Validation:** YAML and repository verification follow this recorded entry.
+- **Known limitations or blockers:** The refreshed native matrix must complete to provide final hosted-runner confirmation.
+- **Next starting point:** Push this CI environment adjustment, refresh Dependabot, and confirm all matrix jobs.
