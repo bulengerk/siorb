@@ -179,3 +179,13 @@ Native tool behavior still varies by OS version and upstream repository. Siorb r
 - **Validation:** Passed formatting plus focused CLI and xtask unit suites; full repository verification follows this entry.
 - **Known limitations or blockers:** The final Windows catalog-verification error must be observed on the refreshed native runner.
 - **Next starting point:** Run repository verification, push the changes, refresh the representative Dependabot branch, and repair the reported native error.
+
+### 2026-07-14 08:06 UTC — 019f5d0a-6e2c-7b73-a060-91c6dc9dcca2
+
+- **Objective:** Repair the Windows TUF fixture byte mismatch and the portable packaging-smoke dependency failure.
+- **Work completed:** Marked signed fixture trees as non-text in Git and replaced the PyYAML-only manifest assertion with a standard-library check.
+- **Key files changed:** `.gitattributes`, `scripts/release/test-packaging.sh`, and `README.md`.
+- **Decisions:** Treat all signed fixture bytes as immutable across checkout platforms and keep baseline CI tooling dependency-free.
+- **Validation:** Passed fixture/catalog gates, CLI tests, packaging smoke test, formatting, and attribute checks; full repository verification follows this entry.
+- **Known limitations or blockers:** Native Windows CI must rerun from a checkout containing the new attributes.
+- **Next starting point:** Run full verification, push the fixes, refresh Dependabot, and confirm both Windows matrices plus repository gates.
