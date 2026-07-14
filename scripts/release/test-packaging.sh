@@ -62,7 +62,7 @@ python3 -m zipfile -t "$TMP/winget.zip"
 python3 -c 'import sys, xml.etree.ElementTree as ET; ET.parse(sys.argv[1])' \
   "$ROOT/packaging/windows/siorb.wxs"
 for variable in SiorbVersion SiorbBinary LicensePath; do
-  if ! rg -F "\$(var.$variable)" "$ROOT/packaging/windows/siorb.wxs" >/dev/null; then
+  if ! grep -F "\$(var.$variable)" "$ROOT/packaging/windows/siorb.wxs" >/dev/null; then
     echo "WiX source is missing the required preprocessor variable: $variable" >&2
     exit 1
   fi
