@@ -219,3 +219,13 @@ Native tool behavior still varies by OS version and upstream repository. Siorb r
 - **Validation:** Workflow syntax and repository verification follow this recorded entry.
 - **Known limitations or blockers:** The GitHub-hosted project-gate retry and native Windows matrix are still required for final remote confirmation.
 - **Next starting point:** Validate the workflow files, push the toolchain setup repair, refresh Dependabot, and monitor the remote gates.
+
+### 2026-07-14 08:29 UTC — 019f5d0a-6e2c-7b73-a060-91c6dc9dcca2
+
+- **Objective:** Repair the macOS ARM test failure without weakening state-path link protections.
+- **Work completed:** Moved state-store and CLI E2E test workspaces off macOS's `/var` symlinked temporary path.
+- **Key files changed:** `crates/siorb-{cli,state}/` and `README.md`.
+- **Decisions:** Kept production state-store symlink rejection strict; only test fixtures use canonical repository-local temporary directories on macOS.
+- **Validation:** Local state and CLI tests plus repository verification follow this recorded entry.
+- **Known limitations or blockers:** A native macOS ARM rerun is required to confirm the corrected test harness.
+- **Next starting point:** Validate the portable test fixtures, push them, refresh Dependabot, and confirm all native CI matrices.

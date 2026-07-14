@@ -14,6 +14,16 @@ use siorb_state::{Receipt, ReceiptOrigin, StateStore, VerificationRecord, Verifi
 
 static TEST_DIRECTORY_COUNTER: AtomicU64 = AtomicU64::new(0);
 
+fn isolated_workspace_base() -> PathBuf {
+    if cfg!(target_os = "macos") {
+        Path::new(env!("CARGO_MANIFEST_DIR"))
+            .canonicalize()
+            .unwrap_or_else(|error| panic!("cannot canonicalize CLI test workspace: {error}"))
+    } else {
+        std::env::temp_dir()
+    }
+}
+
 #[derive(Debug)]
 struct IsolatedWorkspace {
     root: PathBuf,
@@ -26,7 +36,7 @@ impl IsolatedWorkspace {
         let nonce = SystemTime::now()
             .duration_since(UNIX_EPOCH)
             .map_or(0, |duration| duration.as_nanos());
-        let root = std::env::temp_dir().join(format!(
+        let root = isolated_workspace_base().join(format!(
             "siorb-cli-e2e-{}-{nonce}-{}",
             std::process::id(),
             TEST_DIRECTORY_COUNTER.fetch_add(1, Ordering::Relaxed)
