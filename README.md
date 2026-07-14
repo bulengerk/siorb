@@ -129,3 +129,13 @@ Native tool behavior still varies by OS version and upstream repository. Siorb r
 - **Validation:** Passed formatting, strict Clippy, workspace/standalone/fuzz checks, schema/catalog/docs/site gates, RustSec and license/source policy checks, the local 10x p95 benchmark, and production-shaped local package verification.
 - **Known limitations or blockers:** Native Windows/macOS execution and protected multi-platform CI were not run locally; production signing, notarization, and publication require repository-owner credentials.
 - **Next starting point:** Run protected multi-platform CI and provision the documented production signing and publication secrets.
+
+### 2026-07-14 07:28 UTC — 019f5d0a-6e2c-7b73-a060-91c6dc9dcca2
+
+- **Objective:** Restore the Pages pipeline and make Dependabot updates pass their repository checks.
+- **Work completed:** Repaired the runtime-TUF hash fixture, Windows WiX variables, cross-platform Clippy issues, and Dependabot-safe security workflow behavior.
+- **Key files changed:** `.github/workflows/security.yml`, `catalog/fixtures/runtime-tuf/`, `crates/siorb-{cli,executor,policy,state,update}/`, `packaging/windows/siorb.wxs`, and `scripts/release/test-packaging.sh`.
+- **Decisions:** Retained Rust dependency policy checks for Dependabot, skipped unavailable GitHub-only review/CodeQL jobs for its read-only token, and used CodeQL's Rust `none` build mode.
+- **Validation:** Passed native Linux tests and strict Clippy plus cross-target strict Clippy for Windows and macOS; catalog, site, packaging, and repository gates are queued below.
+- **Known limitations or blockers:** GitHub Pages is currently disabled in repository settings and must be enabled with GitHub Actions as its source by a repository owner.
+- **Next starting point:** Push these repairs, enable Pages if still disabled, then let Dependabot rebase and rerun its open updates.
