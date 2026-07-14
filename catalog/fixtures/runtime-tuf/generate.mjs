@@ -160,7 +160,7 @@ const truncationTimestamp = buildTimestamp({ snapshotBytes: truncatedSnapshot })
 emitRepository("attacks/truncation", { timestamp: truncationTimestamp.bytes, snapshot: truncatedSnapshot, expected: "update.metadata.invalid" });
 
 emitRepository("attacks/target-hash", {
-  catalog: Buffer.concat([Buffer.from(" "), catalogBytes]),
+  catalog: Buffer.concat([Buffer.from("["), catalogBytes.subarray(1)]),
   expected: "update.hash.mismatch",
   expectedStage: "target",
 });
