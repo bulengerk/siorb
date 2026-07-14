@@ -541,7 +541,11 @@ fn verify_readme_contract(root: &Path) -> Result<()> {
     }
 
     let baseline_count = base_log.map_or(0, |log| log.entry_count);
-    if repository_changed(root, &base_ref)? && current_log.entry_count <= baseline_count {
+    let dependabot_pull_request = is_dependabot_pull_request();
+    if repository_changed(root, &base_ref)?
+        && current_log.entry_count <= baseline_count
+        && !dependabot_pull_request
+    {
         return Err(message(format!(
             "project changes require one new README Codex session entry; append the exact seven-field entry after `{SESSION_HEADING}` before rerunning `cargo xtask verify`"
         )));
@@ -550,6 +554,9 @@ fn verify_readme_contract(root: &Path) -> Result<()> {
         "README Codex log valid: {} entries, {} unchanged base entries",
         current_log.entry_count, baseline_count
     );
+    if dependabot_pull_request {
+        println!("README Codex session entry not required for a Dependabot pull request");
+    }
     Ok(())
 }
 
@@ -783,6 +790,28 @@ fn repository_changed(root: &Path, base_ref: &str) -> Result<bool> {
     Ok(!output.stdout.is_empty())
 }
 
+fn is_dependabot_pull_request() -> bool {
+    if std::env::var("GITHUB_EVENT_NAME").ok().as_deref() != Some("pull_request") {
+        return false;
+    }
+    let Ok(path) = std::env::var("GITHUB_EVENT_PATH") else {
+        return false;
+    };
+    let Ok(event) = fs::read_to_string(path) else {
+        return false;
+    };
+    event_is_dependabot_pull_request(&event)
+}
+
+fn event_is_dependabot_pull_request(event: &str) -> bool {
+    serde_json::from_str::<serde_json::Value>(event).is_ok_and(|value| {
+        value
+            .pointer("/pull_request/user/login")
+            .and_then(serde_json::Value::as_str)
+            == Some("dependabot[bot]")
+    })
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -815,6 +844,17 @@ mod tests {
             first.trim_end()
         );
         assert!(parse_readme_log(&value).is_err());
+    }
+
+    #[test]
+    fn recognizes_dependabot_pull_request_events() {
+        assert!(event_is_dependabot_pull_request(
+            r#"{"pull_request":{"user":{"login":"dependabot[bot]"}}}"#
+        ));
+        assert!(!event_is_dependabot_pull_request(
+            r#"{"pull_request":{"user":{"login":"octocat"}}}"#
+        ));
+        assert!(!event_is_dependabot_pull_request("not JSON"));
     }
 
     #[test]
