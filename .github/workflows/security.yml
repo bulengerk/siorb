@@ -17,7 +17,10 @@ concurrency:
 
 jobs:
   dependency-review:
-    if: github.event_name == 'pull_request'
+    # Dependabot's pull_request token is read-only and GitHub's dependency-review
+    # API is unavailable until the repository owner enables Dependency graph.
+    # Cargo audit and cargo-deny still run for every Dependabot update below.
+    if: github.event_name == 'pull_request' && github.actor != 'dependabot[bot]'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:
@@ -57,6 +60,9 @@ jobs:
         run: python3 scripts/check_secrets.py
 
   codeql:
+    # Dependabot updates only dependency metadata; analyze the merged main ref
+    # instead of failing its read-only pull_request token on result upload.
+    if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     permissions:
@@ -71,8 +77,6 @@ jobs:
         uses: github/codeql-action/init@e34fc2711fb7964ca6850c8a8382121f34745f3b # v4.32.4
         with:
           languages: rust
-          build-mode: manual
-      - name: Build analyzed code
-        run: cargo build --locked --workspace --all-features
+          build-mode: none
       - name: Analyze
         uses: github/codeql-action/analyze@e34fc2711fb7964ca6850c8a8382121f34745f3b # v4.32.4

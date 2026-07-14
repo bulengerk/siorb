@@ -2,7 +2,7 @@
   <Package
       Name="Siorb"
       Manufacturer="Siorb contributors"
-      Version="$(SiorbVersion)"
+      Version="$(var.SiorbVersion)"
       UpgradeCode="645A12BA-75C0-4DA5-A53E-6D6BA1B91DA5"
       Scope="perMachine">
     <SummaryInformation Description="Offline-first semantic package orchestrator" />
@@ -12,7 +12,7 @@
     <StandardDirectory Id="ProgramFiles64Folder">
       <Directory Id="INSTALLFOLDER" Name="Siorb">
         <Component Id="SiorbExecutable" Guid="A29BC32B-C609-47F2-94D2-CE5A0FCA8D5F">
-          <File Id="SiorbExe" Source="$(SiorbBinary)" KeyPath="yes" />
+          <File Id="SiorbExe" Source="$(var.SiorbBinary)" KeyPath="yes" />
           <Environment
               Id="SiorbPath"
               Name="PATH"
@@ -23,7 +23,7 @@
               System="yes" />
         </Component>
         <Component Id="SiorbLicense" Guid="C3C528D1-7D70-4538-98C4-51FAD1FF1EB0">
-          <File Id="License" Source="$(LicensePath)" KeyPath="yes" />
+          <File Id="License" Source="$(var.LicensePath)" KeyPath="yes" />
         </Component>
       </Directory>
     </StandardDirectory>
