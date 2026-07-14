@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.siorb.dev/v1/execution-report.schema.json",
+  "title": "Siorb execution report v1",
+  "type": "object",
+  "required": ["transaction_id", "plan_id", "status", "state_changed", "steps", "recovery_actions"],
+  "properties": {
+    "transaction_id": { "type": "string" },
+    "plan_id": { "type": "string" },
+    "status": { "type": "string", "enum": ["completed", "no_change"] },
+    "state_changed": { "type": "boolean" },
+    "steps": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/step_report" }
+    },
+    "recovery_actions": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "step_report": {
+      "type": "object",
+      "required": ["step_id", "package", "status", "exit_code", "duration_ms", "stdout", "stderr", "output_truncated", "reason_code"],
+      "properties": {
+        "step_id": { "type": "string" },
+        "package": { "type": "string" },
+        "status": { "type": "string", "enum": ["completed", "no_change"] },
+        "exit_code": { "type": ["integer", "null"] },
+        "duration_ms": { "type": "integer", "minimum": 0 },
+        "stdout": { "type": "string" },
+        "stderr": { "type": "string" },
+        "output_truncated": { "type": "boolean" },
+        "reason_code": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    }
+  }
+}

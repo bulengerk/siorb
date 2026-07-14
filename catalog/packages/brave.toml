@@ -1,0 +1,70 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "brave"
+name = "Brave Browser"
+description = "Privacy-oriented Chromium browser with built-in tracker blocking."
+aliases = ["brave-browser"]
+deprecated_aliases = []
+search_terms = ["brave browser", "browsers"]
+homepage = "https://brave.com/"
+upstream = "brave.com"
+license = "MPL-2.0"
+categories = ["browsers"]
+capabilities = ["web-browser"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Brave.Brave", "https://formulae.brew.sh/cask/brave-browser", "https://flathub.org/apps/com.brave.Browser"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "brave-winget"
+platform = "windows"
+backend = "winget"
+package_id = "Brave.Brave"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=Brave.Brave"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "brave-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "brave-browser"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/brave-browser"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "brave-flatpak"
+platform = "linux"
+backend = "flatpak"
+package_id = "com.brave.Browser"
+trust = "sandboxed"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 30
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://flathub.org/apps/com.brave.Browser"
+reviewed_at = "2026-07-13"

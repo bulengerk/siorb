@@ -1,0 +1,115 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "mariadb"
+name = "MariaDB"
+description = "Community-developed relational database compatible with MySQL."
+aliases = ["maria-db"]
+deprecated_aliases = []
+search_terms = ["mariadb", "databases"]
+homepage = "https://mariadb.org/"
+upstream = "mariadb.org"
+license = "GPL-2.0-only"
+categories = ["databases"]
+capabilities = ["data-storage"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=MariaDB.Server", "https://formulae.brew.sh/formula/mariadb", "https://packages.debian.org/search?keywords=mariadb-server&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=mariadb-server", "https://archlinux.org/packages/?q=mariadb", "https://pkgs.alpinelinux.org/packages?name=mariadb"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "mariadb-winget"
+platform = "windows"
+backend = "winget"
+package_id = "MariaDB.Server"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=MariaDB.Server"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "mariadb-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "mariadb"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/mariadb"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "mariadb-apt"
+platform = "debian"
+backend = "apt"
+package_id = "mariadb-server"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=mariadb-server&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "mariadb-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "mariadb-server"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=mariadb-server"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "mariadb-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "mariadb"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=mariadb"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "mariadb-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "mariadb"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=mariadb"
+reviewed_at = "2026-07-13"

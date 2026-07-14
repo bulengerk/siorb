@@ -1,0 +1,16 @@
+{
+  "os": "windows",
+  "os_version": "10.0.19045",
+  "distribution": null,
+  "distribution_version": null,
+  "distribution_like": [],
+  "architecture": "x86_64",
+  "translated": true,
+  "libc": null,
+  "backends": [],
+  "interactive": false,
+  "elevation_available": false,
+  "supported_scopes": ["user"],
+  "offline": false,
+  "restrictions": ["translated_process", "external_elevation_unavailable", "no_compatible_backend"]
+}

@@ -1,0 +1,115 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "redis"
+name = "Redis"
+description = "In-memory data store used as a cache, database, and message broker."
+aliases = ["redis-server"]
+deprecated_aliases = []
+search_terms = ["redis", "databases"]
+homepage = "https://redis.io/"
+upstream = "redis.io"
+license = "RSAL-2.0 OR SSPL-1.0"
+categories = ["databases"]
+capabilities = ["data-storage"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Redis.Redis", "https://formulae.brew.sh/formula/redis", "https://packages.debian.org/search?keywords=redis-server&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=redis", "https://archlinux.org/packages/?q=redis", "https://pkgs.alpinelinux.org/packages?name=redis"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "redis-winget"
+platform = "windows"
+backend = "winget"
+package_id = "Redis.Redis"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=Redis.Redis"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "redis-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "redis"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/redis"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "redis-apt"
+platform = "debian"
+backend = "apt"
+package_id = "redis-server"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=redis-server&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "redis-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "redis"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=redis"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "redis-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "redis"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=redis"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "redis-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "redis"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=redis"
+reviewed_at = "2026-07-13"

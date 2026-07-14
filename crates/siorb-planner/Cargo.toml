@@ -1,0 +1,22 @@
+[package]
+name = "siorb-planner"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+serde.workspace = true
+siorb-backends = { path = "../siorb-backends" }
+siorb-catalog = { path = "../siorb-catalog" }
+siorb-core = { path = "../siorb-core" }
+siorb-policy = { path = "../siorb-policy" }
+siorb-resolver = { path = "../siorb-resolver" }
+
+[dev-dependencies]
+proptest.workspace = true
+
+[lints]
+workspace = true

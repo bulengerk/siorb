@@ -1,0 +1,27 @@
+[package]
+name = "siorb-state"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+libc.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+siorb-core = { path = "../siorb-core" }
+
+[target.'cfg(unix)'.dependencies]
+rustix = { version = "1.1.4", features = ["process"] }
+
+[target.'cfg(windows)'.dependencies]
+atomicwrites = "0.4.4"
+windows-permissions = "0.2.4"
+
+[dev-dependencies]
+tempfile.workspace = true
+
+[lints]
+workspace = true

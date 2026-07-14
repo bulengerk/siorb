@@ -1,0 +1,13 @@
+[
+  {"url":"https://downloads.example.org/firefox.tar.xz","valid":true},
+  {"url":"http://downloads.example.org/firefox.tar.xz","valid":false,"reason_code":"artifact.url.insecure_scheme"},
+  {"url":"https://user:password@example.org/file","valid":false,"reason_code":"artifact.url.credentials"},
+  {"url":"file:///etc/passwd","transport":"remote_catalog","valid":false,"reason_code":"artifact.url.scheme_denied"},
+  {"url":"https://127.0.0.1/private","valid":false,"reason_code":"artifact.url.private_address"},
+  {"url":"https://[::1]/private","valid":false,"reason_code":"artifact.url.private_address"},
+  {"url":"https://169.254.169.254/latest/meta-data/","valid":false,"reason_code":"artifact.url.link_local"},
+  {"url":"https://example.org/file#sha256=evil","valid":false,"reason_code":"artifact.url.fragment"},
+  {"url":"https://example.org/a","redirect":"https://cdn.example.org/b","allowed_hosts":["example.org"],"valid":false,"reason_code":"artifact.redirect.host_denied"},
+  {"url":"https://example.org/a","redirect":"http://example.org/b","allowed_hosts":["example.org"],"valid":false,"reason_code":"artifact.redirect.scheme_downgrade"},
+  {"url":"https://example.org/a","redirect_count":6,"valid":false,"reason_code":"artifact.redirect.limit"}
+]

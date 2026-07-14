@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.siorb.dev/v1/bundle.schema.json",
+  "title": "Siorb portable bundle representation v1",
+  "type": "object",
+  "required": ["schema_version", "name", "metadata", "policy_references", "feature_groups", "profiles", "packages"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "name": { "type": ["string", "null"] },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "policy_references": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/portable_name" },
+      "uniqueItems": true
+    },
+    "feature_groups": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/portable_name" },
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "items": { "type": "string" },
+        "uniqueItems": true
+      }
+    },
+    "profiles": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/portable_name" },
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    },
+    "packages": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/bundle_package" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "bundle_package": {
+      "type": "object",
+      "required": ["id", "state", "version", "channel", "scope", "optional", "features", "platforms", "allow_backends", "deny_backends", "on_conflict"],
+      "properties": {
+        "id": { "type": "string" },
+        "state": { "type": "string", "enum": ["present", "absent"] },
+        "version": { "type": ["string", "null"] },
+        "channel": { "type": "string", "enum": ["stable", "beta", "nightly"] },
+        "scope": { "$ref": "common.schema.json#/$defs/scope" },
+        "optional": { "type": "boolean" },
+        "features": { "$ref": "#/$defs/string_array" },
+        "platforms": { "$ref": "#/$defs/string_array" },
+        "allow_backends": { "$ref": "#/$defs/string_array" },
+        "deny_backends": { "$ref": "#/$defs/string_array" },
+        "on_conflict": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "string_array": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "portable_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9._-]+$"
+    }
+  }
+}

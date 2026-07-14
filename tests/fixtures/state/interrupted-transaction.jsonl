@@ -1,0 +1,2 @@
+{"schema_version":"1.0","transaction_id":"tx-interrupted","plan_id":"plan-0123456789abcdef01234567","step_id":null,"timestamp_unix":1783969200,"state":"transaction_started","detail":""}
+{"schema_version":"1.0","transaction_id":"tx-interrupted","plan_id":"plan-0123456789abcdef01234567","step_id":"step-0001","timestamp_unix":1783969201,"state":"step_started","detail":""}

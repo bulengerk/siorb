@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://siorb.dev/schemas/catalog/index-v1.json",
+  "title": "Generated Siorb catalog index",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["_generated", "schema_version", "catalog", "counts", "packages"],
+  "properties": {
+    "_generated": { "type": "string" },
+    "schema_version": { "const": "1" },
+    "catalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "generated_at", "signature_status"],
+      "properties": {
+        "id": { "type": "string" },
+        "version": { "type": "string" },
+        "generated_at": { "type": "string", "format": "date-time" },
+        "signature_status": { "enum": ["bundled-trusted", "verified", "expired", "unverified"] }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["packages", "mappings"],
+      "properties": {
+        "packages": { "type": "integer", "minimum": 100 },
+        "mappings": { "type": "integer", "minimum": 250 }
+      }
+    },
+    "packages": { "type": "array", "minItems": 100, "items": { "$ref": "package.schema.json" } }
+  }
+}

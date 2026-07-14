@@ -1,0 +1,43 @@
+<!doctype html>
+<!-- Generated from catalog/packages/*.toml. DO NOT EDIT; regenerate with: node website/build.mjs -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Review and contribute exact package mappings to the Siorb catalog.">
+  <meta name="theme-color" content="#18124f">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Contribute mappings · Siorb catalog">
+  <meta property="og:description" content="Review and contribute exact package mappings to the Siorb catalog.">
+  <meta property="og:url" content="https://example.invalid/siorb/contribute/">
+  <meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://example.invalid/siorb/contribute/">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <link rel="manifest" href="../site.webmanifest">
+  <title>Contribute mappings · Siorb catalog</title>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../index.html" aria-label="Siorb catalog home">Siorb</a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="../index.html">Packages</a>
+        <a href="../categories/index.html">Categories</a>
+        <a href="../platforms/index.html">Platforms</a>
+        <a href="../install/index.html">Install</a>
+        <a href="../contribute/index.html">Contribute</a>
+        <a href="../security/index.html">Security</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main-content"><p class="eyebrow">Catalog governance</p><h1>Contribute a mapping</h1><p class="lede">Every package is a human-reviewable TOML manifest. Contributions must preserve exact IDs, provenance, trust metadata, architecture selectors, and HTTPS evidence.</p><section class="panel"><h2>Review sequence</h2><ol><li>Edit one file under <code>catalog/packages/</code>.</li><li>Verify each exact ID in its native backend repository.</li><li>Update the evidence link and review date.</li><li>Run <code>node catalog/validate.mjs</code>, catalog generation, and the website stale check.</li></ol><p><span>Read the complete contribution guide (configured by the deploying repository)</span></p></section></main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>Catalog 2026.07.13.1 · bundled development fixture; CLI authentication is authoritative</p>
+      <p><span>Source and releases (configured by the deploying repository)</span> · No runtime backend</p>
+    </div>
+  </footer>
+  <script src="../assets/app.js" defer></script>
+</body>
+</html>

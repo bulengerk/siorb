@@ -1,0 +1,85 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "uv"
+name = "uv"
+description = "Fast Python package and project manager written in Rust."
+aliases = ["astral-uv"]
+deprecated_aliases = []
+search_terms = ["uv", "runtimes"]
+homepage = "https://docs.astral.sh/uv/"
+upstream = "docs.astral.sh"
+license = "Apache-2.0 OR MIT"
+categories = ["runtimes"]
+capabilities = ["language-runtime"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=astral-sh.uv", "https://formulae.brew.sh/formula/uv", "https://archlinux.org/packages/?q=uv", "https://pkgs.alpinelinux.org/packages?name=uv"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "uv-winget"
+platform = "windows"
+backend = "winget"
+package_id = "astral-sh.uv"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=astral-sh.uv"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "uv-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "uv"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/uv"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "uv-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "uv"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=uv"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "uv-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "uv"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=uv"
+reviewed_at = "2026-07-13"

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.siorb.dev/v1/command-output.schema.json",
+  "title": "Siorb command JSON envelope v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "command",
+    "status",
+    "correlation_id",
+    "platform",
+    "catalog",
+    "policy",
+    "results",
+    "warnings",
+    "errors"
+  ],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "command": { "type": "string", "minLength": 1 },
+    "status": {
+      "type": "string",
+      "enum": ["success", "planned", "no_change", "partial", "error"]
+    },
+    "correlation_id": { "$ref": "common.schema.json#/$defs/correlation_id" },
+    "platform": { "$ref": "common.schema.json#/$defs/platform_context" },
+    "catalog": { "$ref": "common.schema.json#/$defs/catalog_identity" },
+    "policy": {
+      "oneOf": [
+        { "$ref": "common.schema.json#/$defs/policy_identity" },
+        { "type": "null" }
+      ]
+    },
+    "results": {
+      "type": ["object", "array", "null"]
+    },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "errors": {
+      "type": "array",
+      "items": { "$ref": "common.schema.json#/$defs/diagnostic" }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "enum": ["success", "planned", "no_change"] } } },
+      "then": { "properties": { "errors": { "maxItems": 0 } } }
+    },
+    {
+      "if": { "properties": { "status": { "const": "error" } } },
+      "then": { "properties": { "errors": { "minItems": 1 } } }
+    }
+  ],
+  "additionalProperties": false
+}

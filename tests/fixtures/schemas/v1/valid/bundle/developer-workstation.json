@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "name": "developer-workstation",
+  "metadata": {"owner": "example"},
+  "policy_references": [],
+  "feature_groups": {"browser": ["firefox"]},
+  "profiles": {"minimal": ["@browser"]},
+  "packages": [
+    {
+      "id": "firefox",
+      "state": "present",
+      "version": null,
+      "channel": "stable",
+      "scope": "auto",
+      "optional": false,
+      "features": [],
+      "platforms": [],
+      "allow_backends": [],
+      "deny_backends": [],
+      "on_conflict": null
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "signed": {
+    "type": "timestamp",
+    "spec_version": "1.0",
+    "version": 1,
+    "expires_unix": 1893456000,
+    "snapshot": {
+      "version": 1,
+      "length": 482,
+      "sha256": "2667e810667379a07cf7b7ef6758471e72ff468c55b4c301337bbf8a507ce54b"
+    }
+  },
+  "signatures": []
+}

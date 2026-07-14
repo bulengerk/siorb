@@ -1,0 +1,24 @@
+{
+  "os": "linux",
+  "os_version": "15.6",
+  "distribution": "opensuse-leap",
+  "distribution_version": "15.6",
+  "distribution_like": ["suse", "opensuse"],
+  "architecture": "arm64",
+  "translated": false,
+  "libc": "glibc",
+  "backends": [
+    {
+      "id": "zypper",
+      "executable": "fixture-bin/zypper",
+      "version": "1.14.76",
+      "available": true,
+      "capabilities": ["query", "install", "remove", "upgrade", "repair", "verify", "non_interactive"]
+    }
+  ],
+  "interactive": false,
+  "elevation_available": true,
+  "supported_scopes": ["user", "system"],
+  "offline": false,
+  "restrictions": []
+}

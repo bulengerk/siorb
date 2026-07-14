@@ -1,0 +1,136 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_INCREMENTAL: "0"
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: "1"
+
+jobs:
+  repository-contracts:
+    name: Formatting and repository contracts
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Install pinned Rust toolchain
+        run: |
+          rustup toolchain install 1.85.0 --profile minimal --component rustfmt
+          rustup default 1.85.0
+      - name: Check GitHub Action pins
+        run: python3 scripts/check_action_pins.py
+      - name: Check repository for committed secret patterns
+        run: python3 scripts/check_secrets.py
+      - name: Check formatting
+        run: cargo fmt --check
+      - name: Verify shell syntax
+        run: bash -n scripts/release/*.sh
+      - name: Verify Python syntax
+        run: python3 -m compileall -q scripts tests
+      - name: Smoke-test deterministic release packaging
+        run: SIORB_REQUIRE_TAG_SIGNING_TEST=1 scripts/release/test-packaging.sh
+
+  workspace:
+    name: ${{ matrix.target }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-24.04
+            target: x86_64-unknown-linux-gnu
+          - runner: ubuntu-24.04-arm
+            target: aarch64-unknown-linux-gnu
+          - runner: ubuntu-24.04
+            target: x86_64-unknown-linux-musl
+          - runner: ubuntu-24.04-arm
+            target: aarch64-unknown-linux-musl
+          - runner: windows-2022
+            target: x86_64-pc-windows-msvc
+          - runner: windows-11-arm
+            target: aarch64-pc-windows-msvc
+          - runner: macos-15-intel
+            target: x86_64-apple-darwin
+          - runner: macos-15
+            target: aarch64-apple-darwin
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Install pinned Rust toolchain
+        run: |
+          rustup toolchain install 1.85.0 --profile minimal --component clippy
+          rustup default 1.85.0
+          rustup target add ${{ matrix.target }}
+      - name: Install native musl linker
+        if: contains(matrix.target, 'linux-musl')
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes musl-tools
+      - name: Clippy
+        run: cargo clippy --locked --workspace --all-targets --all-features --target ${{ matrix.target }} -- -D warnings
+      - name: Test workspace
+        run: cargo test --locked --workspace --all-features --target ${{ matrix.target }}
+
+  project-gates:
+    name: Schemas, catalog, docs, and generated site
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Install pinned Rust toolchain
+        run: |
+          rustup toolchain install 1.85.0 --profile minimal
+          rustup default 1.85.0
+      - name: Install pinned Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install schema-test dependency
+        run: python3 -m pip install --requirement tests/requirements.txt
+      - name: Verify repository invariants
+        run: cargo xtask verify
+      - name: Test standalone contract workspace
+        run: cargo test --locked --manifest-path tests/Cargo.toml --all-targets
+      - name: Test public schemas
+        run: cargo xtask test-schemas
+      - name: Test semantic catalog
+        run: cargo xtask test-catalog
+      - name: Test documentation
+        run: |
+          cargo xtask generate-docs
+          cargo xtask test-docs
+      - name: Build static catalog site
+        run: cargo xtask build-site
+      - name: Require committed deterministic output
+        run: python3 scripts/check_clean_tree.py
+      - name: Upload static site preview
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: catalog-site-${{ github.sha }}
+          path: website/public
+          if-no-files-found: error
+          retention-days: 7

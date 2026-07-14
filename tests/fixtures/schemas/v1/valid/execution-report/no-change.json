@@ -1,0 +1,20 @@
+{
+  "transaction_id": "tx-1783969200-0123456789ab",
+  "plan_id": "plan-0123456789abcdef01234567",
+  "status": "no_change",
+  "state_changed": false,
+  "steps": [
+    {
+      "step_id": "step-0001",
+      "package": "firefox",
+      "status": "no_change",
+      "exit_code": 0,
+      "duration_ms": 0,
+      "stdout": "",
+      "stderr": "",
+      "output_truncated": false,
+      "reason_code": null
+    }
+  ],
+  "recovery_actions": []
+}

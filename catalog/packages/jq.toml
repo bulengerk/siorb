@@ -1,0 +1,130 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "jq"
+name = "jq"
+description = "Lightweight command-line processor for JSON data."
+aliases = ["jqlang"]
+deprecated_aliases = []
+search_terms = ["jq", "developer tools"]
+homepage = "https://jqlang.github.io/jq/"
+upstream = "jqlang.github.io"
+license = "MIT"
+categories = ["developer-tools"]
+capabilities = ["software-development"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=jqlang.jq", "https://formulae.brew.sh/formula/jq", "https://packages.debian.org/search?keywords=jq&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=jq", "https://archlinux.org/packages/?q=jq", "https://software.opensuse.org/search?baseproject=ALL&q=jq", "https://pkgs.alpinelinux.org/packages?name=jq"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "jq-winget"
+platform = "windows"
+backend = "winget"
+package_id = "jqlang.jq"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=jqlang.jq"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "jq-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "jq"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/jq"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "jq-apt"
+platform = "debian"
+backend = "apt"
+package_id = "jq"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=jq&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "jq-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "jq"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=jq"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "jq-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "jq"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=jq"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "jq-zypper"
+platform = "opensuse"
+backend = "zypper"
+package_id = "jq"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://software.opensuse.org/search?baseproject=ALL&q=jq"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "jq-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "jq"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=jq"
+reviewed_at = "2026-07-13"

@@ -1,0 +1,24 @@
+{
+  "os": "windows",
+  "os_version": "10.0.26100",
+  "distribution": null,
+  "distribution_version": null,
+  "distribution_like": [],
+  "architecture": "x86_64",
+  "translated": false,
+  "libc": null,
+  "backends": [
+    {
+      "id": "winget",
+      "executable": "fixture-bin/winget.exe",
+      "version": "1.10.340",
+      "available": true,
+      "capabilities": ["query", "install", "remove", "upgrade", "repair", "verify", "non_interactive"]
+    }
+  ],
+  "interactive": true,
+  "elevation_available": false,
+  "supported_scopes": ["user"],
+  "offline": false,
+  "restrictions": ["external_elevation_unavailable"]
+}

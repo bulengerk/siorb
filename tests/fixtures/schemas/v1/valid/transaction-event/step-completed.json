@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "transaction_id": "3d00d246-e15f-4ddb-91d7-63db369278a0",
+  "plan_id": "plan-1",
+  "step_id": "install-firefox",
+  "timestamp_unix": 1783969202,
+  "state": "step_completed",
+  "detail": "exit_code=0"
+}

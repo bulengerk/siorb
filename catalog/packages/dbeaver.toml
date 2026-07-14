@@ -1,0 +1,70 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "dbeaver"
+name = "DBeaver Community"
+description = "Universal open-source database management client."
+aliases = ["dbeaver-community"]
+deprecated_aliases = []
+search_terms = ["dbeaver community", "databases"]
+homepage = "https://dbeaver.io/"
+upstream = "dbeaver.io"
+license = "Apache-2.0"
+categories = ["databases"]
+capabilities = ["data-storage"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=DBeaver.DBeaver.Community", "https://formulae.brew.sh/cask/dbeaver-community", "https://flathub.org/apps/io.dbeaver.DBeaverCommunity"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "dbeaver-winget"
+platform = "windows"
+backend = "winget"
+package_id = "DBeaver.DBeaver.Community"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=DBeaver.DBeaver.Community"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "dbeaver-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "dbeaver-community"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/dbeaver-community"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "dbeaver-flatpak"
+platform = "linux"
+backend = "flatpak"
+package_id = "io.dbeaver.DBeaverCommunity"
+trust = "sandboxed"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 30
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://flathub.org/apps/io.dbeaver.DBeaverCommunity"
+reviewed_at = "2026-07-13"

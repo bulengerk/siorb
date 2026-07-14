@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "plan_id": "plan-0123456789abcdef01234567",
+  "operation": "install",
+  "requested": ["firefox"],
+  "catalog_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "platform_fingerprint": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "policy_fingerprint": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "created_at_unix": 1783897200,
+  "reproducibility": "best_effort",
+  "packages": [],
+  "steps": [],
+  "warnings": [],
+  "conflicts": [],
+  "recovery_guidance": [],
+  "revalidation": {
+    "platform_fingerprint": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "catalog_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "policy_fingerprint": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+  }
+}

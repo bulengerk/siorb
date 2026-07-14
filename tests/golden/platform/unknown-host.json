@@ -1,0 +1,16 @@
+{
+  "os": "unknown",
+  "os_version": null,
+  "distribution": null,
+  "distribution_version": null,
+  "distribution_like": [],
+  "architecture": "unknown",
+  "translated": false,
+  "libc": null,
+  "backends": [],
+  "interactive": false,
+  "elevation_available": false,
+  "supported_scopes": ["user"],
+  "offline": true,
+  "restrictions": ["unsupported_platform"]
+}

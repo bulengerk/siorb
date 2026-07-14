@@ -1,0 +1,24 @@
+{
+  "signed": {
+    "type": "targets",
+    "spec_version": "1.0",
+    "version": 1,
+    "expires_unix": 1893456000,
+    "targets": {
+      "catalog.json": {
+        "length": 346872,
+        "sha256": "11bb29158ecd6dcfb89e1fd58cd9d6bdcbe784890deca553b3a743f3cb4e1119",
+        "custom": {
+          "catalog_version": "2026071301",
+          "schema_version": "1.0"
+        }
+      }
+    }
+  },
+  "signatures": [
+    {
+      "key_id": "dev-targets",
+      "signature": "TSmnbJu4bLBP6NDPv93TGRKJKdmI8xtC7c7TiK4eynjMMHUNEtKyR7T24JJGNu8SHARxB0itlvffxVepTHSzBA=="
+    }
+  ]
+}

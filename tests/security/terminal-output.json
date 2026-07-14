@@ -1,0 +1,8 @@
+[
+  {"input":"normal diagnostic","expected":"normal diagnostic"},
+  {"input":"\u001b[31mred\u001b[0m","expected":"red"},
+  {"input":"ok\u0000hidden","expected":"okhidden"},
+  {"input":"title\u001b]0;spoofed\u0007text","expected":"titletext"},
+  {"input":"line1\nline2\tvalue","expected":"line1\nline2\tvalue"},
+  {"input":"\u001b[2J\u001b[Hfake prompt","expected":"fake prompt"}
+]

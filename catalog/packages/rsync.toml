@@ -1,0 +1,115 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "rsync"
+name = "rsync"
+description = "Fast incremental file transfer and synchronization utility."
+aliases = ["remote-sync"]
+deprecated_aliases = []
+search_terms = ["rsync", "system utilities"]
+homepage = "https://rsync.samba.org/"
+upstream = "rsync.samba.org"
+license = "GPL-3.0-or-later"
+categories = ["system-utilities"]
+capabilities = ["system-utility"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=RsyncProject.Rsync", "https://formulae.brew.sh/formula/rsync", "https://packages.debian.org/search?keywords=rsync&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=rsync", "https://archlinux.org/packages/?q=rsync", "https://pkgs.alpinelinux.org/packages?name=rsync"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "rsync-winget"
+platform = "windows"
+backend = "winget"
+package_id = "RsyncProject.Rsync"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=RsyncProject.Rsync"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "rsync-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "rsync"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/rsync"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "rsync-apt"
+platform = "debian"
+backend = "apt"
+package_id = "rsync"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=rsync&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "rsync-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "rsync"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=rsync"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "rsync-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "rsync"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=rsync"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "rsync-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "rsync"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=rsync"
+reviewed_at = "2026-07-13"

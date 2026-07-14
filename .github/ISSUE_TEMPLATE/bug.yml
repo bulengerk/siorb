@@ -1,0 +1,60 @@
+name: Bug report
+description: Report a reproducible non-security defect
+title: "bug: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Do not report vulnerabilities or include secrets here. Use the private
+        Security Advisory link in SECURITY.md for verification, privilege,
+        source-selection, or credential exposure issues.
+  - type: input
+    id: version
+    attributes:
+      label: Siorb version or commit
+      placeholder: "siorb version output or commit SHA"
+    validations:
+      required: true
+  - type: dropdown
+    id: host
+    attributes:
+      label: Host family
+      options: [Windows, macOS, Debian or Ubuntu, Fedora or RHEL, Arch, openSUSE, Alpine, Other]
+    validations:
+      required: true
+  - type: input
+    id: architecture
+    attributes:
+      label: Architecture and distribution version
+      placeholder: "x86_64, Ubuntu 24.04"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      description: Use dry-run where possible and redact local/private data.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behavior, reason code, and correlation ID
+      description: State whether any host state changed. Do not paste credentials or raw private URLs.
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: This is not a security vulnerability and the report contains no secrets or personal data.
+          required: true

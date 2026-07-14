@@ -1,0 +1,16 @@
+{
+  "os": "macos",
+  "os_version": "14.7",
+  "distribution": null,
+  "distribution_version": null,
+  "distribution_like": [],
+  "architecture": "arm64",
+  "translated": true,
+  "libc": null,
+  "backends": [],
+  "interactive": false,
+  "elevation_available": true,
+  "supported_scopes": ["user", "system"],
+  "offline": false,
+  "restrictions": ["translated_process", "no_compatible_backend"]
+}

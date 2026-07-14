@@ -1,0 +1,5 @@
+NAME="Fedora Linux"
+VERSION="42 (Workstation Edition)"
+ID=fedora
+VERSION_ID=42
+PLATFORM_ID="platform:f42"

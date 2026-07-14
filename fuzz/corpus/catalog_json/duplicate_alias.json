@@ -1,0 +1,1 @@
+{"schema_version":"1.0","catalog_version":1,"generated_at":"","packages":[{"schema_version":"1.0","id":"alpha","name":"Alpha","description":"A","aliases":["same"],"homepage":"https://example.org/a","license":"MIT","sources":[]},{"schema_version":"1.0","id":"beta","name":"Beta","description":"B","aliases":["same"],"homepage":"https://example.org/b","license":"MIT","sources":[]}]}

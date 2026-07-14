@@ -1,0 +1,24 @@
+{
+  "os": "linux",
+  "os_version": "14.04",
+  "distribution": "ubuntu",
+  "distribution_version": "14.04",
+  "distribution_like": ["debian"],
+  "architecture": "x86_64",
+  "translated": false,
+  "libc": "glibc",
+  "backends": [
+    {
+      "id": "apt",
+      "executable": "fixture-bin/apt-get",
+      "version": "1.0.1ubuntu2",
+      "available": false,
+      "capabilities": []
+    }
+  ],
+  "interactive": false,
+  "elevation_available": true,
+  "supported_scopes": ["user", "system"],
+  "offline": false,
+  "restrictions": ["unsupported_os_version", "no_compatible_backend"]
+}

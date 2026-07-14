@@ -1,0 +1,102 @@
+[
+  {
+    "name": "command output accepts a complete doctor response",
+    "schema": "command-output.schema.json",
+    "instance": "valid/command-output/doctor-success.json",
+    "valid": true
+  },
+  {
+    "name": "command output rejects an incompatible schema version",
+    "schema": "command-output.schema.json",
+    "instance": "invalid/command-output/wrong-schema-version.json",
+    "valid": false,
+    "error_contains": "1.0"
+  },
+  {
+    "name": "successful output cannot contain errors",
+    "schema": "command-output.schema.json",
+    "instance": "invalid/command-output/success-with-error.json",
+    "valid": false
+  },
+  {
+    "name": "command output rejects undocumented top-level fields",
+    "schema": "command-output.schema.json",
+    "instance": "invalid/command-output/unknown-top-level-field.json",
+    "valid": false,
+    "error_contains": "Additional properties"
+  },
+  {
+    "name": "execution plan accepts a safe typed backend step",
+    "schema": "execution-plan.schema.json",
+    "instance": "valid/execution-plan/install-firefox.json",
+    "valid": true
+  },
+  {
+    "name": "execution plan rejects a shell command escape hatch",
+    "schema": "execution-plan.schema.json",
+    "instance": "invalid/execution-plan/arbitrary-shell.json",
+    "valid": false,
+    "error_contains": "Additional properties"
+  },
+  {
+    "name": "execution plan always revalidates backend availability",
+    "schema": "execution-plan.schema.json",
+    "instance": "invalid/execution-plan/incomplete-revalidation.json",
+    "valid": false
+  },
+  {
+    "name": "execution report accepts the runtime no-change shape",
+    "schema": "execution-report.schema.json",
+    "instance": "valid/execution-report/no-change.json",
+    "valid": true
+  },
+  {
+    "name": "resolution preserves selected and rejected candidates",
+    "schema": "resolution.schema.json",
+    "instance": "valid/resolution/firefox-apt.json",
+    "valid": true
+  },
+  {
+    "name": "receipt accepts verified installed state",
+    "schema": "receipt.schema.json",
+    "instance": "valid/receipt/firefox.json",
+    "valid": true
+  },
+  {
+    "name": "receipt rejects an invalid timestamp",
+    "schema": "receipt.schema.json",
+    "instance": "invalid/receipt/bad-timestamp.json",
+    "valid": false
+  },
+  {
+    "name": "transaction event accepts append-only sequencing data",
+    "schema": "transaction-event.schema.json",
+    "instance": "valid/transaction-event/step-completed.json",
+    "valid": true
+  },
+  {
+    "name": "transaction event rejects a negative sequence",
+    "schema": "transaction-event.schema.json",
+    "instance": "invalid/transaction-event/negative-sequence.json",
+    "valid": false
+  },
+  {
+    "name": "bundle lock accepts the runtime platform-specific shape",
+    "schema": "bundle-lock.schema.json",
+    "instance": "valid/bundle-lock/ubuntu.json",
+    "valid": true
+  },
+  {
+    "name": "bundle lock rejects the obsolete multi-target shape",
+    "schema": "bundle-lock.schema.json",
+    "instance": "invalid/bundle-lock/targets-array.json",
+    "valid": false,
+    "error_contains": "Additional properties"
+  },
+  {
+    "name": "portable bundle accepts the runtime serialization shape",
+    "schema": "bundle.schema.json",
+    "instance": "valid/bundle/developer-workstation.json",
+    "valid": true
+  }
+]

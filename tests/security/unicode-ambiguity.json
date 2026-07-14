@@ -1,0 +1,12 @@
+[
+  {"value":"firefox","normalized":"firefox","valid":true},
+  {"value":"Ｆｉｒｅｆｏｘ","valid":false,"reason_code":"catalog.identifier.confusable"},
+  {"value":"fіrefox","valid":false,"reason_code":"catalog.identifier.confusable","note":"second character is Cyrillic i"},
+  {"value":"firеfox","valid":false,"reason_code":"catalog.identifier.confusable","note":"fourth character is Cyrillic e"},
+  {"value":"fırefox","valid":false,"reason_code":"catalog.identifier.confusable","note":"dotless i"},
+  {"value":"firefοx","valid":false,"reason_code":"catalog.identifier.confusable","note":"Greek omicron"},
+  {"value":"fire\u200dfox","valid":false,"reason_code":"catalog.identifier.invisible"},
+  {"value":"fire\u202efox","valid":false,"reason_code":"catalog.identifier.bidi_control"},
+  {"value":"fi\u0301refox","valid":false,"reason_code":"catalog.identifier.non_canonical"},
+  {"value":"install","valid":false,"reason_code":"catalog.alias.reserved"}
+]

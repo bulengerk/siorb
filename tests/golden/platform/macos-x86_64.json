@@ -1,0 +1,24 @@
+{
+  "os": "macos",
+  "os_version": "15.5",
+  "distribution": null,
+  "distribution_version": null,
+  "distribution_like": [],
+  "architecture": "x86_64",
+  "translated": false,
+  "libc": null,
+  "backends": [
+    {
+      "id": "brew",
+      "executable": "fixture-bin/brew",
+      "version": "4.6.5",
+      "available": true,
+      "capabilities": ["query", "install", "remove", "upgrade", "repair", "verify"]
+    }
+  ],
+  "interactive": true,
+  "elevation_available": true,
+  "supported_scopes": ["user", "system"],
+  "offline": false,
+  "restrictions": []
+}

@@ -1,0 +1,115 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "hugo"
+name = "Hugo"
+description = "Fast static site generator written in Go."
+aliases = ["hugo-static-site-generator"]
+deprecated_aliases = []
+search_terms = ["hugo", "developer tools"]
+homepage = "https://gohugo.io/"
+upstream = "gohugo.io"
+license = "Apache-2.0"
+categories = ["developer-tools"]
+capabilities = ["software-development"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Hugo.Hugo.Extended", "https://formulae.brew.sh/formula/hugo", "https://packages.debian.org/search?keywords=hugo&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=hugo", "https://archlinux.org/packages/?q=hugo", "https://pkgs.alpinelinux.org/packages?name=hugo"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "hugo-winget"
+platform = "windows"
+backend = "winget"
+package_id = "Hugo.Hugo.Extended"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=Hugo.Hugo.Extended"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "hugo-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "hugo"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/hugo"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "hugo-apt"
+platform = "debian"
+backend = "apt"
+package_id = "hugo"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=hugo&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "hugo-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "hugo"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=hugo"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "hugo-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "hugo"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=hugo"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "hugo-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "hugo"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=hugo"
+reviewed_at = "2026-07-13"

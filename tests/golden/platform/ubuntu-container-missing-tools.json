@@ -1,0 +1,16 @@
+{
+  "os": "linux",
+  "os_version": "24.04",
+  "distribution": "ubuntu",
+  "distribution_version": "24.04",
+  "distribution_like": ["debian"],
+  "architecture": "x86_64",
+  "translated": false,
+  "libc": "glibc",
+  "backends": [],
+  "interactive": false,
+  "elevation_available": false,
+  "supported_scopes": ["user"],
+  "offline": true,
+  "restrictions": ["container", "missing_elevation", "no_compatible_backend"]
+}

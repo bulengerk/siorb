@@ -1,0 +1,70 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "spotify"
+name = "Spotify"
+description = "Desktop client for the Spotify music streaming service."
+aliases = ["spotify-client"]
+deprecated_aliases = []
+search_terms = ["spotify", "media"]
+homepage = "https://www.spotify.com/download/"
+upstream = "spotify.com"
+license = "LicenseRef-Spotify"
+categories = ["media"]
+capabilities = ["media-workflow"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Spotify.Spotify", "https://formulae.brew.sh/cask/spotify", "https://flathub.org/apps/com.spotify.Client"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "spotify-winget"
+platform = "windows"
+backend = "winget"
+package_id = "Spotify.Spotify"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=Spotify.Spotify"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "spotify-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "spotify"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/spotify"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "spotify-flatpak"
+platform = "linux"
+backend = "flatpak"
+package_id = "com.spotify.Client"
+trust = "sandboxed"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 30
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://flathub.org/apps/com.spotify.Client"
+reviewed_at = "2026-07-13"

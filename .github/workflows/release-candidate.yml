@@ -1,0 +1,123 @@
+name: Unsigned release candidate
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-candidate-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_INCREMENTAL: "0"
+  CARGO_PROFILE_RELEASE_DEBUG: "1"
+  CARGO_PROFILE_RELEASE_STRIP: none
+  SOURCE_DATE_EPOCH: "0"
+
+jobs:
+  repository-release-rehearsal:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Install pinned Rust toolchain
+        run: |
+          rustup toolchain install 1.85.0 --profile minimal
+          rustup default 1.85.0
+      - name: Run complete secret-free release rehearsal
+        run: cargo xtask release-local
+      - name: Upload rehearsal evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-rehearsal-${{ github.sha }}-UNSIGNED
+          path: dist
+          if-no-files-found: error
+          retention-days: 14
+
+  native-archives:
+    name: ${{ matrix.target }} unsigned candidate
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-24.04
+            target: x86_64-unknown-linux-gnu
+            binary: target/x86_64-unknown-linux-gnu/release/siorb
+          - runner: ubuntu-24.04-arm
+            target: aarch64-unknown-linux-gnu
+            binary: target/aarch64-unknown-linux-gnu/release/siorb
+          - runner: ubuntu-24.04
+            target: x86_64-unknown-linux-musl
+            binary: target/x86_64-unknown-linux-musl/release/siorb
+          - runner: ubuntu-24.04-arm
+            target: aarch64-unknown-linux-musl
+            binary: target/aarch64-unknown-linux-musl/release/siorb
+          - runner: windows-2022
+            target: x86_64-pc-windows-msvc
+            binary: target/x86_64-pc-windows-msvc/release/siorb.exe
+          - runner: windows-11-arm
+            target: aarch64-pc-windows-msvc
+            binary: target/aarch64-pc-windows-msvc/release/siorb.exe
+          - runner: macos-15-intel
+            target: x86_64-apple-darwin
+            binary: target/x86_64-apple-darwin/release/siorb
+          - runner: macos-15
+            target: aarch64-apple-darwin
+            binary: target/aarch64-apple-darwin/release/siorb
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Install pinned Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.13"
+      - name: Install pinned Rust toolchain
+        shell: bash
+        run: |
+          rustup toolchain install 1.85.0 --profile minimal
+          rustup default 1.85.0
+          rustup target add "${{ matrix.target }}"
+      - name: Read workspace version
+        id: version
+        shell: bash
+        run: |
+          version=$(python -c 'import tomllib; print(tomllib.load(open("Cargo.toml", "rb"))["workspace"]["package"]["version"])')
+          echo "version=$version" >>"$GITHUB_OUTPUT"
+      - name: Build native release binary
+        if: ${{ !contains(matrix.target, 'linux-musl') }}
+        shell: bash
+        run: cargo build --locked --release --target "${{ matrix.target }}" -p siorb-cli
+      - name: Install linker and build native musl release binary
+        if: contains(matrix.target, 'linux-musl')
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes musl-tools
+          cargo build --locked --release --target "${{ matrix.target }}" -p siorb-cli
+      - name: Smoke-test native binary
+        shell: bash
+        run: '"${{ matrix.binary }}" version'
+      - name: Create deterministic archive
+        shell: bash
+        run: |
+          python scripts/release/package_archive.py \
+            --binary "${{ matrix.binary }}" \
+            --target "${{ matrix.target }}" \
+            --version "${{ steps.version.outputs.version }}" \
+            --output-dir dist
+      - name: Upload unsigned native archive
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: native-${{ matrix.target }}-${{ github.sha }}-UNSIGNED
+          path: dist
+          if-no-files-found: error
+          retention-days: 14

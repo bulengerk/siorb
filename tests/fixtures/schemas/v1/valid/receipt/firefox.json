@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "logical_id": "firefox",
+  "native_id": "firefox",
+  "backend": "apt",
+  "source_id": "firefox-apt",
+  "requested_version": null,
+  "observed_version": "127.0+build2",
+  "scope": "system",
+  "channel": "stable",
+  "architecture": "x86_64",
+  "catalog_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "policy_fingerprint": null,
+  "installed_at_unix": 1783969200,
+  "verification": {
+    "status": "verified",
+    "checked_at_unix": 1783969203,
+    "reason": "backend-installed-state"
+  },
+  "owned_files": [],
+  "transaction_id": "3d00d246-e15f-4ddb-91d7-63db369278a0",
+  "origin": "installed"
+}

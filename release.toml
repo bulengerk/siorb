@@ -1,0 +1,15 @@
+# Shared cargo-release policy. Publishing binaries and platform installers is
+# handled by the protected release workflow, not by publishing workspace crates.
+allow-branch = ["main"]
+consolidate-commits = false
+enable-all-features = true
+publish = false
+push = true
+shared-version = true
+sign-commit = false
+sign-tag = false
+tag = true
+tag-name = "v{{version}}"
+verify = true
+pre-release-commit-message = "chore(release): prepare {{version}}"
+post-release-commit-message = "chore(release): start {{next_version}}"

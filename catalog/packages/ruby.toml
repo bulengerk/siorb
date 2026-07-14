@@ -1,0 +1,115 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "ruby"
+name = "Ruby"
+description = "Dynamic programming language focused on developer productivity."
+aliases = ["ruby-lang"]
+deprecated_aliases = []
+search_terms = ["ruby", "runtimes"]
+homepage = "https://www.ruby-lang.org/"
+upstream = "ruby-lang.org"
+license = "Ruby"
+categories = ["runtimes"]
+capabilities = ["language-runtime"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=RubyInstallerTeam.RubyWithDevKit.3.4", "https://formulae.brew.sh/formula/ruby", "https://packages.debian.org/search?keywords=ruby-full&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=ruby", "https://archlinux.org/packages/?q=ruby", "https://pkgs.alpinelinux.org/packages?name=ruby"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "ruby-winget"
+platform = "windows"
+backend = "winget"
+package_id = "RubyInstallerTeam.RubyWithDevKit.3.4"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=RubyInstallerTeam.RubyWithDevKit.3.4"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "ruby-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "ruby"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/ruby"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "ruby-apt"
+platform = "debian"
+backend = "apt"
+package_id = "ruby-full"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=ruby-full&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "ruby-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "ruby"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=ruby"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "ruby-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "ruby"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=ruby"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "ruby-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "ruby"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=ruby"
+reviewed_at = "2026-07-13"

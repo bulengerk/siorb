@@ -1,0 +1,1 @@
+{"executable":"/usr/bin/apt-get","arguments":["install","--yes","--","firefox"],"redacted_arguments":["install","--yes","--","firefox"],"timeout_seconds":1800,"max_output_bytes":1048576,"requires_privilege":true,"network":true,"environment":[["LANG","C.UTF-8"]]}

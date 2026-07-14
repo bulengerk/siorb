@@ -1,0 +1,84 @@
+{
+  "signed": {
+    "_type": "root",
+    "spec_version": "1.0.31",
+    "version": 1,
+    "expires": "2035-01-01T00:00:00Z",
+    "consistent_snapshot": true,
+    "keys": {
+      "74c181c7ad8a0855d4b55e44d2ba87aabdddb196832571f15f92fece332e4916": {
+        "keytype": "ed25519",
+        "scheme": "ed25519",
+        "keyval": {
+          "public": "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a"
+        }
+      },
+      "eaf1e23f6c823132f437a2eaa299a7950f7386631deff273db195bbd26209e2b": {
+        "keytype": "ed25519",
+        "scheme": "ed25519",
+        "keyval": {
+          "public": "3d4017c3e843895a92b70aa74d1b7ebc9c982ccf2ec4968cc0cd55f12af4660c"
+        }
+      },
+      "e45b8d1fab21a7a7550adbca559eade41e36a398f14a577f8766ec32bf237101": {
+        "keytype": "ed25519",
+        "scheme": "ed25519",
+        "keyval": {
+          "public": "fc51cd8e6218a1a38da47ed00230f0580816ed13ba3303ac5deb911548908025"
+        }
+      },
+      "5e96befc607ef841c37eb7394ab3dd641fbffb1c86b08675facab7aec3412194": {
+        "keytype": "ed25519",
+        "scheme": "ed25519",
+        "keyval": {
+          "public": "278117fc144c72340f67d0f2316e8386ceffbf2b2428c9c51fef7c597f1d426e"
+        }
+      },
+      "aeb9cf505ef05f85c9becc96f93e422299b7f95e7e81e671cfb528f384a0ec7f": {
+        "keytype": "ed25519",
+        "scheme": "ed25519",
+        "keyval": {
+          "public": "ec172b93ad5e563bf4932c70e1245034c35467ef2efd4d64ebf819683467e2bf"
+        }
+      }
+    },
+    "roles": {
+      "root": {
+        "keyids": [
+          "74c181c7ad8a0855d4b55e44d2ba87aabdddb196832571f15f92fece332e4916",
+          "eaf1e23f6c823132f437a2eaa299a7950f7386631deff273db195bbd26209e2b"
+        ],
+        "threshold": 2
+      },
+      "targets": {
+        "keyids": [
+          "e45b8d1fab21a7a7550adbca559eade41e36a398f14a577f8766ec32bf237101"
+        ],
+        "threshold": 1
+      },
+      "snapshot": {
+        "keyids": [
+          "5e96befc607ef841c37eb7394ab3dd641fbffb1c86b08675facab7aec3412194"
+        ],
+        "threshold": 1
+      },
+      "timestamp": {
+        "keyids": [
+          "aeb9cf505ef05f85c9becc96f93e422299b7f95e7e81e671cfb528f384a0ec7f"
+        ],
+        "threshold": 1
+      }
+    },
+    "custom": {
+      "catalog": "siorb-community",
+      "environment": "development-fixture",
+      "offline_root": true
+    }
+  },
+  "signatures": [
+    {
+      "keyid": "74c181c7ad8a0855d4b55e44d2ba87aabdddb196832571f15f92fece332e4916",
+      "sig": "eb1907c8d64a776802b05d7e44fe8c1376aaee39d1e97b2e88a08b0d367923668a0132fa247fb8062fd8ac1544bb42ecfd357e8a9d588db6de2beeaaa706a70f"
+    }
+  ]
+}

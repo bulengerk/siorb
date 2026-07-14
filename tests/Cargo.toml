@@ -1,0 +1,70 @@
+[package]
+name = "siorb-contract-tests"
+version = "0.0.0"
+publish = false
+edition = "2024"
+rust-version = "1.85"
+
+[dependencies]
+clap = { version = "4.5", features = ["derive"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+sha2 = "0.10"
+siorb-backends = { path = "../crates/siorb-backends" }
+siorb-bundle = { path = "../crates/siorb-bundle" }
+siorb-catalog = { path = "../crates/siorb-catalog" }
+siorb-cli = { path = "../crates/siorb-cli" }
+siorb-core = { path = "../crates/siorb-core" }
+siorb-executor = { path = "../crates/siorb-executor" }
+siorb-platform = { path = "../crates/siorb-platform" }
+siorb-planner = { path = "../crates/siorb-planner" }
+siorb-policy = { path = "../crates/siorb-policy" }
+siorb-resolver = { path = "../crates/siorb-resolver" }
+siorb-state = { path = "../crates/siorb-state" }
+siorb-update = { path = "../crates/siorb-update" }
+tar = "0.4"
+tempfile = "3.20"
+zip = { version = "4.0", default-features = false, features = ["deflate"] }
+
+[workspace]
+members = ["."]
+
+[[bin]]
+name = "siorb-test-driver"
+path = "src/bin/siorb-test-driver.rs"
+
+[[test]]
+name = "backend_contract"
+path = "integration/backend_contract.rs"
+
+[[test]]
+name = "backend_output_security"
+path = "integration/backend_output_security.rs"
+
+[[test]]
+name = "json_contract"
+path = "integration/json_contract.rs"
+
+[[test]]
+name = "platform_fixtures"
+path = "integration/platform_fixtures.rs"
+
+[[test]]
+name = "state_contract"
+path = "integration/state_contract.rs"
+
+[[test]]
+name = "security_regressions"
+path = "security/security_regressions.rs"
+
+[[test]]
+name = "update_security"
+path = "security/update_security.rs"
+
+[[test]]
+name = "archive_security"
+path = "security/archive_security.rs"
+
+[[test]]
+name = "e2e_scenarios"
+path = "end-to-end/scenario_contract.rs"

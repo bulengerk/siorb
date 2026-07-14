@@ -1,0 +1,50 @@
+name: Catalog mapping health
+
+on:
+  schedule:
+    - cron: "41 3 * * 3"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  health:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Install pinned Rust toolchain
+        run: |
+          rustup toolchain install 1.85.0 --profile minimal
+          rustup default 1.85.0
+      - name: Validate catalog before probing evidence
+        run: cargo xtask test-catalog
+      - name: Probe mapping review dates and evidence
+        id: health
+        run: |
+          set +e
+          python3 scripts/catalog/catalog_health.py \
+            --catalog-dir catalog/packages \
+            --max-age-days 180 \
+            --check-links \
+            --output catalog-health.json
+          code=$?
+          echo "code=$code" >>"$GITHUB_OUTPUT"
+          exit 0
+      - name: Upload machine-readable health report
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: catalog-health-${{ github.run_id }}
+          path: catalog-health.json
+          if-no-files-found: error
+          retention-days: 30
+      - name: Fail on stale or unreachable evidence
+        if: steps.health.outputs.code != '0'
+        run: |
+          echo "Catalog health findings are recorded in the uploaded JSON artifact." >&2
+          exit 1

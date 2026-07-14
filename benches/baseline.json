@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.1",
+  "reference_runner": "GitHub Actions ubuntu-24.04 x86_64, Rust 1.85.0, release profile",
+  "workload": {
+    "catalog_multiplier": 10,
+    "warmup_iterations": 50,
+    "search_iterations": 2000,
+    "resolver_iterations": 1000,
+    "plan_iterations": 500,
+    "startup_warmups": 3,
+    "startup_samples": 20
+  },
+  "thresholds": {
+    "search_p95_ns": 150000000,
+    "resolver_p95_ns": 50000000,
+    "plan_p95_ns": 250000000,
+    "startup_p95_ms": 100,
+    "peak_rss_bytes_10x_catalog": 268435456
+  }
+}

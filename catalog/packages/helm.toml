@@ -1,0 +1,130 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "helm"
+name = "Helm"
+description = "Package manager for deploying applications to Kubernetes."
+aliases = ["helm3"]
+deprecated_aliases = []
+search_terms = ["helm", "containers"]
+homepage = "https://helm.sh/"
+upstream = "helm.sh"
+license = "Apache-2.0"
+categories = ["containers"]
+capabilities = ["container-workflow"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Helm.Helm", "https://formulae.brew.sh/formula/helm", "https://packages.debian.org/search?keywords=helm&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=helm", "https://archlinux.org/packages/?q=helm", "https://software.opensuse.org/search?baseproject=ALL&q=helm", "https://pkgs.alpinelinux.org/packages?name=helm"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "helm-winget"
+platform = "windows"
+backend = "winget"
+package_id = "Helm.Helm"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=Helm.Helm"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "helm-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "helm"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/helm"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "helm-apt"
+platform = "debian"
+backend = "apt"
+package_id = "helm"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=helm&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "helm-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "helm"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=helm"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "helm-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "helm"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=helm"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "helm-zypper"
+platform = "opensuse"
+backend = "zypper"
+package_id = "helm"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://software.opensuse.org/search?baseproject=ALL&q=helm"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "helm-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "helm"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=helm"
+reviewed_at = "2026-07-13"

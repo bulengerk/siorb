@@ -1,0 +1,115 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "blender"
+name = "Blender"
+description = "Open-source 3D creation suite for modeling, animation, and rendering."
+aliases = ["blender3d"]
+deprecated_aliases = []
+search_terms = ["blender", "media"]
+homepage = "https://www.blender.org/"
+upstream = "blender.org"
+license = "GPL-3.0-or-later"
+categories = ["media"]
+capabilities = ["media-workflow"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=BlenderFoundation.Blender", "https://formulae.brew.sh/cask/blender", "https://packages.debian.org/search?keywords=blender&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=blender", "https://archlinux.org/packages/?q=blender", "https://flathub.org/apps/org.blender.Blender"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "blender-winget"
+platform = "windows"
+backend = "winget"
+package_id = "BlenderFoundation.Blender"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=BlenderFoundation.Blender"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "blender-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "blender"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/blender"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "blender-apt"
+platform = "debian"
+backend = "apt"
+package_id = "blender"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=blender&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "blender-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "blender"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=blender"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "blender-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "blender"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=blender"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "blender-flatpak"
+platform = "linux"
+backend = "flatpak"
+package_id = "org.blender.Blender"
+trust = "sandboxed"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 30
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://flathub.org/apps/org.blender.Blender"
+reviewed_at = "2026-07-13"

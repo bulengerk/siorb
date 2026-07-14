@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.siorb.dev/v1/execution-plan.schema.json",
+  "title": "Siorb immutable execution plan v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "plan_id",
+    "operation",
+    "requested",
+    "catalog_fingerprint",
+    "platform_fingerprint",
+    "policy_fingerprint",
+    "created_at_unix",
+    "reproducibility",
+    "packages",
+    "steps",
+    "warnings",
+    "conflicts",
+    "recovery_guidance",
+    "revalidation"
+  ],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "plan_id": { "type": "string", "pattern": "^plan-[0-9a-f]{24}$" },
+    "operation": {
+      "type": "string",
+      "enum": ["install", "remove", "upgrade", "repair", "adopt", "reconcile", "verify"]
+    },
+    "requested": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1
+    },
+    "catalog_fingerprint": { "$ref": "common.schema.json#/$defs/sha256" },
+    "platform_fingerprint": { "$ref": "common.schema.json#/$defs/sha256" },
+    "policy_fingerprint": {
+      "oneOf": [
+        { "$ref": "common.schema.json#/$defs/sha256" },
+        { "type": "null" }
+      ]
+    },
+    "created_at_unix": { "type": "integer", "minimum": 0 },
+    "reproducibility": {
+      "type": "string",
+      "enum": ["fully_reproducible", "best_effort", "unresolved"]
+    },
+    "packages": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/planned_package" }
+    },
+    "steps": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/plan_step" }
+    },
+    "warnings": { "$ref": "#/$defs/string_array" },
+    "conflicts": { "$ref": "#/$defs/string_array" },
+    "recovery_guidance": { "$ref": "#/$defs/string_array" },
+    "revalidation": { "$ref": "#/$defs/revalidation_guard" }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "string_array": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "planned_package": {
+      "type": "object",
+      "required": ["requested", "logical_id", "source_id", "backend", "native_id", "current_version", "desired_version", "scope", "channel", "architecture"],
+      "properties": {
+        "requested": { "type": "string" },
+        "logical_id": { "type": "string" },
+        "source_id": { "type": "string" },
+        "backend": { "type": "string" },
+        "native_id": { "type": "string" },
+        "current_version": { "type": ["string", "null"] },
+        "desired_version": { "type": ["string", "null"] },
+        "scope": { "$ref": "common.schema.json#/$defs/scope" },
+        "channel": { "type": "string" },
+        "architecture": { "$ref": "common.schema.json#/$defs/architecture" }
+      },
+      "additionalProperties": false
+    },
+    "plan_step": {
+      "type": "object",
+      "required": ["id", "package", "kind", "description", "command", "network_endpoints", "expected_download_bytes", "verification_requirements", "requires_privilege", "agreements", "destructive", "rollback_hint"],
+      "properties": {
+        "id": { "type": "string" },
+        "package": { "type": "string" },
+        "kind": { "type": "string", "enum": ["backend", "download", "verify", "extract", "installer", "receipt", "no_change"] },
+        "description": { "type": "string" },
+        "command": {
+          "oneOf": [
+            { "$ref": "#/$defs/command_spec" },
+            { "type": "null" }
+          ]
+        },
+        "artifact": {
+          "oneOf": [
+            { "$ref": "#/$defs/artifact_plan" },
+            { "type": "null" }
+          ]
+        },
+        "network_endpoints": { "$ref": "#/$defs/string_array" },
+        "expected_download_bytes": { "type": ["integer", "null"], "minimum": 0 },
+        "verification_requirements": { "$ref": "#/$defs/string_array" },
+        "requires_privilege": { "type": "boolean" },
+        "agreements": { "$ref": "#/$defs/string_array" },
+        "destructive": { "type": "boolean" },
+        "rollback_hint": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "artifact_plan": {
+      "type": "object",
+      "required": ["operation", "url", "sha256", "signer", "content_type", "max_bytes", "kind", "format", "archive_format", "payload_path", "strip_components", "install_arguments", "allowed_redirect_hosts"],
+      "properties": {
+        "operation": {
+          "type": "string",
+          "enum": ["install", "remove", "upgrade", "repair", "adopt", "reconcile", "verify"]
+        },
+        "url": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "sha256": { "$ref": "common.schema.json#/$defs/sha256" },
+        "signer": { "type": ["string", "null"] },
+        "content_type": { "type": "string", "pattern": "^[^/\\s]+/[^/\\s]+$" },
+        "max_bytes": { "type": "integer", "minimum": 1, "maximum": 17179869184 },
+        "kind": { "type": "string", "enum": ["portable-archive", "portable-executable", "native-installer"] },
+        "format": { "type": "string", "enum": ["zip", "tar", "tar.gz", "msi", "msix", "exe", "pkg", "dmg", "deb", "rpm", "appimage"] },
+        "archive_format": {
+          "oneOf": [
+            { "type": "string", "enum": ["zip", "tar", "tar.gz"] },
+            { "type": "null" }
+          ]
+        },
+        "payload_path": { "type": ["string", "null"], "minLength": 1, "maxLength": 512 },
+        "strip_components": { "type": "integer", "minimum": 0, "maximum": 16 },
+        "install_arguments": {
+          "type": "array",
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": { "enum": ["/S", "/silent", "/verysilent", "/quiet", "/norestart", "--silent", "--quiet"] }
+        },
+        "allowed_redirect_hosts": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 253,
+            "pattern": "^[A-Za-z0-9.-]+$"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "command_spec": {
+      "type": "object",
+      "required": ["executable", "arguments", "redacted_arguments", "timeout_seconds", "max_output_bytes", "requires_privilege", "network", "environment"],
+      "properties": {
+        "executable": { "type": "string" },
+        "arguments": { "$ref": "#/$defs/string_array" },
+        "redacted_arguments": { "$ref": "#/$defs/string_array" },
+        "timeout_seconds": { "type": "integer", "minimum": 1, "maximum": 3600 },
+        "max_output_bytes": { "type": "integer", "minimum": 1024, "maximum": 16777216 },
+        "requires_privilege": { "type": "boolean" },
+        "network": { "type": "boolean" },
+        "environment": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "prefixItems": [{ "type": "string" }, { "type": "string" }],
+            "items": false,
+            "minItems": 2,
+            "maxItems": 2
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "revalidation_guard": {
+      "type": "object",
+      "required": ["platform_fingerprint", "catalog_fingerprint", "policy_fingerprint", "installed_fingerprint"],
+      "properties": {
+        "platform_fingerprint": { "$ref": "common.schema.json#/$defs/sha256" },
+        "catalog_fingerprint": { "$ref": "common.schema.json#/$defs/sha256" },
+        "policy_fingerprint": { "$ref": "common.schema.json#/$defs/sha256" },
+        "installed_fingerprint": { "$ref": "common.schema.json#/$defs/sha256" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

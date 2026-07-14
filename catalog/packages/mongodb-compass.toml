@@ -1,0 +1,70 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "mongodb-compass"
+name = "MongoDB Compass"
+description = "Graphical user interface for MongoDB databases."
+aliases = ["mongo-compass"]
+deprecated_aliases = []
+search_terms = ["mongodb compass", "databases"]
+homepage = "https://www.mongodb.com/products/tools/compass"
+upstream = "mongodb.com"
+license = "SSPL-1.0"
+categories = ["databases"]
+capabilities = ["data-storage"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=MongoDB.Compass.Full", "https://formulae.brew.sh/cask/mongodb-compass", "https://flathub.org/apps/com.mongodb.Compass"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "mongodb-compass-winget"
+platform = "windows"
+backend = "winget"
+package_id = "MongoDB.Compass.Full"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=MongoDB.Compass.Full"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "mongodb-compass-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "mongodb-compass"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/mongodb-compass"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "mongodb-compass-flatpak"
+platform = "linux"
+backend = "flatpak"
+package_id = "com.mongodb.Compass"
+trust = "sandboxed"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 30
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://flathub.org/apps/com.mongodb.Compass"
+reviewed_at = "2026-07-13"

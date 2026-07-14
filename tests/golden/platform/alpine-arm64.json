@@ -1,0 +1,24 @@
+{
+  "os": "linux",
+  "os_version": "3.21.3",
+  "distribution": "alpine",
+  "distribution_version": "3.21.3",
+  "distribution_like": [],
+  "architecture": "arm64",
+  "translated": false,
+  "libc": "musl",
+  "backends": [
+    {
+      "id": "apk",
+      "executable": "fixture-bin/apk",
+      "version": "2.14.6",
+      "available": true,
+      "capabilities": ["query", "install", "remove", "upgrade", "repair", "verify", "non_interactive"]
+    }
+  ],
+  "interactive": false,
+  "elevation_available": true,
+  "supported_scopes": ["user", "system"],
+  "offline": true,
+  "restrictions": []
+}

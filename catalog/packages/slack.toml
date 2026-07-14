@@ -1,0 +1,70 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "slack"
+name = "Slack"
+description = "Team messaging and collaboration client."
+aliases = ["slack-desktop"]
+deprecated_aliases = []
+search_terms = ["slack", "communication"]
+homepage = "https://slack.com/"
+upstream = "slack.com"
+license = "LicenseRef-Slack"
+categories = ["communication"]
+capabilities = ["communication"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=SlackTechnologies.Slack", "https://formulae.brew.sh/cask/slack", "https://flathub.org/apps/com.slack.Slack"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "slack-winget"
+platform = "windows"
+backend = "winget"
+package_id = "SlackTechnologies.Slack"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=SlackTechnologies.Slack"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "slack-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "slack"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/slack"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "slack-flatpak"
+platform = "linux"
+backend = "flatpak"
+package_id = "com.slack.Slack"
+trust = "sandboxed"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 30
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://flathub.org/apps/com.slack.Slack"
+reviewed_at = "2026-07-13"

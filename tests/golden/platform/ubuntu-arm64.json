@@ -1,0 +1,24 @@
+{
+  "os": "linux",
+  "os_version": "24.04",
+  "distribution": "ubuntu",
+  "distribution_version": "24.04",
+  "distribution_like": ["debian"],
+  "architecture": "arm64",
+  "translated": false,
+  "libc": "glibc",
+  "backends": [
+    {
+      "id": "apt",
+      "executable": "fixture-bin/apt-get",
+      "version": "2.7.14",
+      "available": true,
+      "capabilities": ["query", "install", "remove", "upgrade", "repair", "verify", "non_interactive"]
+    }
+  ],
+  "interactive": false,
+  "elevation_available": true,
+  "supported_scopes": ["user", "system"],
+  "offline": true,
+  "restrictions": []
+}

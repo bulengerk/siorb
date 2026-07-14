@@ -1,0 +1,114 @@
+name: Catalog site
+
+on:
+  workflow_run:
+    workflows: ["Publish release"]
+    types: [completed]
+  push:
+    branches: [main]
+    paths:
+      - "catalog/**"
+      - "docs/**"
+      - "website/**"
+      - "crates/siorb-catalog/**"
+      - "crates/siorb-xtask/**"
+      - "scripts/release/extract_catalog_snapshot.py"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Install pinned Rust toolchain
+        run: |
+          rustup toolchain install 1.85.0 --profile minimal
+          rustup default 1.85.0
+      - name: Validate catalog and documentation
+        run: |
+          cargo xtask test-catalog
+          cargo xtask test-docs
+      - name: Verify committed repository-neutral static site
+        run: cargo xtask build-site
+      - name: Require committed generated output
+        run: python3 scripts/check_clean_tree.py website
+      - name: Generate deployment-specific static site
+        env:
+          CONFIGURED_SITE_URL: ${{ vars.SIORB_SITE_URL }}
+        run: |
+          set -euo pipefail
+          repository_name="${GITHUB_REPOSITORY#*/}"
+          site_url="$CONFIGURED_SITE_URL"
+          if [[ -z "$site_url" ]]; then
+            if [[ "$repository_name" == "${GITHUB_REPOSITORY_OWNER}.github.io" ]]; then
+              site_url="https://$GITHUB_REPOSITORY_OWNER.github.io/"
+            else
+              site_url="https://$GITHUB_REPOSITORY_OWNER.github.io/$repository_name/"
+            fi
+          fi
+          SIORB_SITE_URL="$site_url" \
+          SIORB_REPOSITORY_URL="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" \
+            cargo xtask build-site
+      - name: Stage latest stable signed catalog mirror
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          error_log="$RUNNER_TEMP/latest-release.error"
+          if ! release_tag="$(gh api "repos/$GITHUB_REPOSITORY/releases/latest" --jq .tag_name 2>"$error_log")"; then
+            if grep -Fq "HTTP 404" "$error_log"; then
+              echo "No stable release exists; publishing the catalog site without a runtime mirror."
+              exit 0
+            fi
+            cat "$error_log" >&2
+            exit 1
+          fi
+          download_dir="$RUNNER_TEMP/siorb-catalog-release"
+          mkdir -p "$download_dir"
+          gh release download "$release_tag" \
+            --repo "$GITHUB_REPOSITORY" \
+            --pattern 'siorb-*-catalog.zip' \
+            --dir "$download_dir"
+          mapfile -t archives < <(find "$download_dir" -maxdepth 1 -type f -name 'siorb-*-catalog.zip' -print)
+          if [[ "${#archives[@]}" -ne 1 ]]; then
+            echo "Expected exactly one catalog snapshot for $release_tag, found ${#archives[@]}." >&2
+            exit 1
+          fi
+          python3 scripts/release/extract_catalog_snapshot.py \
+            --archive "${archives[0]}" \
+            --output website/public/catalog
+          SIORB_STATE_DIR="$RUNNER_TEMP/catalog-verifier-state" \
+            cargo run --locked -p siorb-cli -- catalog verify website/public/catalog
+      - name: Configure Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0
+        with:
+          path: website/public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy immutable Pages artifact
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5

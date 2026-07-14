@@ -1,0 +1,145 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "firefox"
+name = "Mozilla Firefox"
+description = "Privacy-focused open-source web browser from Mozilla."
+aliases = ["mozilla-firefox", "ff"]
+deprecated_aliases = []
+search_terms = ["mozilla firefox", "browsers"]
+homepage = "https://www.mozilla.org/firefox/"
+upstream = "mozilla.org"
+license = "MPL-2.0"
+categories = ["browsers"]
+capabilities = ["web-browser"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Mozilla.Firefox", "https://formulae.brew.sh/cask/firefox", "https://packages.debian.org/search?keywords=firefox-esr&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=firefox", "https://archlinux.org/packages/?q=firefox", "https://software.opensuse.org/search?baseproject=ALL&q=MozillaFirefox", "https://pkgs.alpinelinux.org/packages?name=firefox", "https://flathub.org/apps/org.mozilla.firefox"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "firefox-winget"
+platform = "windows"
+backend = "winget"
+package_id = "Mozilla.Firefox"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=Mozilla.Firefox"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "firefox-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "firefox"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/firefox"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "firefox-apt"
+platform = "debian"
+backend = "apt"
+package_id = "firefox-esr"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=firefox-esr&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "firefox-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "firefox"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=firefox"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "firefox-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "firefox"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=firefox"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "firefox-zypper"
+platform = "opensuse"
+backend = "zypper"
+package_id = "MozillaFirefox"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://software.opensuse.org/search?baseproject=ALL&q=MozillaFirefox"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "firefox-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "firefox"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=firefox"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "firefox-flatpak"
+platform = "linux"
+backend = "flatpak"
+package_id = "org.mozilla.firefox"
+trust = "sandboxed"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 30
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://flathub.org/apps/org.mozilla.firefox"
+reviewed_at = "2026-07-13"

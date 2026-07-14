@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "intent_fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "profile": null,
+  "policy_references": [],
+  "catalog_version": 1,
+  "catalog_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "policy_fingerprint": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "platform_fingerprint": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "platform_os": "linux",
+  "platform_architecture": "x86_64",
+  "packages": [
+    {
+      "logical_id": "firefox",
+      "desired_state": "present",
+      "source_id": "firefox-apt",
+      "backend": "apt",
+      "native_id": "firefox",
+      "version": null,
+      "scope": "system",
+      "channel": "stable",
+      "explanation_fingerprint": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    }
+  ]
+}

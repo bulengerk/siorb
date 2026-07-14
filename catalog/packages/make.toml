@@ -1,0 +1,115 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "make"
+name = "GNU Make"
+description = "Build automation tool driven by makefiles."
+aliases = ["gmake", "gnu-make"]
+deprecated_aliases = []
+search_terms = ["gnu make", "developer tools"]
+homepage = "https://www.gnu.org/software/make/"
+upstream = "gnu.org"
+license = "GPL-3.0-or-later"
+categories = ["developer-tools"]
+capabilities = ["software-development"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=GnuWin32.Make", "https://formulae.brew.sh/formula/make", "https://packages.debian.org/search?keywords=make&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=make", "https://archlinux.org/packages/?q=make", "https://pkgs.alpinelinux.org/packages?name=make"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "make-winget"
+platform = "windows"
+backend = "winget"
+package_id = "GnuWin32.Make"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=GnuWin32.Make"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "make-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "make"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/make"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "make-apt"
+platform = "debian"
+backend = "apt"
+package_id = "make"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=make&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "make-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "make"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=make"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "make-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "make"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=make"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "make-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "make"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=make"
+reviewed_at = "2026-07-13"

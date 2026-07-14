@@ -1,0 +1,70 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "telegram"
+name = "Telegram Desktop"
+description = "Desktop client for Telegram messaging."
+aliases = ["telegram-desktop"]
+deprecated_aliases = []
+search_terms = ["telegram desktop", "communication"]
+homepage = "https://desktop.telegram.org/"
+upstream = "desktop.telegram.org"
+license = "GPL-3.0-only"
+categories = ["communication"]
+capabilities = ["communication"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Telegram.TelegramDesktop", "https://formulae.brew.sh/cask/telegram", "https://flathub.org/apps/org.telegram.desktop"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "telegram-winget"
+platform = "windows"
+backend = "winget"
+package_id = "Telegram.TelegramDesktop"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=Telegram.TelegramDesktop"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "telegram-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "telegram"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/telegram"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "telegram-flatpak"
+platform = "linux"
+backend = "flatpak"
+package_id = "org.telegram.desktop"
+trust = "sandboxed"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 30
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://flathub.org/apps/org.telegram.desktop"
+reviewed_at = "2026-07-13"

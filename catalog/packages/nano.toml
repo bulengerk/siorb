@@ -1,0 +1,115 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "nano"
+name = "GNU nano"
+description = "Small terminal text editor with discoverable keyboard shortcuts."
+aliases = ["gnu-nano"]
+deprecated_aliases = []
+search_terms = ["gnu nano", "editors"]
+homepage = "https://www.nano-editor.org/"
+upstream = "nano-editor.org"
+license = "GPL-3.0-or-later"
+categories = ["editors"]
+capabilities = ["text-editing"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=GNU.Nano", "https://formulae.brew.sh/formula/nano", "https://packages.debian.org/search?keywords=nano&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=nano", "https://archlinux.org/packages/?q=nano", "https://pkgs.alpinelinux.org/packages?name=nano"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "nano-winget"
+platform = "windows"
+backend = "winget"
+package_id = "GNU.Nano"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=GNU.Nano"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "nano-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "nano"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/nano"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "nano-apt"
+platform = "debian"
+backend = "apt"
+package_id = "nano"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=nano&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "nano-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "nano"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=nano"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "nano-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "nano"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=nano"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "nano-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "nano"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=nano"
+reviewed_at = "2026-07-13"

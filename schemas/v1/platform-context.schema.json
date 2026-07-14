@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.siorb.dev/v1/platform-context.schema.json",
+  "title": "Siorb normalized platform context v1",
+  "$ref": "common.schema.json#/$defs/platform_context"
+}

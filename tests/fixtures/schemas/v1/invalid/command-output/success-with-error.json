@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "command": "install firefox",
+  "status": "success",
+  "correlation_id": "c2c02e8a-54af-42fd-a374-f40044b32711",
+  "platform": {
+    "os": "linux",
+    "os_version": "24.04",
+    "distribution": "ubuntu",
+    "distribution_version": "24.04",
+    "distribution_like": ["debian"],
+    "architecture": "x86_64",
+    "translated": false,
+    "libc": "glibc",
+    "backends": [],
+    "interactive": false,
+    "elevation_available": true,
+    "supported_scopes": ["user"],
+    "offline": true,
+    "restrictions": []
+  },
+  "catalog": {
+    "id": "bundled",
+    "version": 1,
+    "fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "verified": true,
+    "expires_unix": null,
+    "source": "embedded"
+  },
+  "policy": null,
+  "results": {},
+  "warnings": [],
+  "errors": [
+    {
+      "kind": "backend_failure",
+      "reason_code": "backend-exit-nonzero",
+      "message": "The backend failed.",
+      "state_changed": false,
+      "next_action": "Inspect the backend diagnostic."
+    }
+  ]
+}

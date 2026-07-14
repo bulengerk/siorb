@@ -1,0 +1,55 @@
+# Rust build products
+**/target/
+**/*.rs.bk
+*.pdb
+
+# cargo-fuzz products and generated crash artifacts
+/fuzz/target/
+/fuzz/artifacts/
+/fuzz/coverage/
+
+# Benchmark and coverage output
+/criterion/
+/coverage/
+*.profraw
+*.profdata
+lcov.info
+
+# Generated release products (sources and checked-in fixtures remain tracked)
+/dist/
+/release-artifacts/
+*.deb
+*.rpm
+*.msi
+*.dmg
+
+# Local Siorb state, keys, and developer signing material
+/.siorb/
+/.local-catalog/
+/.release/
+*.key
+*.pem
+*.p12
+*.pfx
+!tests/fixtures/**/*.pem
+!tests/fixtures/**/*.key
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Local environment files and logs
+.env
+.env.*
+!.env.example
+*.log
+
+# Python-based contract checker caches
+__pycache__/
+*.py[cod]
+.pytest_cache/

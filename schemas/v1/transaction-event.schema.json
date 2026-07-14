@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.siorb.dev/v1/transaction-event.schema.json",
+  "title": "Siorb append-only transaction event v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "transaction_id",
+    "plan_id",
+    "step_id",
+    "timestamp_unix",
+    "state",
+    "detail"
+  ],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "transaction_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "plan_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "step_id": {
+      "oneOf": [
+        { "type": "string", "minLength": 1, "maxLength": 128 },
+        { "type": "null" }
+      ]
+    },
+    "timestamp_unix": { "type": "integer", "minimum": 0 },
+    "state": {
+      "type": "string",
+      "enum": ["transaction_started", "step_started", "step_completed", "step_failed", "verification_completed", "receipt_committed", "transaction_completed", "transaction_failed", "reconciled"]
+    },
+    "detail": { "type": "string", "maxLength": 16384 }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,21 @@
+[
+  {"name":"winget install is exact and accepts agreements","catalog_backend":"winget","backend_id":"winget","operation":"install","package_id":"Mozilla.Firefox","non_interactive":true,"accept_agreements":true,"expected_arguments":["install","--id","Mozilla.Firefox","--exact","--silent","--accept-package-agreements","--accept-source-agreements"]},
+  {"name":"scoop install","catalog_backend":"scoop","backend_id":"scoop","operation":"install","package_id":"firefox","expected_arguments":["install","firefox"]},
+  {"name":"chocolatey install","catalog_backend":"chocolatey","backend_id":"chocolatey","operation":"install","package_id":"firefox","expected_arguments":["install","--yes","--no-progress","firefox"]},
+  {"name":"homebrew formula install","catalog_backend":"homebrew-formula","backend_id":"brew","operation":"install","package_id":"ripgrep","expected_arguments":["install","ripgrep"]},
+  {"name":"homebrew cask install","catalog_backend":"homebrew-cask","backend_id":"brew","operation":"install","package_id":"firefox","expected_arguments":["install","--cask","firefox"]},
+  {"name":"macports install","catalog_backend":"macports","backend_id":"macports","operation":"install","package_id":"firefox","expected_arguments":["install","firefox"]},
+  {"name":"apt install uses option boundary","catalog_backend":"apt","backend_id":"apt","operation":"install","package_id":"firefox","expected_arguments":["install","--yes","--","firefox"]},
+  {"name":"dnf install uses option boundary","catalog_backend":"dnf","backend_id":"dnf","operation":"install","package_id":"firefox","expected_arguments":["install","-y","--","firefox"]},
+  {"name":"pacman install uses option boundary","catalog_backend":"pacman","backend_id":"pacman","operation":"install","package_id":"firefox","expected_arguments":["-S","--noconfirm","--needed","--","firefox"]},
+  {"name":"flatpak install uses exact remote","catalog_backend":"flatpak","backend_id":"flatpak","operation":"install","package_id":"org.mozilla.firefox","expected_arguments":["install","--noninteractive","--or-update","flathub","org.mozilla.firefox"]},
+  {"name":"snap install","catalog_backend":"snap","backend_id":"snap","operation":"install","package_id":"firefox","expected_arguments":["install","firefox"]},
+  {"name":"zypper install uses option boundary","catalog_backend":"zypper","backend_id":"zypper","operation":"install","package_id":"MozillaFirefox","expected_arguments":["--non-interactive","install","--","MozillaFirefox"]},
+  {"name":"apk install uses option boundary","catalog_backend":"apk","backend_id":"apk","operation":"install","package_id":"firefox","expected_arguments":["add","--","firefox"]},
+  {"name":"apt remove uses option boundary","catalog_backend":"apt","backend_id":"apt","operation":"remove","package_id":"firefox","expected_arguments":["remove","--yes","--","firefox"]},
+  {"name":"apt upgrade is package scoped","catalog_backend":"apt","backend_id":"apt","operation":"upgrade","package_id":"firefox","expected_arguments":["install","--only-upgrade","--yes","--","firefox"]},
+  {"name":"apt verify is non-mutating","catalog_backend":"apt","backend_id":"apt","operation":"verify","package_id":"firefox","expected_arguments":["--just-print","install","firefox"]},
+  {"name":"winget agreements are mandatory in automation","catalog_backend":"winget","backend_id":"winget","operation":"install","package_id":"Mozilla.Firefox","non_interactive":true,"accept_agreements":false,"expected_reason":"backend.agreement.required"},
+  {"name":"native ids cannot inject options","catalog_backend":"apt","backend_id":"apt","operation":"install","package_id":"--help","expected_reason":"backend.package_id.unsafe"},
+  {"name":"missing backend is typed","catalog_backend":"apt","backend_id":"apt","operation":"install","package_id":"firefox","available":false,"expected_reason":"backend.absent"}
+]

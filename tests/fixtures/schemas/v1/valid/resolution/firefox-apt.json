@@ -1,0 +1,94 @@
+{
+  "request": "firefox",
+  "canonical_id": "firefox",
+  "package_name": "Mozilla Firefox",
+  "selected": {
+    "id": "firefox-apt",
+    "platform": "debian",
+    "distributions": ["debian", "ubuntu"],
+    "backend": "apt",
+    "package_id": "firefox",
+    "trust": "native",
+    "scope": "system",
+    "channel": "stable",
+    "architectures": ["x86_64", "arm64"],
+    "priority": 10,
+    "requires_privilege": true,
+    "provenance": "distribution repository",
+    "evidence": "https://packages.debian.org/firefox",
+    "reviewed_at": "2026-07-13",
+    "verification": null
+  },
+  "evaluations": [
+    {
+      "source": {
+        "id": "firefox-apt",
+        "platform": "debian",
+        "distributions": ["debian", "ubuntu"],
+        "backend": "apt",
+        "package_id": "firefox",
+        "trust": "native",
+        "scope": "system",
+        "channel": "stable",
+        "architectures": ["x86_64", "arm64"],
+        "priority": 10,
+        "requires_privilege": true,
+        "provenance": "distribution repository",
+        "evidence": "https://packages.debian.org/firefox",
+        "reviewed_at": "2026-07-13",
+        "verification": null
+      },
+      "accepted": true,
+      "rank": {
+        "explicit_source": 0,
+        "explicit_backend": 0,
+        "policy_preference": 0,
+        "trust": 3,
+        "catalog_priority": 10
+      },
+      "rejections": [],
+      "policy": {
+        "allowed": true,
+        "reasons": [],
+        "confirmation_required": true,
+        "dry_run_required": false
+      }
+    },
+    {
+      "source": {
+        "id": "firefox-flatpak",
+        "platform": "linux",
+        "distributions": [],
+        "backend": "flatpak",
+        "package_id": "org.mozilla.firefox",
+        "trust": "sandboxed",
+        "scope": "user",
+        "channel": "stable",
+        "architectures": ["x86_64", "arm64"],
+        "priority": 20,
+        "requires_privilege": false,
+        "provenance": "flathub",
+        "evidence": "https://flathub.org/apps/org.mozilla.firefox",
+        "reviewed_at": "2026-07-13",
+        "verification": null
+      },
+      "accepted": false,
+      "rank": null,
+      "rejections": [
+        {
+          "code": "candidate.backend.absent",
+          "message": "required backend executable was not detected"
+        }
+      ],
+      "policy": {
+        "allowed": true,
+        "reasons": [],
+        "confirmation_required": true,
+        "dry_run_required": false
+      }
+    }
+  ],
+  "installed": null,
+  "requested_version": null,
+  "warnings": []
+}

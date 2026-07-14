@@ -1,0 +1,3 @@
+ID="$(touch /tmp/must-not-exist)"
+ID_LIKE="debian  fedora"
+BROKEN

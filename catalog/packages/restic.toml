@@ -1,0 +1,115 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "restic"
+name = "restic"
+description = "Fast secure deduplicating backup program."
+aliases = ["restic-backup"]
+deprecated_aliases = []
+search_terms = ["restic", "system utilities"]
+homepage = "https://restic.net/"
+upstream = "restic.net"
+license = "BSD-2-Clause"
+categories = ["system-utilities"]
+capabilities = ["system-utility"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=restic.restic", "https://formulae.brew.sh/formula/restic", "https://packages.debian.org/search?keywords=restic&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=restic", "https://archlinux.org/packages/?q=restic", "https://pkgs.alpinelinux.org/packages?name=restic"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "restic-winget"
+platform = "windows"
+backend = "winget"
+package_id = "restic.restic"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=restic.restic"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "restic-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "restic"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/restic"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "restic-apt"
+platform = "debian"
+backend = "apt"
+package_id = "restic"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=restic&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "restic-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "restic"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=restic"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "restic-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "restic"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=restic"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "restic-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "restic"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=restic"
+reviewed_at = "2026-07-13"

@@ -1,0 +1,41 @@
+name: Performance baselines
+
+on:
+  schedule:
+    - cron: "23 2 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Install pinned Rust toolchain
+        run: |
+          rustup toolchain install 1.85.0 --profile minimal
+          rustup default 1.85.0
+      - name: Record runner context
+        run: |
+          uname -a | tee benchmark-runner.txt
+          rustc --version --verbose | tee -a benchmark-runner.txt
+      - name: Run repository benchmark gate
+        run: |
+          set -o pipefail
+          cargo xtask benchmark 2>&1 | tee benchmark-results.txt
+      - name: Upload measured results
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: benchmark-${{ github.sha }}-${{ github.run_id }}
+          path: |
+            benchmark-runner.txt
+            benchmark-results.txt
+            target/criterion
+          if-no-files-found: warn
+          retention-days: 30

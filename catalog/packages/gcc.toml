@@ -1,0 +1,115 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "gcc"
+name = "GNU Compiler Collection"
+description = "Compilers for C, C++, and other programming languages."
+aliases = ["gnu-compiler-collection"]
+deprecated_aliases = []
+search_terms = ["gnu compiler collection", "developer tools"]
+homepage = "https://gcc.gnu.org/"
+upstream = "gcc.gnu.org"
+license = "GPL-3.0-or-later"
+categories = ["developer-tools"]
+capabilities = ["software-development"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://formulae.brew.sh/formula/gcc", "https://packages.debian.org/search?keywords=gcc&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=gcc", "https://archlinux.org/packages/?q=gcc", "https://software.opensuse.org/search?baseproject=ALL&q=gcc", "https://pkgs.alpinelinux.org/packages?name=gcc"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "gcc-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "gcc"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/gcc"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "gcc-apt"
+platform = "debian"
+backend = "apt"
+package_id = "gcc"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=gcc&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "gcc-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "gcc"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=gcc"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "gcc-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "gcc"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=gcc"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "gcc-zypper"
+platform = "opensuse"
+backend = "zypper"
+package_id = "gcc"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://software.opensuse.org/search?baseproject=ALL&q=gcc"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "gcc-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "gcc"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=gcc"
+reviewed_at = "2026-07-13"

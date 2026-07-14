@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.siorb.dev/v1/resolution.schema.json",
+  "title": "Siorb explainable package resolution v1",
+  "type": "object",
+  "required": ["request", "canonical_id", "package_name", "selected", "evaluations", "installed", "requested_version", "warnings"],
+  "properties": {
+    "request": { "type": "string" },
+    "canonical_id": { "type": "string" },
+    "package_name": { "type": "string" },
+    "selected": {
+      "oneOf": [
+        { "$ref": "#/$defs/package_source" },
+        { "type": "null" }
+      ]
+    },
+    "evaluations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/candidate_evaluation" }
+    },
+    "installed": {
+      "oneOf": [
+        { "$ref": "#/$defs/installed_package" },
+        { "type": "null" }
+      ]
+    },
+    "requested_version": { "type": ["string", "null"] },
+    "warnings": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "package_source": {
+      "type": "object",
+      "required": ["id", "platform", "distributions", "backend", "package_id", "trust", "scope", "channel", "architectures", "priority", "requires_privilege", "provenance", "evidence", "reviewed_at", "verification"],
+      "properties": {
+        "id": { "type": "string" },
+        "platform": { "type": "string" },
+        "distributions": { "type": "array", "items": { "type": "string" } },
+        "backend": { "type": "string" },
+        "package_id": { "type": "string" },
+        "trust": { "type": "string" },
+        "scope": { "type": "string" },
+        "channel": { "type": "string" },
+        "architectures": { "type": "array", "items": { "type": "string" } },
+        "priority": { "type": "integer" },
+        "requires_privilege": { "type": "boolean" },
+        "provenance": { "type": "string" },
+        "evidence": { "type": "string" },
+        "reviewed_at": { "type": "string" },
+        "verification": {
+          "oneOf": [
+            { "$ref": "#/$defs/artifact_verification" },
+            { "type": "null" }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "artifact_verification": {
+      "type": "object",
+      "required": ["sha256", "signer", "content_type", "max_bytes", "kind", "format"],
+      "properties": {
+        "sha256": { "$ref": "common.schema.json#/$defs/sha256" },
+        "signer": { "type": ["string", "null"] },
+        "content_type": { "type": ["string", "null"] },
+        "max_bytes": { "type": ["integer", "null"], "minimum": 1, "maximum": 17179869184 },
+        "kind": { "type": "string", "enum": ["portable-archive", "portable-executable", "native-installer"] },
+        "format": { "type": "string", "enum": ["zip", "tar", "tar.gz", "msi", "msix", "exe", "pkg", "dmg", "deb", "rpm", "appimage"] },
+        "archive_format": {
+          "oneOf": [
+            { "type": "string", "enum": ["zip", "tar", "tar.gz"] },
+            { "type": "null" }
+          ]
+        },
+        "payload_path": { "type": ["string", "null"], "minLength": 1, "maxLength": 512 },
+        "strip_components": { "type": "integer", "minimum": 0, "maximum": 16 },
+        "install_arguments": {
+          "type": "array",
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": { "enum": ["/S", "/silent", "/verysilent", "/quiet", "/norestart", "--silent", "--quiet"] }
+        },
+        "allowed_redirect_hosts": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 253,
+            "pattern": "^[A-Za-z0-9.-]+$"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "candidate_evaluation": {
+      "type": "object",
+      "required": ["source", "accepted", "rank", "rejections", "policy"],
+      "properties": {
+        "source": { "$ref": "#/$defs/package_source" },
+        "accepted": { "type": "boolean" },
+        "rank": {
+          "oneOf": [
+            { "$ref": "#/$defs/rank" },
+            { "type": "null" }
+          ]
+        },
+        "rejections": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/rejection" }
+        },
+        "policy": { "$ref": "#/$defs/policy_decision" }
+      },
+      "additionalProperties": false
+    },
+    "rank": {
+      "type": "object",
+      "required": ["explicit_source", "explicit_backend", "policy_preference", "trust", "catalog_priority"],
+      "properties": {
+        "explicit_source": { "type": "integer", "minimum": 0, "maximum": 255 },
+        "explicit_backend": { "type": "integer", "minimum": 0, "maximum": 255 },
+        "policy_preference": { "type": "integer", "minimum": 0 },
+        "trust": { "type": "integer", "minimum": 0, "maximum": 255 },
+        "catalog_priority": { "type": "integer", "minimum": -2147483648, "maximum": 2147483647 }
+      },
+      "additionalProperties": false
+    },
+    "rejection": {
+      "type": "object",
+      "required": ["code", "message"],
+      "properties": {
+        "code": { "type": "string" },
+        "message": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "policy_decision": {
+      "type": "object",
+      "required": ["allowed", "reasons", "confirmation_required", "dry_run_required"],
+      "properties": {
+        "allowed": { "type": "boolean" },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["code", "message", "layer"],
+            "properties": {
+              "code": { "type": "string" },
+              "message": { "type": "string" },
+              "layer": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "confirmation_required": { "type": "boolean" },
+        "dry_run_required": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "installed_package": {
+      "type": "object",
+      "required": ["logical_id", "native_id", "backend", "version", "scope", "receipt", "held", "pinned"],
+      "properties": {
+        "logical_id": { "type": "string" },
+        "native_id": { "type": "string" },
+        "backend": { "type": "string" },
+        "version": { "type": ["string", "null"] },
+        "scope": { "$ref": "common.schema.json#/$defs/scope" },
+        "receipt": { "type": "boolean" },
+        "held": { "type": "boolean" },
+        "pinned": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    }
+  }
+}

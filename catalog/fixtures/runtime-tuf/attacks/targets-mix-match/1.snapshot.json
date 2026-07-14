@@ -1,0 +1,21 @@
+{
+  "signed": {
+    "type": "snapshot",
+    "spec_version": "1.0",
+    "version": 1,
+    "expires_unix": 1893456000,
+    "meta": {
+      "targets.json": {
+        "version": 1,
+        "length": 572,
+        "sha256": "7e20335333c73e546c854c097cbf353f5601f32112aed7ffbdb0e98ff6eb1aea"
+      }
+    }
+  },
+  "signatures": [
+    {
+      "key_id": "dev-snapshot",
+      "signature": "+FOR5in984/1Blqom/s5njqipAM8LRTO/yhODiVMSAkrFGecvaXEVyk/vJ9E7FJj0nfBRZlEsD/omOD1hPrrBw=="
+    }
+  ]
+}

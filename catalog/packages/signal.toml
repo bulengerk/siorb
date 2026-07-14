@@ -1,0 +1,70 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "signal"
+name = "Signal Desktop"
+description = "End-to-end encrypted messaging desktop client."
+aliases = ["signal-desktop"]
+deprecated_aliases = []
+search_terms = ["signal desktop", "communication"]
+homepage = "https://signal.org/"
+upstream = "signal.org"
+license = "AGPL-3.0-only"
+categories = ["communication"]
+capabilities = ["communication"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=OpenWhisperSystems.Signal", "https://formulae.brew.sh/cask/signal", "https://flathub.org/apps/org.signal.Signal"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "signal-winget"
+platform = "windows"
+backend = "winget"
+package_id = "OpenWhisperSystems.Signal"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=OpenWhisperSystems.Signal"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "signal-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "signal"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/signal"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "signal-flatpak"
+platform = "linux"
+backend = "flatpak"
+package_id = "org.signal.Signal"
+trust = "sandboxed"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 30
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://flathub.org/apps/org.signal.Signal"
+reviewed_at = "2026-07-13"

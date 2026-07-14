@@ -1,0 +1,14 @@
+[
+  {"value":"--help","context":"package_id","valid":false,"reason_code":"backend.package_id.unsafe"},
+  {"value":"-y","context":"package_id","valid":false,"reason_code":"backend.package_id.unsafe"},
+  {"value":"firefox; touch /tmp/pwned","context":"package_id","valid":false,"reason_code":"backend.package_id.unsafe"},
+  {"value":"firefox && whoami","context":"package_id","valid":false,"reason_code":"backend.package_id.unsafe"},
+  {"value":"$(id)","context":"package_id","valid":false,"reason_code":"backend.package_id.unsafe"},
+  {"value":"`id`","context":"package_id","valid":false,"reason_code":"backend.package_id.unsafe"},
+  {"value":"firefox\n--root=/tmp/evil","context":"package_id","valid":false,"reason_code":"backend.package_id.unsafe"},
+  {"value":"firefox\u0000--silent","context":"package_id","valid":false,"reason_code":"backend.package_id.unsafe"},
+  {"value":"－help","context":"package_id","valid":false,"reason_code":"input.identifier.confusable"},
+  {"value":"Mozilla.Firefox","context":"winget_package_id","valid":true},
+  {"value":"org.mozilla.firefox","context":"flatpak_package_id","valid":true},
+  {"value":"firefox-esr","context":"apt_package_id","valid":true}
+]

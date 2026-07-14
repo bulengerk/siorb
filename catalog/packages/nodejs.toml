@@ -1,0 +1,130 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "nodejs"
+name = "Node.js"
+description = "JavaScript runtime built on the V8 engine."
+aliases = ["node", "node-js"]
+deprecated_aliases = []
+search_terms = ["node.js", "runtimes"]
+homepage = "https://nodejs.org/"
+upstream = "nodejs.org"
+license = "MIT"
+categories = ["runtimes"]
+capabilities = ["language-runtime"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=OpenJS.NodeJS.LTS", "https://formulae.brew.sh/formula/node", "https://packages.debian.org/search?keywords=nodejs&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=nodejs", "https://archlinux.org/packages/?q=nodejs", "https://software.opensuse.org/search?baseproject=ALL&q=nodejs", "https://pkgs.alpinelinux.org/packages?name=nodejs"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "nodejs-winget"
+platform = "windows"
+backend = "winget"
+package_id = "OpenJS.NodeJS.LTS"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=OpenJS.NodeJS.LTS"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "nodejs-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "node"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/node"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "nodejs-apt"
+platform = "debian"
+backend = "apt"
+package_id = "nodejs"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=nodejs&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "nodejs-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "nodejs"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=nodejs"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "nodejs-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "nodejs"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=nodejs"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "nodejs-zypper"
+platform = "opensuse"
+backend = "zypper"
+package_id = "nodejs"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://software.opensuse.org/search?baseproject=ALL&q=nodejs"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "nodejs-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "nodejs"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=nodejs"
+reviewed_at = "2026-07-13"

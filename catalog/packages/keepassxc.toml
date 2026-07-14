@@ -1,0 +1,115 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "keepassxc"
+name = "KeePassXC"
+description = "Offline cross-platform password manager compatible with KeePass databases."
+aliases = ["keepass-xc"]
+deprecated_aliases = []
+search_terms = ["keepassxc", "security"]
+homepage = "https://keepassxc.org/"
+upstream = "keepassxc.org"
+license = "GPL-2.0-or-later"
+categories = ["security"]
+capabilities = ["security-tooling"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=KeePassXCTeam.KeePassXC", "https://formulae.brew.sh/cask/keepassxc", "https://packages.debian.org/search?keywords=keepassxc&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=keepassxc", "https://archlinux.org/packages/?q=keepassxc", "https://flathub.org/apps/org.keepassxc.KeePassXC"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "keepassxc-winget"
+platform = "windows"
+backend = "winget"
+package_id = "KeePassXCTeam.KeePassXC"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=KeePassXCTeam.KeePassXC"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "keepassxc-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "keepassxc"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/keepassxc"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "keepassxc-apt"
+platform = "debian"
+backend = "apt"
+package_id = "keepassxc"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=keepassxc&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "keepassxc-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "keepassxc"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=keepassxc"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "keepassxc-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "keepassxc"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=keepassxc"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "keepassxc-flatpak"
+platform = "linux"
+backend = "flatpak"
+package_id = "org.keepassxc.KeePassXC"
+trust = "sandboxed"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 30
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://flathub.org/apps/org.keepassxc.KeePassXC"
+reviewed_at = "2026-07-13"

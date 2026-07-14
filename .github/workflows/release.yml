@@ -1,0 +1,485 @@
+name: Publish release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  CARGO_INCREMENTAL: "0"
+  CARGO_PROFILE_RELEASE_DEBUG: "1"
+  CARGO_PROFILE_RELEASE_STRIP: none
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      prerelease: ${{ steps.version.outputs.prerelease }}
+    steps:
+      - name: Check out tagged source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Install pinned Rust toolchain
+        run: |
+          rustup toolchain install 1.85.0 --profile minimal --component rustfmt,clippy
+          rustup default 1.85.0
+      - name: Install pinned Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install schema-test dependency
+        run: python3 -m pip install --requirement tests/requirements.txt
+      - name: Refuse an unprotected release tag
+        if: github.ref_protected != true
+        run: |
+          echo "Release tags must match a protected repository tag ruleset." >&2
+          exit 1
+      - name: Verify annotated tag signature and protected-main ancestry
+        env:
+          TAG_SIGNING_KEYS: ${{ vars.SIORB_RELEASE_TAG_SIGNING_KEYS_BASE64 }}
+        run: |
+          set -euo pipefail
+          : "${TAG_SIGNING_KEYS:?SIORB_RELEASE_TAG_SIGNING_KEYS_BASE64 is required}"
+          export GNUPGHOME="$RUNNER_TEMP/siorb-release-gnupg"
+          mkdir -m 0700 "$GNUPGHOME"
+          trap 'rm -rf -- "$GNUPGHOME"' EXIT
+          printf '%s' "$TAG_SIGNING_KEYS" | base64 --decode >"$GNUPGHOME/release-signers.asc"
+          gpg --batch --import "$GNUPGHOME/release-signers.asc"
+          scripts/release/verify-release-tag.sh "$GITHUB_REF_NAME" origin/main
+      - name: Match tag, workspace, and changelog
+        id: version
+        run: python3 scripts/release/version_from_tag.py --tag "$GITHUB_REF_NAME" --github-output "$GITHUB_OUTPUT"
+      - name: Refuse development or unexpected trusted roots
+        env:
+          RUNTIME_ROOT_SHA256: ${{ vars.SIORB_PRODUCTION_RUNTIME_ROOT_SHA256 }}
+          TUF_ROOT_SHA256: ${{ vars.SIORB_PRODUCTION_TUF_ROOT_SHA256 }}
+        run: |
+          python3 scripts/release/verify_production_roots.py \
+            --runtime-root catalog/trusted-root/runtime-root.json \
+            --runtime-sha256 "$RUNTIME_ROOT_SHA256" \
+            --tuf-root catalog/trusted-root/root.json \
+            --tuf-sha256 "$TUF_ROOT_SHA256"
+      - name: Run release gates
+        run: |
+          cargo fmt --check
+          cargo clippy --locked --workspace --all-targets --all-features -- -D warnings
+          cargo test --locked --workspace --all-features
+          cargo test --locked --manifest-path tests/Cargo.toml --all-targets
+          cargo xtask verify
+          cargo xtask test-schemas
+          cargo xtask test-catalog
+          cargo xtask generate-docs
+          cargo xtask test-docs
+          cargo xtask build-site
+      - name: Require committed generated output
+        run: python3 scripts/check_clean_tree.py
+
+  build:
+    needs: validate
+    name: Build and sign ${{ matrix.target }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 90
+    environment: release
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-22.04
+            os: linux
+            target: x86_64-unknown-linux-gnu
+            binary: target/x86_64-unknown-linux-gnu/release/siorb
+            package_arch: x86_64
+            packages: true
+          - runner: ubuntu-22.04-arm
+            os: linux
+            target: aarch64-unknown-linux-gnu
+            binary: target/aarch64-unknown-linux-gnu/release/siorb
+            package_arch: arm64
+            packages: true
+          - runner: ubuntu-22.04
+            os: linux
+            target: x86_64-unknown-linux-musl
+            binary: target/x86_64-unknown-linux-musl/release/siorb
+            packages: false
+          - runner: ubuntu-22.04-arm
+            os: linux
+            target: aarch64-unknown-linux-musl
+            binary: target/aarch64-unknown-linux-musl/release/siorb
+            packages: false
+          - runner: windows-2022
+            os: windows
+            target: x86_64-pc-windows-msvc
+            binary: target/x86_64-pc-windows-msvc/release/siorb.exe
+            wix_arch: x64
+          - runner: windows-11-arm
+            os: windows
+            target: aarch64-pc-windows-msvc
+            binary: target/aarch64-pc-windows-msvc/release/siorb.exe
+            wix_arch: arm64
+          - runner: macos-15-intel
+            os: macos
+            target: x86_64-apple-darwin
+            binary: target/x86_64-apple-darwin/release/siorb
+          - runner: macos-15
+            os: macos
+            target: aarch64-apple-darwin
+            binary: target/aarch64-apple-darwin/release/siorb
+    steps:
+      - name: Check out tagged source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Install pinned Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.13"
+      - name: Set deterministic source timestamp
+        shell: bash
+        run: echo "SOURCE_DATE_EPOCH=$(git show -s --format=%ct HEAD)" >>"$GITHUB_ENV"
+      - name: Install pinned Rust toolchain
+        shell: bash
+        run: |
+          rustup toolchain install 1.85.0 --profile minimal
+          rustup default 1.85.0
+          rustup target add "${{ matrix.target }}"
+      - name: Build native release binary with retained symbols
+        if: ${{ !contains(matrix.target, 'linux-musl') }}
+        shell: bash
+        run: cargo build --locked --release --target "${{ matrix.target }}" -p siorb-cli
+      - name: Install linker and build native musl release binary with retained symbols
+        if: contains(matrix.target, 'linux-musl')
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes musl-tools
+          cargo build --locked --release --target "${{ matrix.target }}" -p siorb-cli
+      - name: Split Linux debug symbols and strip binary
+        if: matrix.os == 'linux'
+        shell: bash
+        run: |
+          objcopy --only-keep-debug "${{ matrix.binary }}" "$RUNNER_TEMP/siorb.debug"
+          strip --strip-unneeded "${{ matrix.binary }}"
+          objcopy --add-gnu-debuglink="$RUNNER_TEMP/siorb.debug" "${{ matrix.binary }}"
+          python scripts/release/package_symbols.py \
+            --symbols "$RUNNER_TEMP/siorb.debug" \
+            --version "${{ needs.validate.outputs.version }}" \
+            --target "${{ matrix.target }}" \
+            --output-dir dist
+      - name: Split macOS debug symbols and strip binary
+        if: matrix.os == 'macos'
+        shell: bash
+        run: |
+          dsymutil "${{ matrix.binary }}" -o "$RUNNER_TEMP/siorb.dSYM"
+          strip -x "${{ matrix.binary }}"
+          python scripts/release/package_symbols.py \
+            --symbols "$RUNNER_TEMP/siorb.dSYM" \
+            --version "${{ needs.validate.outputs.version }}" \
+            --target "${{ matrix.target }}" \
+            --output-dir dist
+      - name: Retain Windows PDB
+        if: matrix.os == 'windows'
+        shell: bash
+        run: |
+          pdb="target/${{ matrix.target }}/release/siorb.pdb"
+          test -f "$pdb"
+          python scripts/release/package_symbols.py \
+            --symbols "$pdb" \
+            --version "${{ needs.validate.outputs.version }}" \
+            --target "${{ matrix.target }}" \
+            --output-dir dist
+      - name: Import protected Apple certificates
+        if: matrix.os == 'macos'
+        shell: bash
+        env:
+          SIORB_APPLE_CERTIFICATE_P12_BASE64: ${{ secrets.SIORB_APPLE_CERTIFICATE_P12_BASE64 }}
+          SIORB_APPLE_CERTIFICATE_PASSWORD: ${{ secrets.SIORB_APPLE_CERTIFICATE_PASSWORD }}
+        run: |
+          SIORB_APPLE_KEYCHAIN_PASSWORD=$(openssl rand -hex 32)
+          export SIORB_APPLE_KEYCHAIN_PASSWORD
+          echo "::add-mask::$SIORB_APPLE_KEYCHAIN_PASSWORD"
+          scripts/release/import-apple-certificate.sh "$RUNNER_TEMP/siorb.keychain-db"
+      - name: Sign macOS binary
+        if: matrix.os == 'macos'
+        shell: bash
+        env:
+          SIORB_APPLE_APPLICATION_IDENTITY: ${{ vars.SIORB_APPLE_APPLICATION_IDENTITY }}
+        run: scripts/release/macos-sign-notarize.sh sign-binary "${{ matrix.binary }}"
+      - name: Sign Windows executable
+        if: matrix.os == 'windows'
+        shell: pwsh
+        env:
+          SIORB_WINDOWS_PFX_BASE64: ${{ secrets.SIORB_WINDOWS_PFX_BASE64 }}
+          SIORB_WINDOWS_PFX_PASSWORD: ${{ secrets.SIORB_WINDOWS_PFX_PASSWORD }}
+          SIORB_WINDOWS_TIMESTAMP_URL: ${{ vars.SIORB_WINDOWS_TIMESTAMP_URL }}
+        run: ./scripts/release/authenticode-sign.ps1 "${{ matrix.binary }}"
+      - name: Smoke-test signed native binary
+        shell: bash
+        run: '"${{ matrix.binary }}" version'
+      - name: Build Linux DEB and RPM
+        if: matrix.os == 'linux' && matrix.packages && needs.validate.outputs.prerelease != 'true'
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes rpm
+          scripts/release/package-linux.sh \
+            "${{ matrix.binary }}" \
+            "${{ needs.validate.outputs.version }}" \
+            "${{ matrix.package_arch }}" \
+            all dist
+      - name: Build unsigned macOS package
+        if: matrix.os == 'macos' && needs.validate.outputs.prerelease != 'true'
+        shell: bash
+        run: scripts/release/package-macos.sh "${{ matrix.binary }}" "${{ needs.validate.outputs.version }}" "$RUNNER_TEMP/siorb-unsigned.pkg"
+      - name: Sign, notarize, and staple macOS package
+        if: matrix.os == 'macos' && needs.validate.outputs.prerelease != 'true'
+        shell: bash
+        env:
+          SIORB_APPLE_INSTALLER_IDENTITY: ${{ vars.SIORB_APPLE_INSTALLER_IDENTITY }}
+          SIORB_APPLE_ID: ${{ secrets.SIORB_APPLE_ID }}
+          SIORB_APPLE_TEAM_ID: ${{ vars.SIORB_APPLE_TEAM_ID }}
+          SIORB_APPLE_APP_PASSWORD: ${{ secrets.SIORB_APPLE_APP_PASSWORD }}
+        run: |
+          pkg="dist/siorb-${{ needs.validate.outputs.version }}-${{ matrix.target }}.pkg"
+          scripts/release/macos-sign-notarize.sh sign-pkg "$RUNNER_TEMP/siorb-unsigned.pkg" "$pkg"
+          scripts/release/macos-sign-notarize.sh notarize "$pkg"
+          scripts/release/macos-sign-notarize.sh staple "$pkg"
+      - name: Install pinned WiX tool
+        if: matrix.os == 'windows' && needs.validate.outputs.prerelease != 'true'
+        shell: pwsh
+        run: dotnet tool install --global wix --version 6.0.2
+      - name: Build and sign Windows MSI
+        if: matrix.os == 'windows' && needs.validate.outputs.prerelease != 'true'
+        shell: pwsh
+        env:
+          SIORB_WINDOWS_PFX_BASE64: ${{ secrets.SIORB_WINDOWS_PFX_BASE64 }}
+          SIORB_WINDOWS_PFX_PASSWORD: ${{ secrets.SIORB_WINDOWS_PFX_PASSWORD }}
+          SIORB_WINDOWS_TIMESTAMP_URL: ${{ vars.SIORB_WINDOWS_TIMESTAMP_URL }}
+        run: |
+          $msi = "dist/siorb-${{ needs.validate.outputs.version }}-${{ matrix.target }}.msi"
+          ./scripts/release/package-windows.ps1 -Binary "${{ matrix.binary }}" -Version "${{ needs.validate.outputs.version }}" -Architecture "${{ matrix.wix_arch }}" -Output $msi
+          ./scripts/release/authenticode-sign.ps1 $msi
+      - name: Create deterministic signed-binary archive
+        shell: bash
+        run: |
+          python scripts/release/package_archive.py \
+            --binary "${{ matrix.binary }}" \
+            --target "${{ matrix.target }}" \
+            --version "${{ needs.validate.outputs.version }}" \
+            --output-dir dist
+      - name: Attest native release subjects
+        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3.0.0
+        with:
+          subject-path: dist/*
+      - name: Upload native release subjects
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-${{ matrix.target }}
+          path: dist
+          if-no-files-found: error
+          retention-days: 30
+      - name: Remove temporary Apple keychain
+        if: always() && matrix.os == 'macos'
+        shell: bash
+        run: security delete-keychain "$RUNNER_TEMP/siorb.keychain-db" || true
+
+  catalog:
+    needs: [validate, build]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    environment: catalog-signing
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    steps:
+      - name: Check out tagged source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Install pinned Rust toolchain
+        run: |
+          rustup toolchain install 1.85.0 --profile minimal
+          rustup default 1.85.0
+      - name: Recheck production trusted-root fingerprints
+        env:
+          RUNTIME_ROOT_SHA256: ${{ vars.SIORB_PRODUCTION_RUNTIME_ROOT_SHA256 }}
+          TUF_ROOT_SHA256: ${{ vars.SIORB_PRODUCTION_TUF_ROOT_SHA256 }}
+        run: |
+          python3 scripts/release/verify_production_roots.py \
+            --runtime-root catalog/trusted-root/runtime-root.json \
+            --runtime-sha256 "$RUNTIME_ROOT_SHA256" \
+            --tuf-root catalog/trusted-root/root.json \
+            --tuf-sha256 "$TUF_ROOT_SHA256"
+      - name: Download native release subjects for self-update metadata
+        uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v8.0.0
+        with:
+          pattern: release-*
+          path: release-artifacts
+          merge-multiple: true
+      - name: Set deterministic source timestamp
+        run: echo "SOURCE_DATE_EPOCH=$(git show -s --format=%ct HEAD)" >>"$GITHUB_ENV"
+      - name: Prepare and sign static catalog
+        env:
+          TARGETS_KEY: ${{ secrets.SIORB_CATALOG_TARGETS_KEY_BASE64 }}
+          SNAPSHOT_KEY: ${{ secrets.SIORB_CATALOG_SNAPSHOT_KEY_BASE64 }}
+          TIMESTAMP_KEY: ${{ secrets.SIORB_CATALOG_TIMESTAMP_KEY_BASE64 }}
+        run: |
+          set -euo pipefail
+          cargo xtask prepare-catalog --artifacts release-artifacts --out dist/catalog
+          umask 077
+          key_dir="$RUNNER_TEMP/siorb-catalog-keys"
+          mkdir -p "$key_dir"
+          trap 'rm -rf -- "$key_dir"' EXIT
+          printf '%s' "$TARGETS_KEY" | base64 --decode >"$key_dir/targets.key"
+          printf '%s' "$SNAPSHOT_KEY" | base64 --decode >"$key_dir/snapshot.key"
+          printf '%s' "$TIMESTAMP_KEY" | base64 --decode >"$key_dir/timestamp.key"
+          cargo xtask sign-metadata --role targets --key "$key_dir/targets.key" --out dist/catalog
+          cargo xtask sign-metadata --role snapshot --key "$key_dir/snapshot.key" --out dist/catalog
+          cargo xtask sign-metadata --role timestamp --key "$key_dir/timestamp.key" --out dist/catalog
+          cargo run --locked -p siorb-cli -- catalog verify dist/catalog
+      - name: Archive catalog snapshot
+        run: |
+          python3 scripts/release/archive_directory.py \
+            --directory dist/catalog \
+            --output "dist/siorb-${{ needs.validate.outputs.version }}-catalog.zip"
+          rm -rf dist/catalog
+      - name: Attest catalog snapshot
+        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3.0.0
+        with:
+          subject-path: dist/*
+      - name: Upload signed catalog snapshot
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-catalog
+          path: dist
+          if-no-files-found: error
+          retention-days: 30
+
+  publish:
+    needs: [validate, build, catalog]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    environment: release
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+      - name: Check out tagged source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Install pinned Rust toolchain
+        run: |
+          rustup toolchain install 1.85.0 --profile minimal
+          rustup default 1.85.0
+      - name: Download all release subjects
+        uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v8.0.0
+        with:
+          pattern: release-*
+          path: dist
+          merge-multiple: true
+      - name: Set deterministic source timestamp
+        run: echo "SOURCE_DATE_EPOCH=$(git show -s --format=%ct HEAD)" >>"$GITHUB_ENV"
+      - name: Generate downstream package-manager metadata
+        if: needs.validate.outputs.prerelease != 'true'
+        env:
+          VERSION: ${{ needs.validate.outputs.version }}
+        run: |
+          set -euo pipefail
+          base="https://github.com/$GITHUB_REPOSITORY/releases/download/$GITHUB_REF_NAME"
+          python3 scripts/release/generate_homebrew.py \
+            --version "$VERSION" --base-url "$base" \
+            --aarch64 "dist/siorb-$VERSION-aarch64-apple-darwin.tar.gz" \
+            --x86-64 "dist/siorb-$VERSION-x86_64-apple-darwin.tar.gz" \
+            --output "dist/siorb-$VERSION-homebrew.rb"
+          python3 scripts/release/generate_winget.py \
+            --version "$VERSION" --base-url "$base" \
+            --x86-64 "dist/siorb-$VERSION-x86_64-pc-windows-msvc.zip" \
+            --arm64 "dist/siorb-$VERSION-aarch64-pc-windows-msvc.zip" \
+            --output-dir "$RUNNER_TEMP/winget"
+          python3 scripts/release/archive_directory.py \
+            --directory "$RUNNER_TEMP/winget" \
+            --output "dist/siorb-$VERSION-winget.zip"
+      - name: Generate SPDX JSON SBOM
+        uses: anchore/sbom-action@a930d0ac434e3182448fe678398ba5713717112a # v0.21.0
+        with:
+          path: .
+          format: spdx-json
+          output-file: dist/siorb-${{ needs.validate.outputs.version }}.spdx.json
+          upload-artifact: false
+          upload-release-assets: false
+      - name: Generate per-artifact provenance and artifact manifest
+        env:
+          VERSION: ${{ needs.validate.outputs.version }}
+        run: |
+          python3 scripts/release/generate_release_metadata.py \
+            --directory dist \
+            --version "$VERSION" \
+            --repository "$GITHUB_REPOSITORY" \
+            --server-url "$GITHUB_SERVER_URL" \
+            --workflow-ref "$GITHUB_WORKFLOW_REF" \
+            --commit "$GITHUB_SHA" \
+            --run-id "$GITHUB_RUN_ID" \
+            --run-attempt "$GITHUB_RUN_ATTEMPT"
+      - name: Generate and verify SHA-256 manifest
+        run: |
+          python3 scripts/release/checksums.py --directory dist --output dist/SHA256SUMS
+          python3 scripts/release/verify_release.py --directory dist --checksums dist/SHA256SUMS --inspect-archives
+      - name: Install pinned cosign
+        uses: sigstore/cosign-installer@faadad0cce49287aee09b3a48701e75088a2c6ad # v4.0.0
+      - name: Sign checksum manifest with workflow identity
+        run: scripts/release/sign-artifacts.sh dist/SHA256SUMS
+      - name: Verify complete release package contract
+        run: cargo xtask package --verify dist
+      - name: Attest final release metadata
+        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3.0.0
+        with:
+          subject-path: |
+            dist/ARTIFACTS.json
+            dist/SHA256SUMS
+            dist/SHA256SUMS.sigstore.json
+            dist/*.provenance.json
+            dist/*.spdx.json
+      - name: Attest stable downstream manifests
+        if: needs.validate.outputs.prerelease != 'true'
+        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3.0.0
+        with:
+          subject-path: |
+            dist/*-homebrew.rb
+            dist/*-winget.zip
+      - name: Extract reviewed release notes
+        run: python3 scripts/release/release_notes.py --version "${{ needs.validate.outputs.version }}" --output "$RUNNER_TEMP/release-notes.md"
+      - name: Publish immutable GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.validate.outputs.version }}
+          PRERELEASE: ${{ needs.validate.outputs.prerelease }}
+        run: |
+          set -euo pipefail
+          args=()
+          if [[ "$PRERELEASE" == "true" ]]; then args+=(--prerelease); fi
+          gh release create "$GITHUB_REF_NAME" dist/* \
+            --verify-tag \
+            --title "Siorb $VERSION" \
+            --notes-file "$RUNNER_TEMP/release-notes.md" \
+            "${args[@]}"

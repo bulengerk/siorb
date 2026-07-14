@@ -1,0 +1,162 @@
+name: Catalog validation and signing
+
+on:
+  pull_request:
+    paths:
+      - "catalog/**"
+      - "schemas/**"
+      - "crates/siorb-catalog/**"
+      - "crates/siorb-update/**"
+      - "crates/siorb-xtask/**"
+      - "scripts/catalog/**"
+      - ".github/workflows/catalog.yml"
+  push:
+    branches: [main]
+    paths:
+      - "catalog/**"
+      - "schemas/**"
+      - "crates/siorb-catalog/**"
+      - "crates/siorb-update/**"
+  workflow_dispatch:
+    inputs:
+      sign:
+        description: Sign online catalog roles in the protected environment
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: catalog-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Install pinned Rust toolchain
+        run: |
+          rustup toolchain install 1.85.0 --profile minimal
+          rustup default 1.85.0
+      - name: Install pinned Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install schema-test dependency
+        run: python3 -m pip install --requirement tests/requirements.txt
+      - name: Validate schemas and catalog
+        run: |
+          cargo xtask test-schemas
+          cargo xtask test-catalog
+      - name: Regenerate catalog and site
+        run: |
+          cargo xtask generate-catalog
+          cargo xtask build-site
+      - name: Require committed deterministic output
+        run: python3 scripts/check_clean_tree.py catalog/generated website/public
+
+  prepare:
+    if: github.event_name != 'pull_request'
+    needs: validate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Install pinned Rust toolchain
+        run: |
+          rustup toolchain install 1.85.0 --profile minimal
+          rustup default 1.85.0
+      - name: Prepare unsigned role metadata and targets
+        run: cargo xtask prepare-catalog --out dist/catalog
+      - name: Upload reviewable unsigned candidate
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: catalog-unsigned-${{ github.sha }}
+          path: dist/catalog
+          if-no-files-found: error
+          retention-days: 14
+
+  signing-ref-policy:
+    if: github.event_name == 'workflow_dispatch' && inputs.sign
+    needs: prepare
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Refuse signing outside main
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "Catalog signing may run only from refs/heads/main." >&2
+          exit 1
+      - name: Refuse signing from an unprotected main ref
+        if: github.ref_protected != true
+        run: |
+          echo "Catalog signing requires a protected main branch ruleset." >&2
+          exit 1
+
+  sign-online-roles:
+    if: github.event_name == 'workflow_dispatch' && inputs.sign
+    needs: [prepare, signing-ref-policy]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment: catalog-signing
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Install pinned Rust toolchain
+        run: |
+          rustup toolchain install 1.85.0 --profile minimal
+          rustup default 1.85.0
+      - name: Download unsigned candidate
+        uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 # v8.0.0
+        with:
+          name: catalog-unsigned-${{ github.sha }}
+          path: dist/catalog
+      - name: Refuse development or unexpected trusted roots
+        env:
+          RUNTIME_ROOT_SHA256: ${{ vars.SIORB_PRODUCTION_RUNTIME_ROOT_SHA256 }}
+          TUF_ROOT_SHA256: ${{ vars.SIORB_PRODUCTION_TUF_ROOT_SHA256 }}
+        run: |
+          python3 scripts/release/verify_production_roots.py \
+            --runtime-root catalog/trusted-root/runtime-root.json \
+            --runtime-sha256 "$RUNTIME_ROOT_SHA256" \
+            --tuf-root catalog/trusted-root/root.json \
+            --tuf-sha256 "$TUF_ROOT_SHA256"
+      - name: Sign targets, snapshot, and timestamp roles
+        env:
+          TARGETS_KEY: ${{ secrets.SIORB_CATALOG_TARGETS_KEY_BASE64 }}
+          SNAPSHOT_KEY: ${{ secrets.SIORB_CATALOG_SNAPSHOT_KEY_BASE64 }}
+          TIMESTAMP_KEY: ${{ secrets.SIORB_CATALOG_TIMESTAMP_KEY_BASE64 }}
+        run: |
+          set -euo pipefail
+          umask 077
+          key_dir="$RUNNER_TEMP/siorb-catalog-keys"
+          mkdir -p "$key_dir"
+          trap 'rm -rf -- "$key_dir"' EXIT
+          printf '%s' "$TARGETS_KEY" | base64 --decode >"$key_dir/targets.key"
+          printf '%s' "$SNAPSHOT_KEY" | base64 --decode >"$key_dir/snapshot.key"
+          printf '%s' "$TIMESTAMP_KEY" | base64 --decode >"$key_dir/timestamp.key"
+          cargo xtask sign-metadata --role targets --key "$key_dir/targets.key" --out dist/catalog
+          cargo xtask sign-metadata --role snapshot --key "$key_dir/snapshot.key" --out dist/catalog
+          cargo xtask sign-metadata --role timestamp --key "$key_dir/timestamp.key" --out dist/catalog
+      - name: Verify signed catalog through the runtime verifier
+        run: cargo run --locked -p siorb-cli -- catalog verify dist/catalog
+      - name: Upload signed static catalog
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: catalog-signed-${{ github.sha }}
+          path: dist/catalog
+          if-no-files-found: error
+          retention-days: 30

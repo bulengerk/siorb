@@ -1,0 +1,21 @@
+[package]
+name = "siorb-resolver"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+semver.workspace = true
+serde.workspace = true
+siorb-catalog = { path = "../siorb-catalog" }
+siorb-core = { path = "../siorb-core" }
+siorb-policy = { path = "../siorb-policy" }
+
+[dev-dependencies]
+proptest.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,85 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "deno"
+name = "Deno"
+description = "Secure JavaScript and TypeScript runtime with built-in tooling."
+aliases = ["deno-runtime"]
+deprecated_aliases = []
+search_terms = ["deno", "runtimes"]
+homepage = "https://deno.com/"
+upstream = "deno.com"
+license = "MIT"
+categories = ["runtimes"]
+capabilities = ["language-runtime"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=DenoLand.Deno", "https://formulae.brew.sh/formula/deno", "https://archlinux.org/packages/?q=deno", "https://pkgs.alpinelinux.org/packages?name=deno"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "deno-winget"
+platform = "windows"
+backend = "winget"
+package_id = "DenoLand.Deno"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=DenoLand.Deno"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "deno-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "deno"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/deno"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "deno-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "deno"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=deno"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "deno-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "deno"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=deno"
+reviewed_at = "2026-07-13"

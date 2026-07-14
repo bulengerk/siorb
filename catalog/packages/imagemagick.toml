@@ -1,0 +1,115 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "imagemagick"
+name = "ImageMagick"
+description = "Command-line toolkit for creating and converting images."
+aliases = ["image-magick", "convert-images"]
+deprecated_aliases = []
+search_terms = ["imagemagick", "media"]
+homepage = "https://imagemagick.org/"
+upstream = "imagemagick.org"
+license = "ImageMagick"
+categories = ["media"]
+capabilities = ["media-workflow"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=ImageMagick.ImageMagick", "https://formulae.brew.sh/formula/imagemagick", "https://packages.debian.org/search?keywords=imagemagick&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=ImageMagick", "https://archlinux.org/packages/?q=imagemagick", "https://pkgs.alpinelinux.org/packages?name=imagemagick"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "imagemagick-winget"
+platform = "windows"
+backend = "winget"
+package_id = "ImageMagick.ImageMagick"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=ImageMagick.ImageMagick"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "imagemagick-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "imagemagick"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/imagemagick"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "imagemagick-apt"
+platform = "debian"
+backend = "apt"
+package_id = "imagemagick"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=imagemagick&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "imagemagick-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "ImageMagick"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=ImageMagick"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "imagemagick-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "imagemagick"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=imagemagick"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "imagemagick-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "imagemagick"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=imagemagick"
+reviewed_at = "2026-07-13"

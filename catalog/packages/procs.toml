@@ -1,0 +1,100 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "procs"
+name = "procs"
+description = "Modern replacement for ps with searchable structured output."
+aliases = ["process-list"]
+deprecated_aliases = []
+search_terms = ["procs", "system utilities"]
+homepage = "https://github.com/dalance/procs"
+upstream = "github.com"
+license = "MIT"
+categories = ["system-utilities"]
+capabilities = ["system-utility"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=dalance.procs", "https://formulae.brew.sh/formula/procs", "https://packages.debian.org/search?keywords=procs&searchon=names&suite=stable&section=all", "https://archlinux.org/packages/?q=procs", "https://pkgs.alpinelinux.org/packages?name=procs"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "procs-winget"
+platform = "windows"
+backend = "winget"
+package_id = "dalance.procs"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=dalance.procs"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "procs-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "procs"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/procs"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "procs-apt"
+platform = "debian"
+backend = "apt"
+package_id = "procs"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=procs&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "procs-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "procs"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=procs"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "procs-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "procs"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=procs"
+reviewed_at = "2026-07-13"

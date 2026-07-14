@@ -1,0 +1,9 @@
+# Invalid keys, duplicate values, shell-looking text, and escape sequences must
+# be parsed as inert data. The parser must never evaluate this file.
+ID=first
+ID=second
+lowercase_key=ignored
+BAD-KEY=ignored
+VERSION_ID="$(touch /tmp/siorb-must-not-exist)"
+ID_LIKE="debian  fedora"
+ANSI="\033[31mred"

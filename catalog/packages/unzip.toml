@@ -1,0 +1,115 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "unzip"
+name = "UnZip"
+description = "Command-line utility for extracting ZIP archives."
+aliases = ["infozip-unzip"]
+deprecated_aliases = []
+search_terms = ["unzip", "system utilities"]
+homepage = "https://infozip.sourceforge.net/"
+upstream = "infozip.sourceforge.net"
+license = "Info-ZIP"
+categories = ["system-utilities"]
+capabilities = ["system-utility"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://formulae.brew.sh/formula/unzip", "https://packages.debian.org/search?keywords=unzip&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=unzip", "https://archlinux.org/packages/?q=unzip", "https://software.opensuse.org/search?baseproject=ALL&q=unzip", "https://pkgs.alpinelinux.org/packages?name=unzip"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "unzip-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "unzip"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/unzip"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "unzip-apt"
+platform = "debian"
+backend = "apt"
+package_id = "unzip"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=unzip&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "unzip-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "unzip"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=unzip"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "unzip-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "unzip"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=unzip"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "unzip-zypper"
+platform = "opensuse"
+backend = "zypper"
+package_id = "unzip"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://software.opensuse.org/search?baseproject=ALL&q=unzip"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "unzip-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "unzip"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=unzip"
+reviewed_at = "2026-07-13"

@@ -1,0 +1,13 @@
+[
+  {"backend":"winget","operation":"query","exit_code":0,"stdout":"Name            Id               Version Source\n--------------------------------------------------\nMozilla Firefox Mozilla.Firefox  127.0.2 winget\n","expected":{"state":"installed","native_id":"Mozilla.Firefox","version":"127.0.2"}},
+  {"backend":"apt","operation":"query","exit_code":0,"stdout":"Inst firefox (127.0+build2 Ubuntu:24.04/noble [amd64])\n","expected":{"state":"installed","native_id":"firefox","version":"127.0+build2"}},
+  {"backend":"dnf","operation":"query","exit_code":0,"stdout":"Installed Packages\nfirefox.x86_64 127.0-1.fc42 updates\n","expected":{"state":"installed","native_id":"firefox","version":"127.0-1.fc42"}},
+  {"backend":"pacman","operation":"query","exit_code":0,"stdout":"firefox 127.0-1\n","expected":{"state":"installed","native_id":"firefox","version":"127.0-1"}},
+  {"backend":"brew","operation":"query","exit_code":0,"stdout":"firefox 127.0\n","expected":{"state":"installed","native_id":"firefox","version":"127.0"}},
+  {"backend":"flatpak","operation":"query","exit_code":0,"stdout":"Firefox - Fast, Private & Safe Web Browser\n\n          ID: org.mozilla.firefox\n         Ref: app/org.mozilla.firefox/x86_64/stable\n     Version: 127.0\n","expected":{"state":"installed","native_id":"org.mozilla.firefox","version":"127.0"}},
+  {"backend":"apt","operation":"install","exit_code":100,"stdout":"","stderr":"E: Unable to locate package firefox\n","expected":{"error":"not_found","reason_code":"backend.package_not_found"}},
+  {"backend":"winget","operation":"install","exit_code":-1978335189,"stdout":"","stderr":"No package found matching input criteria.\n","expected":{"error":"not_found","reason_code":"backend.package_not_found"}},
+  {"backend":"zypper","operation":"install","exit_code":4,"stdout":"","stderr":"Problem retrieving files from repository.\n","expected":{"error":"network","reason_code":"backend.network"}},
+  {"backend":"apk","operation":"install","exit_code":1,"stdout":"","stderr":"ERROR: unable to select packages:\n  firefox (no such package)\n","expected":{"error":"not_found","reason_code":"backend.package_not_found"}},
+  {"backend":"apt","operation":"query","exit_code":0,"stdout":"\u001b[2J\u001b[Hfake prompt\nInst firefox (127.0 Ubuntu [amd64])\n","expected":{"state":"installed","native_id":"firefox","version":"127.0","diagnostic_contains_escape":false}}
+]

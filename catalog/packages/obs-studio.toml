@@ -1,0 +1,145 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "obs-studio"
+name = "OBS Studio"
+description = "Live streaming and screen recording application."
+aliases = ["obs", "open-broadcaster-software"]
+deprecated_aliases = []
+search_terms = ["obs studio", "media"]
+homepage = "https://obsproject.com/"
+upstream = "obsproject.com"
+license = "GPL-2.0-or-later"
+categories = ["media"]
+capabilities = ["media-workflow"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=OBSProject.OBSStudio", "https://formulae.brew.sh/cask/obs", "https://packages.debian.org/search?keywords=obs-studio&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=obs-studio", "https://archlinux.org/packages/?q=obs-studio", "https://software.opensuse.org/search?baseproject=ALL&q=obs-studio", "https://pkgs.alpinelinux.org/packages?name=obs-studio", "https://flathub.org/apps/com.obsproject.Studio"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "obs-studio-winget"
+platform = "windows"
+backend = "winget"
+package_id = "OBSProject.OBSStudio"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=OBSProject.OBSStudio"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "obs-studio-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "obs"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/obs"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "obs-studio-apt"
+platform = "debian"
+backend = "apt"
+package_id = "obs-studio"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=obs-studio&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "obs-studio-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "obs-studio"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=obs-studio"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "obs-studio-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "obs-studio"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=obs-studio"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "obs-studio-zypper"
+platform = "opensuse"
+backend = "zypper"
+package_id = "obs-studio"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://software.opensuse.org/search?baseproject=ALL&q=obs-studio"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "obs-studio-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "obs-studio"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=obs-studio"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "obs-studio-flatpak"
+platform = "linux"
+backend = "flatpak"
+package_id = "com.obsproject.Studio"
+trust = "sandboxed"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 30
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://flathub.org/apps/com.obsproject.Studio"
+reviewed_at = "2026-07-13"

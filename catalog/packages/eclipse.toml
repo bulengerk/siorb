@@ -1,0 +1,70 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "eclipse"
+name = "Eclipse IDE"
+description = "Extensible open-source integrated development environment."
+aliases = ["eclipse-ide"]
+deprecated_aliases = []
+search_terms = ["eclipse ide", "editors"]
+homepage = "https://www.eclipse.org/ide/"
+upstream = "eclipse.org"
+license = "EPL-2.0"
+categories = ["editors"]
+capabilities = ["text-editing"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=EclipseFoundation.EclipseIDEforJavaDevelopers", "https://formulae.brew.sh/cask/eclipse-java", "https://flathub.org/apps/org.eclipse.Java"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "eclipse-winget"
+platform = "windows"
+backend = "winget"
+package_id = "EclipseFoundation.EclipseIDEforJavaDevelopers"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=EclipseFoundation.EclipseIDEforJavaDevelopers"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "eclipse-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "eclipse-java"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/eclipse-java"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "eclipse-flatpak"
+platform = "linux"
+backend = "flatpak"
+package_id = "org.eclipse.Java"
+trust = "sandboxed"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 30
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://flathub.org/apps/org.eclipse.Java"
+reviewed_at = "2026-07-13"

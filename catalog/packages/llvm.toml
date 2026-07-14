@@ -1,0 +1,115 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "llvm"
+name = "LLVM"
+description = "Modular compiler and toolchain technologies."
+aliases = ["clang", "llvm-toolchain"]
+deprecated_aliases = []
+search_terms = ["llvm", "developer tools"]
+homepage = "https://llvm.org/"
+upstream = "llvm.org"
+license = "Apache-2.0 WITH LLVM-exception"
+categories = ["developer-tools"]
+capabilities = ["software-development"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=LLVM.LLVM", "https://formulae.brew.sh/formula/llvm", "https://packages.debian.org/search?keywords=llvm&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=llvm", "https://archlinux.org/packages/?q=llvm", "https://pkgs.alpinelinux.org/packages?name=llvm"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "llvm-winget"
+platform = "windows"
+backend = "winget"
+package_id = "LLVM.LLVM"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=LLVM.LLVM"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "llvm-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "llvm"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/llvm"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "llvm-apt"
+platform = "debian"
+backend = "apt"
+package_id = "llvm"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=llvm&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "llvm-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "llvm"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=llvm"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "llvm-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "llvm"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=llvm"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "llvm-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "llvm"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=llvm"
+reviewed_at = "2026-07-13"

@@ -1,0 +1,16 @@
+[
+  {"path":"bin/firefox","kind":"file","valid":true},
+  {"path":"share/applications/firefox.desktop","kind":"file","valid":true},
+  {"path":"../outside","kind":"file","valid":false,"reason_code":"archive.path.traversal"},
+  {"path":"safe/../../outside","kind":"file","valid":false,"reason_code":"archive.path.traversal"},
+  {"path":"/etc/passwd","kind":"file","valid":false,"reason_code":"archive.path.traversal"},
+  {"path":"C:\\Windows\\System32\\evil.dll","kind":"file","valid":false,"reason_code":"archive.path.traversal"},
+  {"path":"\\\\server\\share\\evil.exe","kind":"file","valid":false,"reason_code":"archive.path.traversal"},
+  {"path":"bin/evil\u0000.exe","kind":"file","valid":false,"reason_code":"archive.path.traversal"},
+  {"path":"bin/link","kind":"symlink","target":"../../etc/passwd","valid":false,"reason_code":"archive.special.forbidden"},
+  {"path":"bin/hard","kind":"hardlink","target":"../../etc/passwd","valid":false,"reason_code":"archive.special.forbidden"},
+  {"path":"CON","kind":"file","valid":false,"reason_code":"archive.path.traversal"},
+  {"path":"file.txt:evil.exe","kind":"file","valid":false,"reason_code":"archive.path.traversal"},
+  {"path":"payload","kind":"file","compressed_bytes":32,"expanded_bytes":1073741824,"valid":false,"reason_code":"archive.ratio.limit"},
+  {"path":"many-files","kind":"directory","entries":1000001,"valid":false,"reason_code":"archive.entries.limit"}
+]

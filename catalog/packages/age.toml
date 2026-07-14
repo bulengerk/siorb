@@ -1,0 +1,115 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "age"
+name = "age"
+description = "Simple modern file encryption tool with small explicit keys."
+aliases = ["age-encryption"]
+deprecated_aliases = []
+search_terms = ["age", "security"]
+homepage = "https://age-encryption.org/"
+upstream = "age-encryption.org"
+license = "BSD-3-Clause"
+categories = ["security"]
+capabilities = ["security-tooling"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=FiloSottile.age", "https://formulae.brew.sh/formula/age", "https://packages.debian.org/search?keywords=age&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=age", "https://archlinux.org/packages/?q=age", "https://pkgs.alpinelinux.org/packages?name=age"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "age-winget"
+platform = "windows"
+backend = "winget"
+package_id = "FiloSottile.age"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=FiloSottile.age"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "age-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "age"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/age"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "age-apt"
+platform = "debian"
+backend = "apt"
+package_id = "age"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=age&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "age-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "age"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=age"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "age-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "age"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=age"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "age-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "age"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=age"
+reviewed_at = "2026-07-13"

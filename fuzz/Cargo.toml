@@ -1,0 +1,83 @@
+[package]
+name = "siorb-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2024"
+rust-version = "1.85"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+serde_json = "1.0"
+siorb-backends = { path = "../crates/siorb-backends" }
+siorb-bundle = { path = "../crates/siorb-bundle" }
+siorb-catalog = { path = "../crates/siorb-catalog" }
+siorb-core = { path = "../crates/siorb-core" }
+siorb-executor = { path = "../crates/siorb-executor" }
+siorb-platform = { path = "../crates/siorb-platform" }
+siorb-policy = { path = "../crates/siorb-policy" }
+
+[workspace]
+members = ["."]
+
+[[bin]]
+name = "catalog_json"
+path = "fuzz_targets/catalog_json.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "os_release"
+path = "fuzz_targets/os_release.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "command_spec"
+path = "fuzz_targets/command_spec.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "terminal_output"
+path = "fuzz_targets/terminal_output.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "url_policy"
+path = "fuzz_targets/url_policy.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "bundle_toml"
+path = "fuzz_targets/bundle_toml.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "archive_zip"
+path = "fuzz_targets/archive_zip.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "archive_tar"
+path = "fuzz_targets/archive_tar.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "archive_path"
+path = "fuzz_targets/archive_path.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "backend_query"
+path = "fuzz_targets/backend_query.rs"
+test = false
+doc = false

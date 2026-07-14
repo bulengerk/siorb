@@ -1,0 +1,70 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "onlyoffice"
+name = "ONLYOFFICE Desktop Editors"
+description = "Desktop office suite for documents, spreadsheets, and presentations."
+aliases = ["onlyoffice-desktopeditors"]
+deprecated_aliases = []
+search_terms = ["onlyoffice desktop editors", "productivity"]
+homepage = "https://www.onlyoffice.com/desktop.aspx"
+upstream = "onlyoffice.com"
+license = "AGPL-3.0-only"
+categories = ["productivity"]
+capabilities = ["productivity"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=ONLYOFFICE.DesktopEditors", "https://formulae.brew.sh/cask/onlyoffice", "https://flathub.org/apps/org.onlyoffice.desktopeditors"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "onlyoffice-winget"
+platform = "windows"
+backend = "winget"
+package_id = "ONLYOFFICE.DesktopEditors"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=ONLYOFFICE.DesktopEditors"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "onlyoffice-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "onlyoffice"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/onlyoffice"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "onlyoffice-flatpak"
+platform = "linux"
+backend = "flatpak"
+package_id = "org.onlyoffice.desktopeditors"
+trust = "sandboxed"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 30
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://flathub.org/apps/org.onlyoffice.desktopeditors"
+reviewed_at = "2026-07-13"

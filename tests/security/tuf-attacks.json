@@ -1,0 +1,17 @@
+[
+  {"scenario":"expired_timestamp","expected":"reject","reason_code":"update.metadata.expired"},
+  {"scenario":"expired_snapshot_offline_outside_grace","expected":"reject","reason_code":"update.metadata.expired"},
+  {"scenario":"root_threshold_one_of_two","expected":"reject","reason_code":"update.threshold.not_met"},
+  {"scenario":"unknown_root_key","expected":"reject","reason_code":"update.threshold.not_met"},
+  {"scenario":"root_version_rollback","expected":"reject","reason_code":"update.rollback.detected"},
+  {"scenario":"snapshot_version_rollback","expected":"reject","reason_code":"update.rollback.detected"},
+  {"scenario":"same_version_changed_hash","expected":"reject","reason_code":"update.hash.mismatch"},
+  {"scenario":"timestamp_never_advances_until_expiry","expected":"reject","reason_code":"update.metadata.expired"},
+  {"scenario":"target_hash_mismatch","expected":"reject","reason_code":"update.hash.mismatch"},
+  {"scenario":"target_length_mismatch","expected":"reject","reason_code":"update.length.mismatch"},
+  {"scenario":"truncated_snapshot","expected":"reject","reason_code":"update.length.mismatch"},
+  {"scenario":"mirror_snapshot_disagrees_with_timestamp","expected":"reject","reason_code":"update.hash.mismatch"},
+  {"scenario":"interrupted_update_before_atomic_swap","expected":"retain_previous","reason_code":"update.state.atomicity"},
+  {"scenario":"valid_root_rotation_old_and_new_thresholds","expected":"accept"},
+  {"scenario":"valid_consistent_snapshot","expected":"accept"}
+]

@@ -1,0 +1,6 @@
+schema_version = "1.0"
+
+[[packages]]
+id = "firefox"
+allow_backends = ["apt"]
+deny_backends = ["apt"]

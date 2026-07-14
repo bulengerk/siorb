@@ -1,0 +1,70 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "discord"
+name = "Discord"
+description = "Voice, video, and text communication client."
+aliases = ["discord-client"]
+deprecated_aliases = []
+search_terms = ["discord", "communication"]
+homepage = "https://discord.com/"
+upstream = "discord.com"
+license = "LicenseRef-Discord"
+categories = ["communication"]
+capabilities = ["communication"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Discord.Discord", "https://formulae.brew.sh/cask/discord", "https://flathub.org/apps/com.discordapp.Discord"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "discord-winget"
+platform = "windows"
+backend = "winget"
+package_id = "Discord.Discord"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=Discord.Discord"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "discord-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "discord"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/discord"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "discord-flatpak"
+platform = "linux"
+backend = "flatpak"
+package_id = "com.discordapp.Discord"
+trust = "sandboxed"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 30
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://flathub.org/apps/com.discordapp.Discord"
+reviewed_at = "2026-07-13"

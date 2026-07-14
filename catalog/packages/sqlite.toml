@@ -1,0 +1,130 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "sqlite"
+name = "SQLite"
+description = "Small self-contained relational database engine and CLI."
+aliases = ["sqlite3"]
+deprecated_aliases = []
+search_terms = ["sqlite", "databases"]
+homepage = "https://www.sqlite.org/"
+upstream = "sqlite.org"
+license = "blessing"
+categories = ["databases"]
+capabilities = ["data-storage"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=SQLite.SQLite", "https://formulae.brew.sh/formula/sqlite", "https://packages.debian.org/search?keywords=sqlite3&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=sqlite", "https://archlinux.org/packages/?q=sqlite", "https://software.opensuse.org/search?baseproject=ALL&q=sqlite3", "https://pkgs.alpinelinux.org/packages?name=sqlite"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "sqlite-winget"
+platform = "windows"
+backend = "winget"
+package_id = "SQLite.SQLite"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=SQLite.SQLite"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "sqlite-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "sqlite"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/sqlite"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "sqlite-apt"
+platform = "debian"
+backend = "apt"
+package_id = "sqlite3"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=sqlite3&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "sqlite-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "sqlite"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=sqlite"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "sqlite-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "sqlite"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=sqlite"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "sqlite-zypper"
+platform = "opensuse"
+backend = "zypper"
+package_id = "sqlite3"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://software.opensuse.org/search?baseproject=ALL&q=sqlite3"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "sqlite-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "sqlite"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=sqlite"
+reviewed_at = "2026-07-13"

@@ -1,0 +1,8 @@
+[
+  {"platform":"linux","mode":"0600","owner":"current_user","valid":true},
+  {"platform":"linux","mode":"0644","owner":"current_user","valid":false,"reason_code":"state.file.permissions"},
+  {"platform":"linux","mode":"0600","owner":"other_user","valid":false,"reason_code":"state.permissions.wrong_owner"},
+  {"platform":"windows","acl":["current_user:full","SYSTEM:full"],"valid":true},
+  {"platform":"windows","acl":["Everyone:write"],"valid":false,"reason_code":"state.permissions.too_open"},
+  {"platform":"macos","symlink":true,"valid":false,"reason_code":"state.path.symlink"}
+]

@@ -1,0 +1,70 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "vivaldi"
+name = "Vivaldi"
+description = "Customizable Chromium-based web browser."
+aliases = ["vivaldi-browser"]
+deprecated_aliases = []
+search_terms = ["vivaldi", "browsers"]
+homepage = "https://vivaldi.com/"
+upstream = "vivaldi.com"
+license = "LicenseRef-Vivaldi"
+categories = ["browsers"]
+capabilities = ["web-browser"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Vivaldi.Vivaldi", "https://formulae.brew.sh/cask/vivaldi", "https://packages.debian.org/search?keywords=vivaldi-stable&searchon=names&suite=stable&section=all"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "vivaldi-winget"
+platform = "windows"
+backend = "winget"
+package_id = "Vivaldi.Vivaldi"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=Vivaldi.Vivaldi"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "vivaldi-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "vivaldi"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/vivaldi"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "vivaldi-apt"
+platform = "debian"
+backend = "apt"
+package_id = "vivaldi-stable"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=vivaldi-stable&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"

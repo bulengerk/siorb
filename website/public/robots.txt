@@ -1,0 +1,4 @@
+# Generated from catalog/packages/*.toml. DO NOT EDIT; regenerate with: node website/build.mjs
+User-agent: *
+Allow: /
+Sitemap: https://example.invalid/siorb/sitemap.xml

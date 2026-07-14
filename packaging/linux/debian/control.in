@@ -1,0 +1,14 @@
+Package: siorb
+Version: @VERSION@
+Section: admin
+Priority: optional
+Architecture: @ARCH@
+Depends: libc6 (>= 2.35)
+Maintainer: Siorb contributors <noreply@github.com>
+Homepage: https://github.com/bulengerk/siorb
+Vcs-Git: https://github.com/bulengerk/siorb.git
+Vcs-Browser: https://github.com/bulengerk/siorb
+Rules-Requires-Root: no
+Description: offline-first semantic package orchestrator
+ Siorb resolves portable logical package intent into an auditable plan for
+ native package managers. It does not require a hosted Siorb service.

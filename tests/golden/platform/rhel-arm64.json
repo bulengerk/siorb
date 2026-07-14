@@ -1,0 +1,24 @@
+{
+  "os": "linux",
+  "os_version": "10.0",
+  "distribution": "rhel",
+  "distribution_version": "10.0",
+  "distribution_like": ["fedora"],
+  "architecture": "arm64",
+  "translated": false,
+  "libc": "glibc",
+  "backends": [
+    {
+      "id": "dnf",
+      "executable": "fixture-bin/dnf",
+      "version": "4.20.0",
+      "available": true,
+      "capabilities": ["query", "install", "remove", "upgrade", "repair", "verify", "non_interactive"]
+    }
+  ],
+  "interactive": false,
+  "elevation_available": true,
+  "supported_scopes": ["user", "system"],
+  "offline": false,
+  "restrictions": []
+}

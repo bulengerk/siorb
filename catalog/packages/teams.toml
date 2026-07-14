@@ -1,0 +1,70 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "teams"
+name = "Microsoft Teams"
+description = "Microsoft work communication and meeting client."
+aliases = ["microsoft-teams", "ms-teams"]
+deprecated_aliases = []
+search_terms = ["microsoft teams", "communication"]
+homepage = "https://www.microsoft.com/microsoft-teams/"
+upstream = "microsoft.com"
+license = "LicenseRef-Microsoft-Teams"
+categories = ["communication"]
+capabilities = ["communication"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Microsoft.Teams", "https://formulae.brew.sh/cask/microsoft-teams", "https://flathub.org/apps/com.github.IsmaelMartinez.teams_for_linux"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "teams-winget"
+platform = "windows"
+backend = "winget"
+package_id = "Microsoft.Teams"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=Microsoft.Teams"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "teams-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "microsoft-teams"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/microsoft-teams"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "teams-flatpak"
+platform = "linux"
+backend = "flatpak"
+package_id = "com.github.IsmaelMartinez.teams_for_linux"
+trust = "sandboxed"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 30
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://flathub.org/apps/com.github.IsmaelMartinez.teams_for_linux"
+reviewed_at = "2026-07-13"

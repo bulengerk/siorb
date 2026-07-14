@@ -1,0 +1,9 @@
+{
+  "_generated": "Generated from catalog/packages/*.toml. DO NOT EDIT; regenerate with: node website/build.mjs",
+  "name": "Siorb package catalog",
+  "short_name": "Siorb",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f7f8fc",
+  "theme_color": "#18124f"
+}

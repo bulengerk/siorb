@@ -1,0 +1,36 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package
+      Name="Siorb"
+      Manufacturer="Siorb contributors"
+      Version="$(SiorbVersion)"
+      UpgradeCode="645A12BA-75C0-4DA5-A53E-6D6BA1B91DA5"
+      Scope="perMachine">
+    <SummaryInformation Description="Offline-first semantic package orchestrator" />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of Siorb is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLFOLDER" Name="Siorb">
+        <Component Id="SiorbExecutable" Guid="A29BC32B-C609-47F2-94D2-CE5A0FCA8D5F">
+          <File Id="SiorbExe" Source="$(SiorbBinary)" KeyPath="yes" />
+          <Environment
+              Id="SiorbPath"
+              Name="PATH"
+              Value="[INSTALLFOLDER]"
+              Action="set"
+              Part="last"
+              Permanent="no"
+              System="yes" />
+        </Component>
+        <Component Id="SiorbLicense" Guid="C3C528D1-7D70-4538-98C4-51FAD1FF1EB0">
+          <File Id="License" Source="$(LicensePath)" KeyPath="yes" />
+        </Component>
+      </Directory>
+    </StandardDirectory>
+
+    <Feature Id="MainFeature" Title="Siorb CLI" Level="1">
+      <ComponentRef Id="SiorbExecutable" />
+      <ComponentRef Id="SiorbLicense" />
+    </Feature>
+  </Package>
+</Wix>

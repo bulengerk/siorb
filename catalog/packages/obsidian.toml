@@ -1,0 +1,70 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "obsidian"
+name = "Obsidian"
+description = "Local-first Markdown knowledge base and note-taking application."
+aliases = ["obsidian-notes"]
+deprecated_aliases = []
+search_terms = ["obsidian", "productivity"]
+homepage = "https://obsidian.md/"
+upstream = "obsidian.md"
+license = "LicenseRef-Obsidian"
+categories = ["productivity"]
+capabilities = ["productivity"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Obsidian.Obsidian", "https://formulae.brew.sh/cask/obsidian", "https://flathub.org/apps/md.obsidian.Obsidian"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "obsidian-winget"
+platform = "windows"
+backend = "winget"
+package_id = "Obsidian.Obsidian"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=Obsidian.Obsidian"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "obsidian-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "obsidian"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/obsidian"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "obsidian-flatpak"
+platform = "linux"
+backend = "flatpak"
+package_id = "md.obsidian.Obsidian"
+trust = "sandboxed"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 30
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://flathub.org/apps/md.obsidian.Obsidian"
+reviewed_at = "2026-07-13"

@@ -1,0 +1,55 @@
+{
+  "signed": {
+    "_type": "root",
+    "spec_version": "1.0.31",
+    "version": 2,
+    "expires": "2035-01-01T00:00:00Z",
+    "consistent_snapshot": true,
+    "keys": {
+      "aeb9cf505ef05f85c9becc96f93e422299b7f95e7e81e671cfb528f384a0ec7f": {
+        "keytype": "ed25519",
+        "scheme": "ed25519",
+        "keyval": {
+          "public": "ec172b93ad5e563bf4932c70e1245034c35467ef2efd4d64ebf819683467e2bf"
+        }
+      }
+    },
+    "roles": {
+      "root": {
+        "keyids": [
+          "aeb9cf505ef05f85c9becc96f93e422299b7f95e7e81e671cfb528f384a0ec7f"
+        ],
+        "threshold": 1
+      },
+      "targets": {
+        "keyids": [
+          "e45b8d1fab21a7a7550adbca559eade41e36a398f14a577f8766ec32bf237101"
+        ],
+        "threshold": 1
+      },
+      "snapshot": {
+        "keyids": [
+          "5e96befc607ef841c37eb7394ab3dd641fbffb1c86b08675facab7aec3412194"
+        ],
+        "threshold": 1
+      },
+      "timestamp": {
+        "keyids": [
+          "aeb9cf505ef05f85c9becc96f93e422299b7f95e7e81e671cfb528f384a0ec7f"
+        ],
+        "threshold": 1
+      }
+    },
+    "custom": {
+      "catalog": "siorb-community",
+      "environment": "development-fixture",
+      "offline_root": true
+    }
+  },
+  "signatures": [
+    {
+      "keyid": "aeb9cf505ef05f85c9becc96f93e422299b7f95e7e81e671cfb528f384a0ec7f",
+      "sig": "f3ebb751350b6e5f21330c79d68b2dfe9c709cfa32a036eab89b1caa8b00cefddfd50bb977561b6ac2b524f36d0d6fb2c2595fefd6e59a759bcccc0ffc282906"
+    }
+  ]
+}

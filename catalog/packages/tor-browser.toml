@@ -1,0 +1,70 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "tor-browser"
+name = "Tor Browser"
+description = "Privacy browser that routes traffic through the Tor network."
+aliases = ["torbrowser"]
+deprecated_aliases = []
+search_terms = ["tor browser", "browsers"]
+homepage = "https://www.torproject.org/download/"
+upstream = "torproject.org"
+license = "MPL-2.0"
+categories = ["browsers"]
+capabilities = ["web-browser"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=TorProject.TorBrowser", "https://formulae.brew.sh/cask/tor-browser", "https://flathub.org/apps/org.torproject.torbrowser-launcher"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "tor-browser-winget"
+platform = "windows"
+backend = "winget"
+package_id = "TorProject.TorBrowser"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=TorProject.TorBrowser"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "tor-browser-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "tor-browser"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/tor-browser"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "tor-browser-flatpak"
+platform = "linux"
+backend = "flatpak"
+package_id = "org.torproject.torbrowser-launcher"
+trust = "sandboxed"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 30
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://flathub.org/apps/org.torproject.torbrowser-launcher"
+reviewed_at = "2026-07-13"

@@ -1,0 +1,145 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "libreoffice"
+name = "LibreOffice"
+description = "Open-source office suite for documents, spreadsheets, and presentations."
+aliases = ["libre-office"]
+deprecated_aliases = []
+search_terms = ["libreoffice", "productivity"]
+homepage = "https://www.libreoffice.org/"
+upstream = "libreoffice.org"
+license = "MPL-2.0"
+categories = ["productivity"]
+capabilities = ["productivity"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=TheDocumentFoundation.LibreOffice", "https://formulae.brew.sh/cask/libreoffice", "https://packages.debian.org/search?keywords=libreoffice&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=libreoffice", "https://archlinux.org/packages/?q=libreoffice-fresh", "https://software.opensuse.org/search?baseproject=ALL&q=libreoffice", "https://pkgs.alpinelinux.org/packages?name=libreoffice", "https://flathub.org/apps/org.libreoffice.LibreOffice"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "libreoffice-winget"
+platform = "windows"
+backend = "winget"
+package_id = "TheDocumentFoundation.LibreOffice"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=TheDocumentFoundation.LibreOffice"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "libreoffice-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "libreoffice"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/libreoffice"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "libreoffice-apt"
+platform = "debian"
+backend = "apt"
+package_id = "libreoffice"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=libreoffice&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "libreoffice-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "libreoffice"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=libreoffice"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "libreoffice-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "libreoffice-fresh"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=libreoffice-fresh"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "libreoffice-zypper"
+platform = "opensuse"
+backend = "zypper"
+package_id = "libreoffice"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://software.opensuse.org/search?baseproject=ALL&q=libreoffice"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "libreoffice-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "libreoffice"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=libreoffice"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "libreoffice-flatpak"
+platform = "linux"
+backend = "flatpak"
+package_id = "org.libreoffice.LibreOffice"
+trust = "sandboxed"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 30
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://flathub.org/apps/org.libreoffice.LibreOffice"
+reviewed_at = "2026-07-13"

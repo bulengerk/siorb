@@ -1,0 +1,55 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "windows-terminal"
+name = "Windows Terminal"
+description = "Modern terminal application for command-line tools and shells on Windows."
+aliases = ["wt", "microsoft-terminal"]
+deprecated_aliases = []
+search_terms = ["windows terminal", "terminals"]
+homepage = "https://github.com/microsoft/terminal"
+upstream = "github.com"
+license = "MIT"
+categories = ["terminals"]
+capabilities = ["terminal-workflow"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Microsoft.WindowsTerminal", "https://community.chocolatey.org/packages/microsoft-windows-terminal"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "windows-terminal-winget"
+platform = "windows"
+backend = "winget"
+package_id = "Microsoft.WindowsTerminal"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=Microsoft.WindowsTerminal"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "windows-terminal-chocolatey"
+platform = "windows"
+backend = "chocolatey"
+package_id = "microsoft-windows-terminal"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://community.chocolatey.org/packages/microsoft-windows-terminal"
+reviewed_at = "2026-07-13"

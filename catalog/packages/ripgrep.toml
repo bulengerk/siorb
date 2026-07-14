@@ -1,0 +1,286 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "ripgrep"
+name = "ripgrep"
+description = "Fast recursive line-oriented search tool that respects ignore files."
+aliases = ["rg"]
+deprecated_aliases = []
+search_terms = ["ripgrep", "developer tools"]
+homepage = "https://github.com/BurntSushi/ripgrep"
+upstream = "github.com"
+license = "MIT OR Unlicense"
+categories = ["developer-tools"]
+capabilities = ["software-development"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature-or-pinned-sha256"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=BurntSushi.ripgrep.MSVC", "https://formulae.brew.sh/formula/ripgrep", "https://packages.debian.org/search?keywords=ripgrep&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=ripgrep", "https://archlinux.org/packages/?q=ripgrep", "https://software.opensuse.org/search?baseproject=ALL&q=ripgrep", "https://pkgs.alpinelinux.org/packages?name=ripgrep", "https://github.com/BurntSushi/ripgrep/releases/tag/15.1.0"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "ripgrep-artifact-windows-x86-64"
+platform = "windows"
+backend = "artifact"
+package_id = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-pc-windows-msvc.zip"
+trust = "verified-upstream"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64"]
+priority = 90
+requires_privilege = false
+provenance = "signed-release"
+evidence = "https://github.com/BurntSushi/ripgrep/releases/tag/15.1.0"
+reviewed_at = "2026-07-13"
+
+[sources.verification]
+sha256 = "124510b94b6baa3380d051fdf4650eaa80a302c876d611e9dba0b2e18d87493a"
+content_type = "application/octet-stream"
+max_bytes = 4194304
+kind = "portable-archive"
+format = "zip"
+archive_format = "zip"
+strip_components = 1
+install_arguments = []
+allowed_redirect_hosts = ["release-assets.githubusercontent.com", "objects.githubusercontent.com"]
+
+[[sources]]
+id = "ripgrep-artifact-windows-arm64"
+platform = "windows"
+backend = "artifact"
+package_id = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-aarch64-pc-windows-msvc.zip"
+trust = "verified-upstream"
+scope = "user"
+channel = "stable"
+architectures = ["aarch64"]
+priority = 90
+requires_privilege = false
+provenance = "signed-release"
+evidence = "https://github.com/BurntSushi/ripgrep/releases/tag/15.1.0"
+reviewed_at = "2026-07-13"
+
+[sources.verification]
+sha256 = "00d931fb5237c9696ca49308818edb76d8eb6fc132761cb2a1bd616b2df02f8e"
+content_type = "application/octet-stream"
+max_bytes = 4194304
+kind = "portable-archive"
+format = "zip"
+archive_format = "zip"
+strip_components = 1
+install_arguments = []
+allowed_redirect_hosts = ["release-assets.githubusercontent.com", "objects.githubusercontent.com"]
+
+[[sources]]
+id = "ripgrep-artifact-macos-x86-64"
+platform = "macos"
+backend = "artifact"
+package_id = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-apple-darwin.tar.gz"
+trust = "verified-upstream"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64"]
+priority = 90
+requires_privilege = false
+provenance = "signed-release"
+evidence = "https://github.com/BurntSushi/ripgrep/releases/tag/15.1.0"
+reviewed_at = "2026-07-13"
+
+[sources.verification]
+sha256 = "64811cb24e77cac3057d6c40b63ac9becf9082eedd54ca411b475b755d334882"
+content_type = "application/octet-stream"
+max_bytes = 4194304
+kind = "portable-archive"
+format = "tar.gz"
+archive_format = "tar.gz"
+strip_components = 1
+install_arguments = []
+allowed_redirect_hosts = ["release-assets.githubusercontent.com", "objects.githubusercontent.com"]
+
+[[sources]]
+id = "ripgrep-artifact-macos-arm64"
+platform = "macos"
+backend = "artifact"
+package_id = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-aarch64-apple-darwin.tar.gz"
+trust = "verified-upstream"
+scope = "user"
+channel = "stable"
+architectures = ["aarch64"]
+priority = 90
+requires_privilege = false
+provenance = "signed-release"
+evidence = "https://github.com/BurntSushi/ripgrep/releases/tag/15.1.0"
+reviewed_at = "2026-07-13"
+
+[sources.verification]
+sha256 = "378e973289176ca0c6054054ee7f631a065874a352bf43f0fa60ef079b6ba715"
+content_type = "application/octet-stream"
+max_bytes = 4194304
+kind = "portable-archive"
+format = "tar.gz"
+archive_format = "tar.gz"
+strip_components = 1
+install_arguments = []
+allowed_redirect_hosts = ["release-assets.githubusercontent.com", "objects.githubusercontent.com"]
+
+[[sources]]
+id = "ripgrep-artifact-linux-x86-64"
+platform = "linux"
+backend = "artifact"
+package_id = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-x86_64-unknown-linux-musl.tar.gz"
+trust = "verified-upstream"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64"]
+priority = 90
+requires_privilege = false
+provenance = "signed-release"
+evidence = "https://github.com/BurntSushi/ripgrep/releases/tag/15.1.0"
+reviewed_at = "2026-07-13"
+
+[sources.verification]
+sha256 = "1c9297be4a084eea7ecaedf93eb03d058d6faae29bbc57ecdaf5063921491599"
+content_type = "application/octet-stream"
+max_bytes = 4194304
+kind = "portable-archive"
+format = "tar.gz"
+archive_format = "tar.gz"
+strip_components = 1
+install_arguments = []
+allowed_redirect_hosts = ["release-assets.githubusercontent.com", "objects.githubusercontent.com"]
+
+[[sources]]
+id = "ripgrep-artifact-linux-arm64"
+platform = "linux"
+backend = "artifact"
+package_id = "https://github.com/BurntSushi/ripgrep/releases/download/15.1.0/ripgrep-15.1.0-aarch64-unknown-linux-gnu.tar.gz"
+trust = "verified-upstream"
+scope = "user"
+channel = "stable"
+architectures = ["aarch64"]
+priority = 90
+requires_privilege = false
+provenance = "signed-release"
+evidence = "https://github.com/BurntSushi/ripgrep/releases/tag/15.1.0"
+reviewed_at = "2026-07-13"
+
+[sources.verification]
+sha256 = "2b661c6ef508e902f388e9098d9c4c5aca72c87b55922d94abdba830b4dc885e"
+content_type = "application/octet-stream"
+max_bytes = 4194304
+kind = "portable-archive"
+format = "tar.gz"
+archive_format = "tar.gz"
+strip_components = 1
+install_arguments = []
+allowed_redirect_hosts = ["release-assets.githubusercontent.com", "objects.githubusercontent.com"]
+
+[[sources]]
+id = "ripgrep-winget"
+platform = "windows"
+backend = "winget"
+package_id = "BurntSushi.ripgrep.MSVC"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=BurntSushi.ripgrep.MSVC"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "ripgrep-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "ripgrep"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/ripgrep"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "ripgrep-apt"
+platform = "debian"
+backend = "apt"
+package_id = "ripgrep"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=ripgrep&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "ripgrep-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "ripgrep"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=ripgrep"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "ripgrep-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "ripgrep"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=ripgrep"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "ripgrep-zypper"
+platform = "opensuse"
+backend = "zypper"
+package_id = "ripgrep"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://software.opensuse.org/search?baseproject=ALL&q=ripgrep"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "ripgrep-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "ripgrep"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=ripgrep"
+reviewed_at = "2026-07-13"

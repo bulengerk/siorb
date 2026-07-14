@@ -1,0 +1,64 @@
+{
+  "signed": {
+    "type": "root",
+    "spec_version": "1.0",
+    "version": 1,
+    "expires_unix": 2051222400,
+    "consistent_snapshot": true,
+    "keys": {
+      "dev-root-a": {
+        "scheme": "ed25519",
+        "public": "ekfYicI9n5N7TAPDF/8xS0rm/RFblFO99wZPE4PB+Oo="
+      },
+      "dev-root-b": {
+        "scheme": "ed25519",
+        "public": "J0gNFpsHxPFmIU0gzjZvpS7jt8u5XqlFWPpN7aaZFJA="
+      },
+      "dev-snapshot": {
+        "scheme": "ed25519",
+        "public": "0hMm4lqd/g7iqkj4mTfeBGQF78e48uALw7LAaK3FiTQ="
+      },
+      "dev-targets": {
+        "scheme": "ed25519",
+        "public": "ZnjHjIxCMmUFohqrC0SMiUelQeIkDgpxC77oXs6PRyI="
+      },
+      "dev-timestamp": {
+        "scheme": "ed25519",
+        "public": "VQZONBNjloBr0TaPsZoS2JAVcDDHUt7Oox7LvkTrk4Y="
+      }
+    },
+    "roles": {
+      "root": {
+        "key_ids": [
+          "dev-root-a",
+          "dev-root-b"
+        ],
+        "threshold": 2
+      },
+      "snapshot": {
+        "key_ids": [
+          "dev-snapshot"
+        ],
+        "threshold": 1
+      },
+      "targets": {
+        "key_ids": [
+          "dev-targets"
+        ],
+        "threshold": 1
+      },
+      "timestamp": {
+        "key_ids": [
+          "dev-timestamp"
+        ],
+        "threshold": 1
+      }
+    }
+  },
+  "signatures": [
+    {
+      "key_id": "dev-root-a",
+      "signature": "+gIZ4fO9YERrmrXjcmkxij2P7x66YOfQSgtb+Pb2pkDBPjO75KOJdgg+qEJcAzjkY6zylUJzlbgKobiN2wg7Dw=="
+    }
+  ]
+}

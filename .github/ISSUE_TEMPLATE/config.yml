@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Private security report
+    url: https://github.com/bulengerk/siorb/security/advisories/new
+    about: Report verification, privilege, source-selection, or secret exposure vulnerabilities privately.

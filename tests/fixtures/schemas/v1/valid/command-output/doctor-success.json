@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "command": "doctor",
+  "status": "success",
+  "correlation_id": "siorb-687544b0-7d0-0",
+  "platform": {
+    "os": "linux",
+    "os_version": "24.04",
+    "distribution": "ubuntu",
+    "distribution_version": "24.04",
+    "distribution_like": ["debian"],
+    "architecture": "x86_64",
+    "translated": false,
+    "libc": "glibc",
+    "backends": [
+      {
+        "id": "apt",
+        "available": true,
+        "version": "2.7.14",
+        "executable": "/usr/bin/apt-get",
+        "capabilities": ["query", "install", "remove", "upgrade", "non_interactive"]
+      }
+    ],
+    "interactive": false,
+    "elevation_available": true,
+    "supported_scopes": ["user", "system", "auto"],
+    "offline": true,
+    "restrictions": []
+  },
+  "catalog": {
+    "id": "bundled",
+    "version": 1,
+    "fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "verified": true,
+    "expires_unix": 1786492800,
+    "source": "embedded"
+  },
+  "policy": null,
+  "results": {
+    "healthy": true,
+    "remediations": []
+  },
+  "warnings": [],
+  "errors": []
+}

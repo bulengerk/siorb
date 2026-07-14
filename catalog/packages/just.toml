@@ -1,0 +1,115 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "just"
+name = "just"
+description = "Command runner and project-specific task tool."
+aliases = ["just-command-runner"]
+deprecated_aliases = []
+search_terms = ["just", "developer tools"]
+homepage = "https://just.systems/"
+upstream = "just.systems"
+license = "CC0-1.0"
+categories = ["developer-tools"]
+capabilities = ["software-development"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Casey.Just", "https://formulae.brew.sh/formula/just", "https://packages.debian.org/search?keywords=just&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=just", "https://archlinux.org/packages/?q=just", "https://pkgs.alpinelinux.org/packages?name=just"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "just-winget"
+platform = "windows"
+backend = "winget"
+package_id = "Casey.Just"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=Casey.Just"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "just-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "just"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/just"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "just-apt"
+platform = "debian"
+backend = "apt"
+package_id = "just"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=just&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "just-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "just"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=just"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "just-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "just"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=just"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "just-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "just"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=just"
+reviewed_at = "2026-07-13"

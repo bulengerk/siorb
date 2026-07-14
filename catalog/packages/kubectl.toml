@@ -1,0 +1,130 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "kubectl"
+name = "kubectl"
+description = "Official command-line client for Kubernetes clusters."
+aliases = ["kubernetes-cli"]
+deprecated_aliases = []
+search_terms = ["kubectl", "containers"]
+homepage = "https://kubernetes.io/docs/reference/kubectl/"
+upstream = "kubernetes.io"
+license = "Apache-2.0"
+categories = ["containers"]
+capabilities = ["container-workflow"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Kubernetes.kubectl", "https://formulae.brew.sh/formula/kubectl", "https://packages.debian.org/search?keywords=kubectl&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=kubernetes-client", "https://archlinux.org/packages/?q=kubectl", "https://software.opensuse.org/search?baseproject=ALL&q=kubernetes-client", "https://pkgs.alpinelinux.org/packages?name=kubectl"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "kubectl-winget"
+platform = "windows"
+backend = "winget"
+package_id = "Kubernetes.kubectl"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=Kubernetes.kubectl"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "kubectl-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "kubectl"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/kubectl"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "kubectl-apt"
+platform = "debian"
+backend = "apt"
+package_id = "kubectl"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=kubectl&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "kubectl-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "kubernetes-client"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=kubernetes-client"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "kubectl-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "kubectl"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=kubectl"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "kubectl-zypper"
+platform = "opensuse"
+backend = "zypper"
+package_id = "kubernetes-client"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://software.opensuse.org/search?baseproject=ALL&q=kubernetes-client"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "kubectl-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "kubectl"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=kubectl"
+reviewed_at = "2026-07-13"

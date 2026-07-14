@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.siorb.dev/v1/receipt.schema.json",
+  "title": "Siorb installation receipt v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "logical_id",
+    "native_id",
+    "backend",
+    "source_id",
+    "requested_version",
+    "observed_version",
+    "scope",
+    "channel",
+    "architecture",
+    "catalog_fingerprint",
+    "policy_fingerprint",
+    "installed_at_unix",
+    "verification",
+    "owned_files",
+    "transaction_id",
+    "origin"
+  ],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "logical_id": { "$ref": "common.schema.json#/$defs/identifier" },
+    "native_id": { "type": "string", "minLength": 1 },
+    "backend": { "$ref": "common.schema.json#/$defs/identifier" },
+    "source_id": { "$ref": "common.schema.json#/$defs/identifier" },
+    "requested_version": { "type": ["string", "null"] },
+    "observed_version": { "type": ["string", "null"] },
+    "scope": { "$ref": "common.schema.json#/$defs/scope" },
+    "channel": { "type": "string", "minLength": 1 },
+    "architecture": { "type": "string", "minLength": 1 },
+    "catalog_fingerprint": { "$ref": "common.schema.json#/$defs/sha256" },
+    "policy_fingerprint": {
+      "oneOf": [
+        { "$ref": "common.schema.json#/$defs/sha256" },
+        { "type": "null" }
+      ]
+    },
+    "installed_at_unix": { "type": "integer", "minimum": 0 },
+    "verification": {
+      "type": "object",
+      "required": ["status", "checked_at_unix", "reason"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "description": "Stable VerificationStatus value. A successful native mutation receipt is committed only as verified; backend-completed is a non-success state.",
+          "enum": ["verified", "failed", "unavailable", "backend-completed"]
+        },
+        "checked_at_unix": { "type": "integer", "minimum": 0 },
+        "reason": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "owned_files": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "transaction_id": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "origin": { "type": "string", "enum": ["installed", "adopted", "observed"] }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.siorb.dev/v1/bundle-lock.schema.json",
+  "title": "Siorb platform-specific bundle lock v1",
+  "type": "object",
+  "required": ["schema_version", "intent_fingerprint", "profile", "policy_references", "catalog_version", "catalog_fingerprint", "policy_fingerprint", "platform_fingerprint", "platform_os", "platform_architecture", "packages"],
+  "properties": {
+    "schema_version": { "$ref": "common.schema.json#/$defs/schema_version" },
+    "intent_fingerprint": { "$ref": "common.schema.json#/$defs/sha256" },
+    "profile": { "type": ["string", "null"] },
+    "policy_references": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128,
+        "pattern": "^[A-Za-z0-9._-]+$"
+      },
+      "uniqueItems": true
+    },
+    "catalog_version": { "type": "integer", "minimum": 1 },
+    "catalog_fingerprint": { "$ref": "common.schema.json#/$defs/sha256" },
+    "policy_fingerprint": { "$ref": "common.schema.json#/$defs/sha256" },
+    "platform_fingerprint": { "$ref": "common.schema.json#/$defs/sha256" },
+    "platform_os": { "type": "string", "enum": ["windows", "macos", "linux", "unknown"] },
+    "platform_architecture": { "$ref": "common.schema.json#/$defs/architecture" },
+    "packages": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/locked_package" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "locked_package": {
+      "type": "object",
+      "required": ["logical_id", "desired_state", "source_id", "backend", "native_id", "version", "scope", "channel", "explanation_fingerprint"],
+      "properties": {
+        "logical_id": { "type": "string" },
+        "desired_state": { "type": "string", "enum": ["present", "absent"] },
+        "source_id": { "type": "string" },
+        "backend": { "type": "string" },
+        "native_id": { "type": "string" },
+        "version": { "type": ["string", "null"] },
+        "observed_version": { "type": ["string", "null"] },
+        "scope": { "type": "string", "enum": ["user", "system", "auto"] },
+        "channel": { "type": "string", "enum": ["stable", "beta", "nightly"] },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[A-Za-z0-9._-]+$"
+          },
+          "uniqueItems": true
+        },
+        "on_conflict": {
+          "type": "string",
+          "enum": ["error", "prefer-installed", "prefer-bundle"]
+        },
+        "verification": { "$ref": "#/$defs/verification_material" },
+        "explanation_fingerprint": { "$ref": "common.schema.json#/$defs/sha256" }
+      },
+      "additionalProperties": false
+    },
+    "verification_material": {
+      "type": "object",
+      "required": ["provenance", "evidence", "sha256", "signer", "content_type", "max_bytes"],
+      "properties": {
+        "provenance": { "type": "string" },
+        "evidence": { "type": "string" },
+        "sha256": {
+          "oneOf": [
+            { "$ref": "common.schema.json#/$defs/sha256" },
+            { "type": "null" }
+          ]
+        },
+        "signer": { "type": ["string", "null"] },
+        "content_type": { "type": ["string", "null"] },
+        "max_bytes": { "type": ["integer", "null"], "minimum": 1, "maximum": 17179869184 }
+      },
+      "additionalProperties": false
+    }
+  }
+}

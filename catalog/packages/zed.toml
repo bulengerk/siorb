@@ -1,0 +1,55 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "zed"
+name = "Zed"
+description = "High-performance collaborative code editor."
+aliases = ["zed-editor"]
+deprecated_aliases = []
+search_terms = ["zed", "editors"]
+homepage = "https://zed.dev/"
+upstream = "zed.dev"
+license = "GPL-3.0-or-later"
+categories = ["editors"]
+capabilities = ["text-editing"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://formulae.brew.sh/cask/zed", "https://flathub.org/apps/dev.zed.Zed"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "zed-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "zed"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/zed"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "zed-flatpak"
+platform = "linux"
+backend = "flatpak"
+package_id = "dev.zed.Zed"
+trust = "sandboxed"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 30
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://flathub.org/apps/dev.zed.Zed"
+reviewed_at = "2026-07-13"

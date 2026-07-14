@@ -1,0 +1,70 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "zoom"
+name = "Zoom Workplace"
+description = "Video meetings and collaboration desktop client."
+aliases = ["zoom-client", "zoom-us"]
+deprecated_aliases = []
+search_terms = ["zoom workplace", "communication"]
+homepage = "https://zoom.us/download"
+upstream = "zoom.us"
+license = "LicenseRef-Zoom"
+categories = ["communication"]
+capabilities = ["communication"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Zoom.Zoom", "https://formulae.brew.sh/cask/zoom", "https://flathub.org/apps/us.zoom.Zoom"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "zoom-winget"
+platform = "windows"
+backend = "winget"
+package_id = "Zoom.Zoom"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=Zoom.Zoom"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "zoom-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "zoom"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/zoom"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "zoom-flatpak"
+platform = "linux"
+backend = "flatpak"
+package_id = "us.zoom.Zoom"
+trust = "sandboxed"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 30
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://flathub.org/apps/us.zoom.Zoom"
+reviewed_at = "2026-07-13"

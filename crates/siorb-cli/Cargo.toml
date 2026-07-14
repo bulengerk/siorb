@@ -1,0 +1,39 @@
+[package]
+name = "siorb-cli"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[[bin]]
+name = "siorb"
+path = "src/main.rs"
+
+[dependencies]
+clap.workspace = true
+clap_complete.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+siorb-backends = { path = "../siorb-backends" }
+siorb-bundle = { path = "../siorb-bundle" }
+siorb-catalog = { path = "../siorb-catalog" }
+siorb-core = { path = "../siorb-core" }
+siorb-executor = { path = "../siorb-executor" }
+siorb-planner = { path = "../siorb-planner" }
+siorb-platform = { path = "../siorb-platform" }
+siorb-policy = { path = "../siorb-policy" }
+siorb-resolver = { path = "../siorb-resolver" }
+siorb-state = { path = "../siorb-state" }
+siorb-update = { path = "../siorb-update" }
+toml.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+atomicwrites = "0.4.4"
+
+[dev-dependencies]
+tempfile.workspace = true
+
+[lints]
+workspace = true

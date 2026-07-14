@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.siorb.dev/v1/common.schema.json",
+  "title": "Siorb JSON v1 common definitions",
+  "$defs": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z0-9](?:[a-z0-9._-]{0,126}[a-z0-9])?$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "correlation_id": {
+      "type": "string",
+      "pattern": "^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|siorb-[0-9a-f]+-[0-9a-f]+-[0-9a-f]+)$"
+    },
+    "scope": {
+      "type": "string",
+      "enum": ["user", "system", "auto"]
+    },
+    "architecture": {
+      "type": "string",
+      "enum": ["x86_64", "arm64", "x86", "arm", "unknown"]
+    },
+    "backend_fact": {
+      "type": "object",
+      "required": ["id", "executable", "version", "available", "capabilities"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "executable": { "type": "string", "minLength": 1 },
+        "version": { "type": ["string", "null"] },
+        "available": { "type": "boolean" },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["search", "query", "install", "remove", "upgrade", "repair", "verify", "non_interactive"]
+          },
+          "uniqueItems": true
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "available": { "const": true } } },
+          "then": {
+            "properties": {
+              "version": { "type": "string", "minLength": 1 },
+              "capabilities": { "minItems": 1 }
+            }
+          },
+          "else": {
+            "properties": {
+              "capabilities": { "maxItems": 0 }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "platform_context": {
+      "type": "object",
+      "required": [
+        "os",
+        "os_version",
+        "distribution",
+        "distribution_version",
+        "distribution_like",
+        "architecture",
+        "translated",
+        "libc",
+        "backends",
+        "interactive",
+        "elevation_available",
+        "supported_scopes",
+        "offline",
+        "restrictions"
+      ],
+      "properties": {
+        "os": {
+          "type": "string",
+          "enum": ["windows", "macos", "linux", "unknown"]
+        },
+        "os_version": { "type": ["string", "null"] },
+        "distribution": { "type": ["string", "null"] },
+        "distribution_version": { "type": ["string", "null"] },
+        "distribution_like": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "architecture": { "$ref": "#/$defs/architecture" },
+        "translated": { "type": "boolean" },
+        "libc": { "type": ["string", "null"] },
+        "backends": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/backend_fact" }
+        },
+        "interactive": { "type": "boolean" },
+        "elevation_available": { "type": "boolean" },
+        "supported_scopes": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/scope" },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "offline": { "type": "boolean" },
+        "restrictions": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "catalog_identity": {
+      "type": "object",
+      "required": ["id", "version", "fingerprint", "verified", "expires_unix", "source"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "version": { "type": "integer", "minimum": 1 },
+        "fingerprint": { "$ref": "#/$defs/sha256" },
+        "verified": { "type": "boolean" },
+        "expires_unix": { "type": ["integer", "null"], "minimum": 0 },
+        "source": { "$ref": "#/$defs/non_empty_string" }
+      },
+      "additionalProperties": false
+    },
+    "policy_identity": {
+      "type": "object",
+      "required": ["id", "fingerprint", "layers"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "fingerprint": { "$ref": "#/$defs/sha256" },
+        "layers": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "diagnostic": {
+      "type": "object",
+      "required": ["kind", "reason_code", "message", "state_changed", "next_action"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["invalid_input", "unresolved_package", "ambiguous_package", "policy_rejected", "catalog_failure", "backend_absent", "privilege_denied", "backend_failure", "verification_failure", "partial_completion", "internal"]
+        },
+        "reason_code": { "type": "string", "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)*$" },
+        "message": { "$ref": "#/$defs/non_empty_string" },
+        "state_changed": { "type": "boolean" },
+        "next_action": { "$ref": "#/$defs/non_empty_string" },
+        "detail": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "plan_warning": {
+      "type": "object",
+      "required": ["reason_code", "message"],
+      "properties": {
+        "reason_code": { "type": "string", "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)*$" },
+        "message": { "$ref": "#/$defs/non_empty_string" },
+        "requires_confirmation": { "type": "boolean", "default": false }
+      },
+      "additionalProperties": false
+    }
+  }
+}

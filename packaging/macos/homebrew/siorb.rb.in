@@ -1,0 +1,25 @@
+class Siorb < Formula
+  desc "Offline-first semantic package orchestrator"
+  homepage "https://github.com/bulengerk/siorb"
+  version "@VERSION@"
+  license "Apache-2.0"
+  depends_on :macos
+
+  on_arm do
+    url "@AARCH64_URL@"
+    sha256 "@AARCH64_SHA256@"
+  end
+
+  on_intel do
+    url "@X86_64_URL@"
+    sha256 "@X86_64_SHA256@"
+  end
+
+  def install
+    bin.install "siorb"
+  end
+
+  test do
+    assert_match version.to_s, shell_output("#{bin}/siorb version")
+  end
+end

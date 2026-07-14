@@ -1,0 +1,85 @@
+[
+  {
+    "name": "linux dry-run produces an apt plan without executing",
+    "platform_golden": "tests/golden/platform/debian-x86_64.json",
+    "argv": ["install", "firefox", "--dry-run", "--json", "--non-interactive"],
+    "fake_backend": {"id":"apt","expected_invocations":0},
+    "requires_mutation": false,
+    "expected": {"exit_code":0,"status":"planned","state_changed":false,"plan_backend":"apt"}
+  },
+  {
+    "name": "windows dry-run produces an exact winget plan",
+    "platform_golden": "tests/golden/platform/windows-x86_64.json",
+    "argv": ["install", "firefox", "--dry-run", "--json", "--non-interactive", "--accept-agreements"],
+    "fake_backend": {"id":"winget","expected_invocations":0},
+    "requires_mutation": false,
+    "expected": {"exit_code":0,"status":"planned","state_changed":false,"plan_backend":"winget"}
+  },
+  {
+    "name": "macos dry-run selects the native cask",
+    "platform_golden": "tests/golden/platform/macos-arm64.json",
+    "argv": ["plan", "install", "firefox", "--json", "--non-interactive"],
+    "fake_backend": {"id":"brew","expected_invocations":0},
+    "requires_mutation": false,
+    "expected": {"exit_code":0,"status":"planned","state_changed":false,"plan_backend":"homebrew-cask"}
+  },
+  {
+    "name": "offline search uses only the bundled catalog",
+    "platform_golden": "tests/golden/platform/ubuntu-arm64.json",
+    "argv": ["search", "browser", "--offline", "--json", "--non-interactive"],
+    "fake_backend": null,
+    "network": {"allowed_requests":0},
+    "requires_mutation": false,
+    "expected": {"exit_code":0,"status":"success","state_changed":false}
+  },
+  {
+    "name": "non-interactive winget refuses unaccepted agreements",
+    "platform_golden": "tests/golden/platform/windows-x86_64.json",
+    "argv": ["install", "firefox", "--dry-run", "--json", "--non-interactive"],
+    "fake_backend": {"id":"winget","expected_invocations":0},
+    "requires_mutation": false,
+    "expected": {"exit_code":2,"status":"error","state_changed":false,"reason_code":"backend.agreement.required"}
+  },
+  {
+    "name": "option-like shorthand is invalid input",
+    "platform_golden": "tests/golden/platform/debian-x86_64.json",
+    "argv": ["--help=firefox"],
+    "fake_backend": null,
+    "requires_mutation": false,
+    "expected": {"exit_code":2,"status":"error","state_changed":false,"reason_code":"input.invalid"}
+  },
+  {
+    "name": "ambiguous logical name never mutates",
+    "platform_golden": "tests/golden/platform/debian-x86_64.json",
+    "argv": ["code", "--json", "--non-interactive", "--yes"],
+    "catalog_fixture": "tests/fixtures/catalog/ambiguous-code.json",
+    "fake_backend": {"id":"apt","expected_invocations":0},
+    "requires_mutation": false,
+    "expected": {"exit_code":11,"status":"error","state_changed":false,"reason_code":"resolution.package.ambiguous"}
+  },
+  {
+    "name": "backend failure is typed and bounded",
+    "platform_golden": "tests/golden/platform/debian-x86_64.json",
+    "argv": ["install", "firefox", "--json", "--non-interactive", "--yes"],
+    "fake_backend": {"id":"apt","expected_invocations":1,"exit_code":100,"stderr":"network unavailable\n","output_bytes":20},
+    "requires_mutation": false,
+    "expected": {"exit_code":32,"status":"error","state_changed":false,"reason_code":"backend.network"}
+  },
+  {
+    "name": "fake native install verifies state and commits a receipt",
+    "platform_golden": "tests/golden/platform/debian-x86_64.json",
+    "argv": ["install", "firefox", "--json", "--non-interactive", "--yes"],
+    "fake_backend": {"id":"apt","expected_invocations":2,"query_stdout":"Version: 128.0.3"},
+    "requires_mutation": false,
+    "expected": {"exit_code":0,"status":"completed","state_changed":true,"plan_backend":"apt"}
+  },
+  {
+    "name": "interrupted transaction is reported for reconciliation",
+    "platform_golden": "tests/golden/platform/debian-x86_64.json",
+    "argv": ["reconcile", "--json", "--non-interactive", "--dry-run"],
+    "state_fixture": "tests/fixtures/state/interrupted-transaction.jsonl",
+    "fake_backend": {"id":"apt","expected_invocations":0},
+    "requires_mutation": false,
+    "expected": {"exit_code":0,"status":"planned","state_changed":false}
+  }
+]

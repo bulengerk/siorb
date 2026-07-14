@@ -1,0 +1,55 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "notion"
+name = "Notion"
+description = "Workspace client for notes, documents, and project collaboration."
+aliases = ["notion-desktop"]
+deprecated_aliases = []
+search_terms = ["notion", "productivity"]
+homepage = "https://www.notion.so/desktop"
+upstream = "notion.so"
+license = "LicenseRef-Notion"
+categories = ["productivity"]
+capabilities = ["productivity"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Notion.Notion", "https://formulae.brew.sh/cask/notion"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "notion-winget"
+platform = "windows"
+backend = "winget"
+package_id = "Notion.Notion"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=Notion.Notion"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "notion-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "notion"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/notion"
+reviewed_at = "2026-07-13"

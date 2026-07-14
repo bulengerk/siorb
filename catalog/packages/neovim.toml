@@ -1,0 +1,130 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "neovim"
+name = "Neovim"
+description = "Hyperextensible Vim-based text editor with a modern API."
+aliases = ["nvim"]
+deprecated_aliases = []
+search_terms = ["neovim", "editors"]
+homepage = "https://neovim.io/"
+upstream = "neovim.io"
+license = "Apache-2.0"
+categories = ["editors"]
+capabilities = ["text-editing"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Neovim.Neovim", "https://formulae.brew.sh/formula/neovim", "https://packages.debian.org/search?keywords=neovim&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=neovim", "https://archlinux.org/packages/?q=neovim", "https://software.opensuse.org/search?baseproject=ALL&q=neovim", "https://pkgs.alpinelinux.org/packages?name=neovim"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "neovim-winget"
+platform = "windows"
+backend = "winget"
+package_id = "Neovim.Neovim"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=Neovim.Neovim"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "neovim-homebrew-formula"
+platform = "macos"
+backend = "homebrew-formula"
+package_id = "neovim"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/formula/neovim"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "neovim-apt"
+platform = "debian"
+backend = "apt"
+package_id = "neovim"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.debian.org/search?keywords=neovim&searchon=names&suite=stable&section=all"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "neovim-dnf"
+platform = "fedora"
+backend = "dnf"
+package_id = "neovim"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=neovim"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "neovim-pacman"
+platform = "arch"
+backend = "pacman"
+package_id = "neovim"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://archlinux.org/packages/?q=neovim"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "neovim-zypper"
+platform = "opensuse"
+backend = "zypper"
+package_id = "neovim"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://software.opensuse.org/search?baseproject=ALL&q=neovim"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "neovim-apk"
+platform = "alpine"
+backend = "apk"
+package_id = "neovim"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://pkgs.alpinelinux.org/packages?name=neovim"
+reviewed_at = "2026-07-13"

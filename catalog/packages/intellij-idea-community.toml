@@ -1,0 +1,70 @@
+# Siorb package manifest. Human-reviewable source of truth.
+schema_version = "1"
+id = "intellij-idea-community"
+name = "IntelliJ IDEA Community"
+description = "Open-source Java and Kotlin integrated development environment."
+aliases = ["intellij", "idea-community"]
+deprecated_aliases = []
+search_terms = ["intellij idea community", "editors"]
+homepage = "https://www.jetbrains.com/idea/"
+upstream = "jetbrains.com"
+license = "Apache-2.0"
+categories = ["editors"]
+capabilities = ["text-editing"]
+risk = "standard"
+channels = ["stable"]
+conflicts = []
+replacements = []
+dependencies = []
+optional_relationships = []
+version_normalization = "semver-loose"
+verification = "backend-signature"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=JetBrains.IntelliJIDEA.Community", "https://formulae.brew.sh/cask/intellij-idea-ce", "https://flathub.org/apps/com.jetbrains.IntelliJ-IDEA-Community"]
+reviewed_at = "2026-07-13"
+deprecated = false
+maintainers = ["siorb-catalog-maintainers"]
+
+[[sources]]
+id = "intellij-idea-community-winget"
+platform = "windows"
+backend = "winget"
+package_id = "JetBrains.IntelliJIDEA.Community"
+trust = "native"
+scope = "auto"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://github.com/microsoft/winget-pkgs/search?q=JetBrains.IntelliJIDEA.Community"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "intellij-idea-community-homebrew-cask"
+platform = "macos"
+backend = "homebrew-cask"
+package_id = "intellij-idea-ce"
+trust = "native"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://formulae.brew.sh/cask/intellij-idea-ce"
+reviewed_at = "2026-07-13"
+
+[[sources]]
+id = "intellij-idea-community-flatpak"
+platform = "linux"
+backend = "flatpak"
+package_id = "com.jetbrains.IntelliJ-IDEA-Community"
+trust = "sandboxed"
+scope = "user"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 30
+requires_privilege = false
+provenance = "backend-repository"
+evidence = "https://flathub.org/apps/com.jetbrains.IntelliJ-IDEA-Community"
+reviewed_at = "2026-07-13"
