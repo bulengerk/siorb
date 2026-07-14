@@ -641,12 +641,27 @@ mod tests {
     use proptest::prelude::*;
     use siorb_catalog::{ArtifactFormat, ArtifactKind, ArtifactVerification, PackageSource};
 
+    fn native_test_backend() -> (&'static str, &'static str, &'static str) {
+        if cfg!(target_os = "windows") {
+            (
+                "windows",
+                "chocolatey",
+                r"C:\ProgramData\chocolatey\bin\choco.exe",
+            )
+        } else {
+            ("linux", "apt", "/usr/bin/apt-get")
+        }
+    }
+
     fn source() -> PackageSource {
+        let (platform, backend, _) = native_test_backend();
         PackageSource {
             id: "ubuntu-apt".to_owned(),
-            platform: "linux".to_owned(),
-            distributions: vec!["ubuntu".to_owned()],
-            backend: "apt".to_owned(),
+            platform: platform.to_owned(),
+            distributions: (platform == "linux")
+                .then(|| vec!["ubuntu".to_owned()])
+                .unwrap_or_default(),
+            backend: backend.to_owned(),
             package_id: "ripgrep".to_owned(),
             trust: "native_trusted".to_owned(),
             scope: "system".to_owned(),
@@ -675,9 +690,10 @@ mod tests {
     }
 
     fn backend() -> BackendInfo {
+        let (_, id, executable) = native_test_backend();
         BackendInfo {
-            id: "apt".to_owned(),
-            executable: "/usr/bin/apt-get".to_owned(),
+            id: id.to_owned(),
+            executable: executable.to_owned(),
             version: Some("test".to_owned()),
             available: true,
             capabilities: vec!["query_installed".to_owned()],
