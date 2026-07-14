@@ -523,7 +523,10 @@ fn noninteractive_yes_reaches_the_backend_under_default_policy() {
 
 fn platform_test_backend() -> Option<(&'static str, &'static str, &'static str)> {
     if cfg!(target_os = "windows") {
-        Some(("winget.exe", "firefox-winget", "winget"))
+        // A Windows backend probe requires a valid PE executable. The
+        // deterministic text fixture used below is intentionally only an
+        // executable on Unix, so do not pretend it can stand in for winget.
+        None
     } else if cfg!(target_os = "macos") {
         Some(("brew", "firefox-homebrew-cask", "homebrew-cask"))
     } else if cfg!(target_os = "linux") {
