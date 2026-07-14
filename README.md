@@ -139,3 +139,13 @@ Native tool behavior still varies by OS version and upstream repository. Siorb r
 - **Validation:** Passed native Linux tests and strict Clippy plus cross-target strict Clippy for Windows and macOS; catalog, site, packaging, and repository gates are queued below.
 - **Known limitations or blockers:** GitHub Pages is currently disabled in repository settings and must be enabled with GitHub Actions as its source by a repository owner.
 - **Next starting point:** Push these repairs, enable Pages if still disabled, then let Dependabot rebase and rerun its open updates.
+
+### 2026-07-14 07:48 UTC — 019f5d0a-6e2c-7b73-a060-91c6dc9dcca2
+
+- **Objective:** Diagnose the remaining native Windows state-store checks on refreshed Dependabot pull requests.
+- **Work completed:** Added failure-context output to the two state-store assertions that had previously hidden the underlying Windows error.
+- **Key files changed:** `crates/siorb-cli/src/lib.rs` and `README.md`.
+- **Decisions:** Kept the assertions strict while making failures actionable from GitHub Actions logs.
+- **Validation:** Passed formatting, the CLI unit suite, and `cargo xtask verify` after recording this entry.
+- **Known limitations or blockers:** A native Windows rerun is required to report and then resolve the remaining platform-specific initialization error.
+- **Next starting point:** Push this diagnostic improvement, refresh a Dependabot branch, and inspect the native Windows test output.
