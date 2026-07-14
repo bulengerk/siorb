@@ -2986,6 +2986,14 @@ fn catalog_io_error(message: &str) -> SiorbError {
 mod tests {
     use super::*;
 
+    fn state_tempdir() -> std::io::Result<tempfile::TempDir> {
+        if cfg!(target_os = "macos") {
+            tempfile::tempdir_in(Path::new(env!("CARGO_MANIFEST_DIR")).canonicalize()?)
+        } else {
+            tempfile::tempdir()
+        }
+    }
+
     #[test]
     fn shorthand_inserts_install_for_exact_first_token() {
         let values =
@@ -3006,7 +3014,7 @@ mod tests {
 
     #[test]
     fn authenticated_catalog_cache_rejects_payload_tampering() {
-        let temporary = tempfile::tempdir();
+        let temporary = state_tempdir();
         assert!(temporary.is_ok());
         let Some(temporary) = temporary.ok() else {
             return;
@@ -3081,7 +3089,7 @@ mod tests {
 
     #[test]
     fn catalog_updates_are_serialized_by_a_private_lock() {
-        let temporary = tempfile::tempdir();
+        let temporary = state_tempdir();
         assert!(temporary.is_ok());
         let Some(temporary) = temporary.ok() else {
             return;

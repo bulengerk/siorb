@@ -989,11 +989,19 @@ fn state_error(reason: &str, message: String) -> SiorbError {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use tempfile::tempdir;
+    use tempfile::{TempDir, tempdir};
+
+    fn state_tempdir() -> std::io::Result<TempDir> {
+        if cfg!(target_os = "macos") {
+            tempfile::tempdir_in(Path::new(env!("CARGO_MANIFEST_DIR")).canonicalize()?)
+        } else {
+            tempdir()
+        }
+    }
 
     #[test]
     fn receipt_round_trip_and_unfinished_detection() {
-        let directory = tempdir();
+        let directory = state_tempdir();
         assert!(directory.is_ok());
         let Some(directory) = directory.ok() else {
             return;
@@ -1076,7 +1084,7 @@ mod tests {
 
     #[test]
     fn failed_partial_transaction_requires_explicit_reconciliation() {
-        let directory = tempdir();
+        let directory = state_tempdir();
         assert!(directory.is_ok());
         let Some(directory) = directory.ok() else {
             return;
@@ -1128,7 +1136,7 @@ mod tests {
     fn swapped_receipt_and_journal_links_are_rejected() {
         use std::os::unix::fs::symlink;
 
-        let directory = tempdir();
+        let directory = state_tempdir();
         assert!(directory.is_ok());
         let Some(directory) = directory.ok() else {
             return;
