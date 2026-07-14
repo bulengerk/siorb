@@ -259,3 +259,13 @@ Native tool behavior still varies by OS version and upstream repository. Siorb r
 - **Validation:** YAML and repository verification follow this recorded entry.
 - **Known limitations or blockers:** The refreshed native matrix must complete to provide final hosted-runner confirmation.
 - **Next starting point:** Push this CI environment adjustment, refresh Dependabot, and confirm all matrix jobs.
+
+### 2026-07-14 08:41 UTC — 019f5d0a-6e2c-7b73-a060-91c6dc9dcca2
+
+- **Objective:** Correct the CI expression scope for the safe temporary-directory setup.
+- **Work completed:** Moved `TMPDIR` initialization from job-level expression context to a cross-platform runner setup step.
+- **Key files changed:** `.github/workflows/ci.yml` and `README.md`.
+- **Decisions:** Use the standard `RUNNER_TEMP` environment variable and `GITHUB_ENV`, which are available on every hosted runner.
+- **Validation:** GitHub workflow dispatch parsing and repository verification follow this recorded entry.
+- **Known limitations or blockers:** The refreshed workflow must be dispatched and complete on native macOS and Windows runners.
+- **Next starting point:** Validate workflow parsing, push the correction, refresh Dependabot, and monitor the native matrix.
