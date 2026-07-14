@@ -1323,7 +1323,16 @@ mod tests {
     fn policy_loader_rejects_writable_files_and_links() {
         use std::os::unix::fs::{PermissionsExt, symlink};
 
-        let directory = tempfile::tempdir();
+        let directory = if cfg!(target_os = "macos") {
+            let parent = Path::new(env!("CARGO_MANIFEST_DIR")).canonicalize();
+            assert!(parent.is_ok());
+            let Some(parent) = parent.ok() else {
+                return;
+            };
+            tempfile::tempdir_in(parent)
+        } else {
+            tempfile::tempdir()
+        };
         assert!(directory.is_ok());
         let Some(directory) = directory.ok() else {
             return;
