@@ -50,8 +50,6 @@ jobs:
     name: ${{ matrix.target }}
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 45
-    env:
-      TMPDIR: ${{ runner.temp }}
     strategy:
       fail-fast: false
       matrix:
@@ -77,6 +75,9 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
+      - name: Select safe temporary directory
+        shell: bash
+        run: echo "TMPDIR=$RUNNER_TEMP" >> "$GITHUB_ENV"
       - name: Install pinned Rust toolchain
         run: |
           rustup toolchain install 1.85.0 --profile minimal --component clippy
