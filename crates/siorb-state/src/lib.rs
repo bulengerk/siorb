@@ -491,7 +491,55 @@ fn create_private_dir(path: &Path) -> Result<()> {
         fs::set_permissions(path, fs::Permissions::from_mode(0o700))
             .map_err(|error| state_error("state.directory.permissions", error.to_string()))?;
     }
+    #[cfg(windows)]
+    harden_windows_private_directory(path)?;
     validate_private_directory(path)
+}
+
+#[cfg(windows)]
+fn harden_windows_private_directory(path: &Path) -> Result<()> {
+    use windows_permissions::constants::{SeObjectType, SecurityInformation};
+    use windows_permissions::{LocalBox, SecurityDescriptor};
+
+    let current = windows_permissions::utilities::current_process_sid()
+        .map_err(|error| windows_security_unavailable(path, &error))?;
+    // Keep child files and directories private as well as this directory, and
+    // block inherited broad access from a shared temporary parent.
+    let descriptor = format!("D:PAI(A;OICI;FA;;;{current})(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)")
+        .parse::<LocalBox<SecurityDescriptor>>()
+        .map_err(|error| {
+            state_error(
+                "state.directory.permissions",
+                format!(
+                    "cannot construct a private Windows DACL for {}: {error}",
+                    path.display()
+                ),
+            )
+        })?;
+    let dacl = descriptor.dacl().ok_or_else(|| {
+        state_error(
+            "state.directory.permissions",
+            format!("private Windows DACL is missing for {}", path.display()),
+        )
+    })?;
+    windows_permissions::wrappers::SetNamedSecurityInfo(
+        path,
+        SeObjectType::SE_FILE_OBJECT,
+        SecurityInformation::Dacl | SecurityInformation::ProtectedDacl,
+        None,
+        None,
+        Some(dacl),
+        None,
+    )
+    .map_err(|error| {
+        state_error(
+            "state.directory.permissions",
+            format!(
+                "cannot protect Windows state directory {}: {error}",
+                path.display()
+            ),
+        )
+    })
 }
 
 fn reject_symlink_components(path: &Path) -> Result<()> {
