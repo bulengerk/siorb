@@ -560,6 +560,7 @@ fn write_probe_only_backend(path: &Path, marker: &Path) {
     }
 }
 
+#[cfg(unix)]
 fn supported_fixture_backend_version() -> &'static str {
     if cfg!(target_os = "windows") {
         "1.8.0"

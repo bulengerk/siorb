@@ -22,7 +22,9 @@ use siorb_core::{
 };
 use siorb_executor::{ExecutionOptions, Executor};
 use siorb_planner::{ExecutionPlan, PlanOptions, Planner};
-use siorb_platform::{SystemDetector, trusted_privileged_executable};
+use siorb_platform::SystemDetector;
+#[cfg(unix)]
+use siorb_platform::trusted_privileged_executable;
 use siorb_policy::{LayeredPolicy, PolicyFile};
 use siorb_resolver::{Resolution, ResolutionContext, ResolveOptions, Resolver, VersionConstraint};
 use siorb_state::StateStore;
@@ -1662,6 +1664,7 @@ fn detected_privilege_broker() -> Option<PathBuf> {
     }
 }
 
+#[cfg(unix)]
 fn trusted_privilege_broker_from(candidates: &[PathBuf]) -> Option<PathBuf> {
     candidates
         .iter()
@@ -1960,6 +1963,7 @@ fn cache_verified_catalog_repository(
     validate_cache_component(&repository_name)?;
     let staging = cache_root.join(&repository_name);
     fs::create_dir(&staging).map_err(|error| catalog_io_error(&error.to_string()))?;
+    #[cfg(unix)]
     set_private_directory_permissions(&staging)?;
 
     let result = (|| {
@@ -2005,6 +2009,7 @@ fn cache_verified_catalog_repository(
         }
         let cached_catalog = cached_transport.fetch("catalog.json", 64 * 1024 * 1024)?;
         cached_repository.verify_target("catalog.json", &cached_catalog)?;
+        #[cfg(unix)]
         sync_directory(&staging)?;
 
         // Only a complete repository that re-verifies from the compiled trust
@@ -2806,7 +2811,7 @@ fn atomic_bytes_write(path: &Path, value: &[u8]) -> siorb_core::Result<()> {
     {
         use atomicwrites::{AllowOverwrite, AtomicFile};
 
-        return AtomicFile::new(path, AllowOverwrite)
+        AtomicFile::new(path, AllowOverwrite)
             .write(|file| {
                 file.write_all(value)?;
                 file.sync_all()
@@ -2814,7 +2819,7 @@ fn atomic_bytes_write(path: &Path, value: &[u8]) -> siorb_core::Result<()> {
             .map_err(|error| {
                 let error: io::Error = error.into();
                 catalog_io_error(&error.to_string())
-            });
+            })
     }
     #[cfg(not(windows))]
     {
@@ -2863,13 +2868,12 @@ fn validate_cache_component(value: &str) -> siorb_core::Result<()> {
     Ok(())
 }
 
+#[cfg(unix)]
 fn set_private_directory_permissions(path: &Path) -> siorb_core::Result<()> {
-    #[cfg(unix)]
-    {
-        use std::os::unix::fs::PermissionsExt;
-        fs::set_permissions(path, fs::Permissions::from_mode(0o700))
-            .map_err(|error| catalog_io_error(&error.to_string()))?;
-    }
+    use std::os::unix::fs::PermissionsExt;
+
+    fs::set_permissions(path, fs::Permissions::from_mode(0o700))
+        .map_err(|error| catalog_io_error(&error.to_string()))?;
     Ok(())
 }
 
@@ -2936,15 +2940,11 @@ fn open_catalog_lock(path: &Path) -> io::Result<fs::File> {
     Ok(file)
 }
 
+#[cfg(unix)]
 fn sync_directory(path: &Path) -> siorb_core::Result<()> {
-    #[cfg(unix)]
-    {
-        fs::File::open(path)
-            .and_then(|directory| directory.sync_all())
-            .map_err(|error| catalog_io_error(&error.to_string()))?;
-    }
-    #[cfg(not(unix))]
-    let _ = path;
+    fs::File::open(path)
+        .and_then(|directory| directory.sync_all())
+        .map_err(|error| catalog_io_error(&error.to_string()))?;
     Ok(())
 }
 
@@ -3058,6 +3058,7 @@ mod tests {
         assert!(load_catalog(None, &state).is_ok());
     }
 
+    #[cfg(unix)]
     #[test]
     fn privilege_broker_selection_rejects_user_controlled_candidates() {
         let temporary = tempfile::tempdir();
