@@ -43,7 +43,7 @@ python3 "$ROOT/scripts/release/generate_winget.py" \
   --x86-64 "$TMP/first/siorb-0.1.0-x86_64-pc-windows-msvc.zip" \
   --arm64 "$TMP/first/siorb-0.1.0-aarch64-pc-windows-msvc.zip" \
   --output-dir "$TMP/winget"
-python3 -c 'import sys, yaml; data=yaml.safe_load(open(sys.argv[1], encoding="utf-8")); assert {item["Architecture"] for item in data["Installers"]} == {"x64", "arm64"}' \
+python3 -c 'import re, sys; values = re.findall(r"(?m)^  - Architecture: ([^\r\n]+)$", open(sys.argv[1], encoding="utf-8").read()); assert sorted(values) == ["arm64", "x64"], values' \
   "$TMP/winget/Siorb.Siorb.installer.yaml"
 python3 "$ROOT/scripts/release/generate_homebrew.py" \
   --version 0.1.0 \
