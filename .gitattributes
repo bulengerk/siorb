@@ -1,0 +1,4 @@
+# Signed metadata fixtures bind raw byte lengths and hashes.  Keep their LF
+# representation on every checkout, including Windows runners.
+catalog/fixtures/** -text
+catalog/trusted-root/** -text
