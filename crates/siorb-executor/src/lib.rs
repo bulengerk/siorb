@@ -1582,6 +1582,7 @@ fn extract_zip_archive(
                 "archive member size changed during extraction",
             ));
         }
+        #[cfg(unix)]
         set_owned_file_permissions(&target, entry.unix_mode())?;
     }
     Ok(())
@@ -1651,8 +1652,11 @@ fn extract_tar_archive<R: Read>(
                 "archive member size changed during extraction",
             ));
         }
-        let mode = entry.header().mode().ok();
-        set_owned_file_permissions(&target, mode)?;
+        #[cfg(unix)]
+        {
+            let mode = entry.header().mode().ok();
+            set_owned_file_permissions(&target, mode)?;
+        }
     }
     Ok(())
 }
@@ -1694,19 +1698,14 @@ fn create_owned_directory(path: &Path) -> Result<()> {
     Ok(())
 }
 
+#[cfg(unix)]
 fn set_owned_file_permissions(file: &File, source_mode: Option<u32>) -> Result<()> {
-    #[cfg(unix)]
-    {
-        use std::os::unix::fs::PermissionsExt;
-        let executable = source_mode.is_some_and(|mode| mode & 0o111 != 0);
-        let mode = if executable { 0o755 } else { 0o644 };
-        file.set_permissions(fs::Permissions::from_mode(mode))
-            .map_err(|error| {
-                verification_error("archive.extract.permissions", &error.to_string())
-            })?;
-    }
-    #[cfg(not(unix))]
-    let _ = (file, source_mode);
+    use std::os::unix::fs::PermissionsExt;
+
+    let executable = source_mode.is_some_and(|mode| mode & 0o111 != 0);
+    let mode = if executable { 0o755 } else { 0o644 };
+    file.set_permissions(fs::Permissions::from_mode(mode))
+        .map_err(|error| verification_error("archive.extract.permissions", &error.to_string()))?;
     Ok(())
 }
 
@@ -1814,7 +1813,7 @@ fn verify_native_signer(path: &Path, recipe: &ArtifactPlan) -> Result<()> {
                 "Authenticode signer does not exactly match catalog metadata",
             ));
         }
-        return Ok(());
+        Ok(())
     }
     #[cfg(target_os = "macos")]
     {
@@ -1895,7 +1894,7 @@ fn verify_native_signer(path: &Path, recipe: &ArtifactPlan) -> Result<()> {
                 "code-signing identity does not exactly match catalog metadata",
             ));
         }
-        return Ok(());
+        Ok(())
     }
     #[cfg(not(any(target_os = "windows", target_os = "macos")))]
     {
@@ -2076,7 +2075,7 @@ fn native_installer_command(
             environment,
         };
         command.validate()?;
-        return Ok(command);
+        Ok(command)
     }
     #[cfg(target_os = "macos")]
     {
@@ -2103,7 +2102,7 @@ fn native_installer_command(
             environment: vec![],
         };
         command.validate()?;
-        return Ok(command);
+        Ok(command)
     }
     #[cfg(not(any(target_os = "windows", target_os = "macos")))]
     {

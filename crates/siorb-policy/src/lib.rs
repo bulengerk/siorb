@@ -203,6 +203,7 @@ fn read_secure_policy(path: &Path) -> std::result::Result<String, String> {
         }
     }
     let mut file = File::open(path).map_err(|error| error.to_string())?;
+    #[cfg(unix)]
     let opened = file.metadata().map_err(|error| error.to_string())?;
     #[cfg(unix)]
     {
