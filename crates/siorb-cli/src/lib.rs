@@ -3020,7 +3020,10 @@ mod tests {
             Path::new(env!("CARGO_MANIFEST_DIR")).join("../../catalog/fixtures/runtime-tuf/valid");
         let transport = DirectoryTransport::new(fixture);
         let repository = verify_repository_transport(&transport, state.root());
-        assert!(repository.is_ok());
+        assert!(
+            repository.is_ok(),
+            "catalog repository verification failed: {repository:?}"
+        );
         let Some(repository) = repository.ok() else {
             return;
         };
