@@ -726,17 +726,26 @@ fn validate_windows_security_descriptor(
 
     let current = windows_permissions::utilities::current_process_sid()
         .map_err(|error| windows_security_unavailable(path, &error))?;
+    let administrators = "S-1-5-32-544".parse::<LocalBox<Sid>>().map_err(|error| {
+        state_error(
+            "state.permissions.acl_unavailable",
+            format!("cannot construct the Administrators SID: {error}"),
+        )
+    })?;
     let owner = descriptor.owner().ok_or_else(|| {
         state_error(
             "state.permissions.ownership_unavailable",
             format!("cannot establish an owner for {}", path.display()),
         )
     })?;
-    if owner != current.as_ref() {
+    // An elevated Windows token can create user-private files owned by the
+    // built-in Administrators group. That group is already a trusted DACL
+    // trustee below; the current process still needs explicit private access.
+    if owner != current.as_ref() && owner != administrators.as_ref() {
         return Err(state_error(
             "state.permissions.wrong_owner",
             format!(
-                "{} is owned by SID {owner}, expected current process SID {}",
+                "{} is owned by SID {owner}, expected current process SID {} or built-in Administrators",
                 path.display(),
                 current.as_ref()
             ),
@@ -758,13 +767,6 @@ fn validate_windows_security_descriptor(
             format!("cannot construct the LocalSystem SID: {error}"),
         )
     })?;
-    let administrators = "S-1-5-32-544".parse::<LocalBox<Sid>>().map_err(|error| {
-        state_error(
-            "state.permissions.acl_unavailable",
-            format!("cannot construct the Administrators SID: {error}"),
-        )
-    })?;
-
     for index in 0..dacl.len() {
         let ace = dacl.get_ace(index).ok_or_else(|| {
             state_error(
