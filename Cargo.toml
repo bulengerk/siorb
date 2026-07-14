@@ -29,7 +29,7 @@ publish = false
 base64 = "0.22.1"
 clap = { version = "4.5.40", features = ["derive", "env", "string"] }
 clap_complete = "4.5"
-ed25519-dalek = { version = "2.2.0", features = ["serde", "rand_core"] }
+ed25519-dalek = { version = "3.0.0", features = ["serde", "rand_core"] }
 flate2 = "1.1.2"
 hex = "0.4.3"
 libc = "0.2.174"
