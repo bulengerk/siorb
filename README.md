@@ -229,3 +229,13 @@ Native tool behavior still varies by OS version and upstream repository. Siorb r
 - **Validation:** Local state and CLI tests plus repository verification follow this recorded entry.
 - **Known limitations or blockers:** A native macOS ARM rerun is required to confirm the corrected test harness.
 - **Next starting point:** Validate the portable test fixtures, push them, refresh Dependabot, and confirm all native CI matrices.
+
+### 2026-07-14 08:33 UTC — 019f5d0a-6e2c-7b73-a060-91c6dc9dcca2
+
+- **Objective:** Eliminate the remaining macOS ARM executor test failures caused by temporary state paths.
+- **Work completed:** Centralized executor test temporary-directory creation and use a canonical repository-local parent on macOS.
+- **Key files changed:** `crates/siorb-executor/src/lib.rs` and `README.md`.
+- **Decisions:** Apply the same fixture-only strategy across all executor state tests while preserving production symlink rejection.
+- **Validation:** Local executor tests, lint, and repository verification follow this recorded entry.
+- **Known limitations or blockers:** The native macOS ARM matrix must rerun to verify the centralized fixture on the hosted runner.
+- **Next starting point:** Validate the executor suite locally, push it, refresh Dependabot, and confirm the full native matrix.
