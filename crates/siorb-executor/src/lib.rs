@@ -2884,6 +2884,14 @@ mod tests {
     use siorb_core::Scope;
     use siorb_planner::{Reproducibility, RevalidationGuard};
 
+    fn test_tempdir() -> std::io::Result<tempfile::TempDir> {
+        if cfg!(target_os = "macos") {
+            tempfile::tempdir_in(Path::new(env!("CARGO_MANIFEST_DIR")).canonicalize()?)
+        } else {
+            tempfile::tempdir()
+        }
+    }
+
     fn bounded_output(stdout: &[u8]) -> BoundedOutput {
         BoundedOutput {
             success: true,
@@ -3099,7 +3107,7 @@ mod tests {
 
     #[test]
     fn offline_rejects_native_network_before_journaling() {
-        let directory = tempfile::tempdir();
+        let directory = test_tempdir();
         assert!(directory.is_ok());
         let Some(directory) = directory.ok() else {
             return;
@@ -3140,7 +3148,7 @@ mod tests {
 
     #[test]
     fn offline_rejects_artifact_download_before_journaling() {
-        let directory = tempfile::tempdir();
+        let directory = test_tempdir();
         assert!(directory.is_ok());
         let Some(directory) = directory.ok() else {
             return;
@@ -3172,7 +3180,7 @@ mod tests {
 
     #[test]
     fn policy_confirmation_cannot_be_satisfied_by_presupplied_consent() {
-        let directory = tempfile::tempdir();
+        let directory = test_tempdir();
         assert!(directory.is_ok());
         let Some(directory) = directory.ok() else {
             return;
@@ -3203,7 +3211,7 @@ mod tests {
 
     #[test]
     fn native_mutation_without_following_query_is_rejected_before_journaling() {
-        let directory = tempfile::tempdir();
+        let directory = test_tempdir();
         assert!(directory.is_ok());
         let Some(directory) = directory.ok() else {
             return;
@@ -3257,7 +3265,7 @@ mod tests {
     #[cfg(unix)]
     #[test]
     fn successful_native_mutation_commits_only_after_observed_version_verification() {
-        let directory = tempfile::tempdir();
+        let directory = test_tempdir();
         assert!(directory.is_ok());
         let Some(directory) = directory.ok() else {
             return;
@@ -3306,7 +3314,7 @@ mod tests {
     #[cfg(unix)]
     #[test]
     fn failed_post_mutation_query_is_partial_and_never_commits_a_receipt() {
-        let directory = tempfile::tempdir();
+        let directory = test_tempdir();
         assert!(directory.is_ok());
         let Some(directory) = directory.ok() else {
             return;
@@ -3345,7 +3353,7 @@ mod tests {
     #[cfg(unix)]
     #[test]
     fn native_remove_retains_receipt_until_absence_is_verified() {
-        let failed_directory = tempfile::tempdir();
+        let failed_directory = test_tempdir();
         assert!(failed_directory.is_ok());
         let Some(failed_directory) = failed_directory.ok() else {
             return;
@@ -3380,7 +3388,7 @@ mod tests {
             Some(1)
         );
 
-        let success_directory = tempfile::tempdir();
+        let success_directory = test_tempdir();
         assert!(success_directory.is_ok());
         let Some(success_directory) = success_directory.ok() else {
             return;
@@ -3429,7 +3437,7 @@ mod tests {
 
     #[test]
     fn native_receipt_requires_verified_observation_and_never_copies_requested_version() {
-        let directory = tempfile::tempdir();
+        let directory = test_tempdir();
         assert!(directory.is_ok());
         let Some(directory) = directory.ok() else {
             return;
@@ -3466,7 +3474,7 @@ mod tests {
         assert_eq!(receipt.architecture, "arm64");
         assert_eq!(receipt.verification.status, VerificationStatus::Verified);
 
-        let adopted_directory = tempfile::tempdir();
+        let adopted_directory = test_tempdir();
         assert!(adopted_directory.is_ok());
         let Some(adopted_directory) = adopted_directory.ok() else {
             return;
@@ -3498,7 +3506,7 @@ mod tests {
 
     #[test]
     fn receipt_verification_rejects_changed_mapping_before_execution() {
-        let directory = tempfile::tempdir();
+        let directory = test_tempdir();
         assert!(directory.is_ok());
         let Some(directory) = directory.ok() else {
             return;
@@ -3530,7 +3538,7 @@ mod tests {
     fn receipt_verification_is_read_only_and_returns_observed_version() {
         use std::os::unix::fs::PermissionsExt;
 
-        let directory = tempfile::tempdir();
+        let directory = test_tempdir();
         assert!(directory.is_ok());
         let Some(directory) = directory.ok() else {
             return;
@@ -3690,7 +3698,7 @@ mod tests {
 
     #[test]
     fn executable_format_magic_is_checked_before_use() {
-        let directory = tempfile::tempdir();
+        let directory = test_tempdir();
         assert!(directory.is_ok());
         let Some(directory) = directory.ok() else {
             return;
@@ -3729,7 +3737,7 @@ mod tests {
 
     #[test]
     fn typed_native_format_headers_are_recognized() {
-        let directory = tempfile::tempdir();
+        let directory = test_tempdir();
         assert!(directory.is_ok());
         let Some(directory) = directory.ok() else {
             return;
@@ -3848,7 +3856,7 @@ mod tests {
     fn msix_requires_the_declared_package_structure() {
         use zip::write::SimpleFileOptions;
 
-        let directory = tempfile::tempdir();
+        let directory = test_tempdir();
         assert!(directory.is_ok());
         let Some(directory) = directory.ok() else {
             return;
@@ -3876,7 +3884,7 @@ mod tests {
     fn appimage_is_committed_as_private_owned_executable() {
         use std::os::unix::fs::PermissionsExt;
 
-        let directory = tempfile::tempdir();
+        let directory = test_tempdir();
         assert!(directory.is_ok());
         let Some(directory) = directory.ok() else {
             return;

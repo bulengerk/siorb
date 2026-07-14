@@ -2986,6 +2986,14 @@ fn catalog_io_error(message: &str) -> SiorbError {
 mod tests {
     use super::*;
 
+    fn state_tempdir() -> std::io::Result<tempfile::TempDir> {
+        if cfg!(target_os = "macos") {
+            tempfile::tempdir_in(Path::new(env!("CARGO_MANIFEST_DIR")).canonicalize()?)
+        } else {
+            tempfile::tempdir()
+        }
+    }
+
     #[test]
     fn shorthand_inserts_install_for_exact_first_token() {
         let values =
@@ -3006,13 +3014,13 @@ mod tests {
 
     #[test]
     fn authenticated_catalog_cache_rejects_payload_tampering() {
-        let temporary = tempfile::tempdir();
+        let temporary = state_tempdir();
         assert!(temporary.is_ok());
         let Some(temporary) = temporary.ok() else {
             return;
         };
         let state = StateStore::new(temporary.path().join("state"));
-        assert!(state.is_ok());
+        assert!(state.is_ok(), "state initialization failed: {state:?}");
         let Some(state) = state.ok() else {
             return;
         };
@@ -3020,7 +3028,10 @@ mod tests {
             Path::new(env!("CARGO_MANIFEST_DIR")).join("../../catalog/fixtures/runtime-tuf/valid");
         let transport = DirectoryTransport::new(fixture);
         let repository = verify_repository_transport(&transport, state.root());
-        assert!(repository.is_ok());
+        assert!(
+            repository.is_ok(),
+            "catalog repository verification failed: {repository:?}"
+        );
         let Some(repository) = repository.ok() else {
             return;
         };
@@ -3078,13 +3089,13 @@ mod tests {
 
     #[test]
     fn catalog_updates_are_serialized_by_a_private_lock() {
-        let temporary = tempfile::tempdir();
+        let temporary = state_tempdir();
         assert!(temporary.is_ok());
         let Some(temporary) = temporary.ok() else {
             return;
         };
         let state = StateStore::new(temporary.path().join("state"));
-        assert!(state.is_ok());
+        assert!(state.is_ok(), "state initialization failed: {state:?}");
         let Some(state) = state.ok() else {
             return;
         };
