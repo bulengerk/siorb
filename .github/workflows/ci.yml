@@ -75,6 +75,9 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
+      - name: Select safe temporary directory
+        shell: bash
+        run: echo "TMPDIR=$RUNNER_TEMP" >> "$GITHUB_ENV"
       - name: Install pinned Rust toolchain
         run: |
           rustup toolchain install 1.85.0 --profile minimal --component clippy
@@ -102,7 +105,7 @@ jobs:
           persist-credentials: false
       - name: Install pinned Rust toolchain
         run: |
-          rustup toolchain install 1.85.0 --profile minimal
+          rustup toolchain install 1.85.0 --profile minimal --component rustfmt,clippy
           rustup default 1.85.0
       - name: Install pinned Python
         uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
