@@ -20,7 +20,7 @@ jobs:
     # Dependabot's pull_request token is read-only and GitHub's dependency-review
     # API is unavailable until the repository owner enables Dependency graph.
     # Cargo audit and cargo-deny still run for every Dependabot update below.
-    if: github.event_name == 'pull_request' && github.actor != 'dependabot[bot]'
+    if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:
@@ -62,7 +62,7 @@ jobs:
   codeql:
     # Dependabot updates only dependency metadata; analyze the merged main ref
     # instead of failing its read-only pull_request token on result upload.
-    if: github.actor != 'dependabot[bot]'
+    if: github.event_name != 'pull_request' || github.event.pull_request.user.login != 'dependabot[bot]'
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     permissions:
