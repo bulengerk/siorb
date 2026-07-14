@@ -1,122 +1,75 @@
 # Siorb
 
-Siorb turns a portable software intent into an explainable, policy-aware plan for the native package tools already trusted by the host. The project is under active development; commands that can mutate a machine always plan first and require explicit consent.
+Siorb is a cross-platform CLI for managing software through the package manager already installed on the computer. It finds a compatible package, shows the exact plan, asks for consent, runs the native tool, and verifies the result.
 
-Codex translated the project specification into the architecture, code, tests, catalog, documentation, packaging, and release automation; maintainers retain review and release-signing responsibility.
+It supports Windows, macOS, and Linux package managers including WinGet, Chocolatey, Scoop, Homebrew, APT, DNF, Pacman, Zypper, APK, Snap, and Flatpak. Resolution uses a bundled catalog and works without accounts, telemetry, a daemon, or a hosted service.
 
-## Terminal demo
+## Build and install
 
-```console
-$ siorb install firefox --dry-run
-PLAN install firefox
-  source: apt / firefox
-  scope: system (elevation required for the execution step)
-  action: /usr/bin/apt-get install --yes -- firefox
-No changes made (--dry-run).
-```
+Install Git and Rust 1.85 with [rustup](https://rustup.rs/). Platform build requirements:
 
-## Security and infrastructure
+| Platform | Additional requirement |
+|---|---|
+| Linux | A C build toolchain such as `build-essential` |
+| macOS | Xcode Command Line Tools: `xcode-select --install` |
+| Windows | Visual Studio Build Tools with **Desktop development with C++** |
 
-Resolution happens locally from a bundled catalog. Siorb has no accounts, telemetry, hosted resolver, database, daemon, or owner-operated runtime service. Optional catalog mirrors are static and verified before use. Backend commands are constructed as an executable plus argument vector, never as shell text.
-
-## Supported hosts and package tools
-
-Siorb detects, rather than assumes, available tools. Adapters cover WinGet, Scoop, Chocolatey, Homebrew formulae and casks, MacPorts, APT, DNF/DNF5, Pacman, Zypper, APK, Snap, and Flatpak. The catalog only selects sources compatible with the detected OS, distribution, architecture, scope, channel, policy, and adapter capabilities.
-
-## Installation
-
-Build from a pinned Rust toolchain:
+Clone and build on Linux, macOS, or Windows PowerShell:
 
 ```sh
 git clone https://github.com/bulengerk/siorb.git
 cd siorb
 cargo build --release --locked -p siorb-cli
-cargo xtask verify
-./target/release/siorb version
 ```
 
-Release archives, native packages, checksums, SBOMs, signatures, and verification instructions are produced by the release workflow. Do not trust an artifact whose digest or signature cannot be verified.
+Run without installing:
 
-## Quick start
+```sh
+cargo run --locked -p siorb-cli -- version
+```
+
+Install for the current user:
+
+```sh
+cargo install --path crates/siorb-cli --locked
+siorb version
+```
+
+Cargo installs to `$HOME/.cargo/bin` on Linux/macOS and `%USERPROFILE%\.cargo\bin` on Windows. Signed releases can also provide `.deb`, `.rpm`, `.pkg`, `.msi`, `.zip`, and `.tar.gz` packages.
+
+## Use
 
 ```sh
 siorb search browser
 siorb info firefox
-siorb plan install firefox
 siorb install firefox --dry-run --explain
 siorb install firefox --yes
 siorb doctor --json
 ```
 
-`siorb firefox` is interactive shorthand for `siorb install firefox`; automation should use the canonical command.
+Use `--dry-run` to preview changes. Use `--yes` only after reviewing the plan. Run `siorb --help` for every command and option.
 
-## Commands and global options
+## How it works
 
-The stable surface includes install, remove, upgrade, search, info, list, plan, why, doctor, adopt, reconcile, repair, migrate, bundle, pin, unpin, hold, unhold, backend, source, catalog, policy, audit, verify, self update, completion, and version.
+1. Detect the operating system, architecture, and available package managers.
+2. Resolve the request from the local catalog and policy.
+3. Produce an explainable, typed installation plan.
+4. Execute only after consent, then verify and record the result.
 
-Global options keep one meaning throughout the CLI: `--dry-run`, `--json`, `--non-interactive`, `--yes`, `--accept-agreements`, `--via`, `--source`, `--scope`, `--channel`, `--version`, `--arch`, `--offline`, `--explain`, `--catalog`, `--policy`, `--color`, `--verbose`, and `--quiet`. JSON is written to stdout and diagnostics to stderr. Non-interactive mode never prompts.
+## How it was created
 
-## Portable bundles and migration
+Codex translated the project specification into a Rust workspace, package catalog, tests, documentation, packaging, website, and CI/release automation. Maintainers remain responsible for review and production signing.
 
-```toml
-schema_version = "1.0"
-
-[[packages]]
-id = "firefox"
-state = "present"
-channel = "stable"
-scope = "auto"
-
-[[packages]]
-id = "vscode"
-state = "present"
-optional = true
-```
-
-Validate and preview with `siorb bundle validate siorb.toml` and `siorb bundle plan siorb.toml`; apply only after reviewing the resulting platform-specific plan. Deterministic locks can be reviewed with `siorb bundle refresh siorb.toml --lock siorb.lock.json` and enforced during apply with `--lock`. `siorb migrate export --output siorb.toml` exports portable intent rather than pretending native package identities transfer between operating systems.
-
-## Architecture
-
-The Rust workspace separates CLI presentation, domain types, platform detection, catalog parsing, policy, resolution, planning, typed backend adapters, bounded execution, state, bundles, signed updates, and repository automation. Essential decisions are local:
-
-```text
-bundled/signed static catalog + platform facts + local policy + receipts
-                              |
-                    resolver and planner
-                              |
-             native backend or verified artifact
-```
-
-## Catalog, signatures, offline mode, and mirrors
-
-Catalog manifests under `catalog/packages/` are the reviewable source of truth. `cargo xtask generate-catalog` creates deterministic indexes and the static website. A bundled snapshot supports offline search, information, explanation, and planning. `siorb catalog verify PATH` verifies a complete local signed repository; catalog updates apply the same rules to static HTTPS mirrors. Rollback and expired metadata are never silently accepted.
-
-## Privacy, privilege, receipts, and recovery
-
-Siorb stores no user identity and sends no telemetry. It resolves without elevation and elevates only individual backend steps. An append-only journal records attempted changes; atomic receipts record installed, adopted, or observed state in the platform application-data directory. Interrupted transactions are surfaced by `reconcile`, and partial completion is never described as an atomic rollback.
-
-## Contributing
+## Development
 
 ```sh
 cargo fmt --check
 cargo clippy --workspace --all-targets --all-features -- -D warnings
 cargo test --workspace --all-features
 cargo xtask verify
-cargo xtask test-schemas
-cargo xtask test-catalog
-cargo xtask test-docs
-cargo xtask build-site
 ```
 
-See `CONTRIBUTING.md`, `AGENTS.md`, the authoring references in `docs/`, and `SECURITY.md`. Host-mutating tests are opt-in; the default suite is workstation-safe.
-
-## Releases and support
-
-Release construction and verification are documented in `docs/release-process.md`. Report vulnerabilities through the private process in `SECURITY.md`; use GitHub issues for reproducible non-sensitive defects and mapping health reports.
-
-## Limitations and roadmap
-
-Native tool behavior still varies by OS version and upstream repository. Siorb reports unsupported capabilities rather than emulating them unsafely. Production signing, notarization, package-store publication, and protected release environments require the repository owner's credentials; local development keys cover the non-secret verification path. Milestone status and evidence live in `PLANS.md` and `FINAL_CHECKLIST.md`.
+See `CONTRIBUTING.md` and `SECURITY.md` for contribution and security guidance.
 
 ## Codex Work Sessions
 
@@ -289,3 +242,23 @@ Native tool behavior still varies by OS version and upstream repository. Siorb r
 - **Validation:** Workspace build, formatting, strict Clippy, workspace tests, catalog/TUF tests, runtime searches, and repository verification passed before publication; final verification follows this entry.
 - **Known limitations or blockers:** The remote push remains pending until the verified commit is created.
 - **Next starting point:** Run final verification, commit the complete catalog update, and push `main` to `origin`.
+
+### 2026-07-14 18:51 UTC — 019f5d0a-6e2c-7b73-a060-91c6dc9dcca2
+
+- **Objective:** Replace the long project README with a concise English guide for users and developers.
+- **Work completed:** Summarized the application's purpose, platform requirements, build, run, installation, basic usage, internal flow, and Codex-assisted creation process.
+- **Key files changed:** `README.md`.
+- **Decisions:** Use one shared cross-platform command path with short OS-specific prerequisites and keep the mandatory append-only work-session log physically final.
+- **Validation:** Passed the documentation gate, including local links and all documented CLI command lines; full repository verification follows this entry.
+- **Known limitations or blockers:** Native installer availability still depends on a signed release; source installation remains universally documented.
+- **Next starting point:** Run final repository verification, then commit and publish the README update when requested.
+
+### 2026-07-14 18:52 UTC — 019f5d0a-6e2c-7b73-a060-91c6dc9dcca2
+
+- **Objective:** Publish the concise cross-platform README to the main repository branch.
+- **Work completed:** Prepared the shortened English user and developer guide as a standalone documentation change.
+- **Key files changed:** `README.md`.
+- **Decisions:** Keep the simplified guide and its required append-only session record together in one documentation commit.
+- **Validation:** Documentation and repository verification passed before publication; final repository verification follows this entry.
+- **Known limitations or blockers:** The remote push remains pending until the documentation commit is created.
+- **Next starting point:** Run final verification, commit the README update, and push `main` to `origin`.
