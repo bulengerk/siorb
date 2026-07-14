@@ -199,3 +199,13 @@ Native tool behavior still varies by OS version and upstream repository. Siorb r
 - **Validation:** Passed formatting and the full local CLI E2E suite; native Windows rerun follows after this entry.
 - **Known limitations or blockers:** Windows backend-invocation semantics require a real signed PE fixture and are not asserted by the portable text-fixture route.
 - **Next starting point:** Run full verification, push the harness adjustment, refresh Dependabot, and confirm the native Windows matrix.
+
+### 2026-07-14 08:18 UTC — 019f5d0a-6e2c-7b73-a060-91c6dc9dcca2
+
+- **Objective:** Repair the remaining native Windows Dependabot failure in planner tests.
+- **Work completed:** Made the native-planner test fixture choose an absolute executable path and matching adapter for the target operating system.
+- **Key files changed:** `crates/siorb-planner/src/lib.rs` and `README.md`.
+- **Decisions:** Kept the production planner unchanged; the test now uses Chocolatey only on Windows and Apt elsewhere.
+- **Validation:** Local planner tests and repository verification follow this recorded entry.
+- **Known limitations or blockers:** Native Windows CI must rerun to confirm both MSVC architectures with the corrected fixture.
+- **Next starting point:** Validate the planner fixture locally, push it, refresh Dependabot, and confirm the native Windows matrix.
