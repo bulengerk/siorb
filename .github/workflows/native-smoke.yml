@@ -101,13 +101,13 @@ jobs:
         shell: pwsh
         run: |
           $ProgressPreference = 'SilentlyContinue'
-          Install-PackageProvider -Name NuGet -Force | Out-Null
-          Install-Module `
+          Install-PSResource `
             -Name Microsoft.WinGet.Client `
-            -RequiredVersion 1.29.280 `
+            -Version 1.29.280 `
             -Repository PSGallery `
             -Scope CurrentUser `
-            -Force
+            -TrustRepository `
+            -Quiet
           Import-Module Microsoft.WinGet.Client -RequiredVersion 1.29.280
           Repair-WinGetPackageManager -AllUsers
           $winget = Get-Command winget.exe -ErrorAction Stop

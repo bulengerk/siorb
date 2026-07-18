@@ -402,3 +402,13 @@ See `CONTRIBUTING.md` and `SECURITY.md` for contribution and security guidance.
 - **Validation:** The third native run again passed macOS and Linux end to end; Windows 2025 passed build, x64 MSI creation, synchronous MSI installation, installed CLI startup, catalog search and info, MSI removal, and failed only because the clean image had no registered WinGet executable.
 - **Known limitations or blockers:** The pinned WinGet bootstrap and subsequent real transaction still need hosted-runner execution.
 - **Next starting point:** Verify the workflow and repository, publish the self-contained test, then rerun the complete Windows MSI and WinGet sequence.
+
+### 2026-07-18 05:51 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Make the pinned WinGet bootstrap compatible with the hosted runner's PowerShell 7 environment.
+- **Work completed:** Replaced the legacy NuGet package-provider bootstrap, which is unsupported in the runner's PowerShell 7 session, with the current `Install-PSResource` flow while preserving the exact Microsoft.WinGet.Client 1.29.280 version and trusted PSGallery selection.
+- **Key files changed:** `.github/workflows/native-smoke.yml` uses PowerShell PSResourceGet; `README.md` records the bootstrap compatibility repair.
+- **Decisions:** Use the native PowerShell 7 resource installer documented for current PowerShell instead of switching the workflow to a legacy shell or allowing an unpinned module version.
+- **Validation:** The failing hosted log shows the obsolete `Install-PackageProvider NuGet` call was the only command reached and failed before any module or host mutation; the replacement retains exact source, version, and scope controls.
+- **Known limitations or blockers:** The PSResourceGet installation and WinGet repair sequence still require hosted execution.
+- **Next starting point:** Validate repository invariants, cancel the superseded failing run, publish the PowerShell 7 bootstrap, and rerun the native workflow.
