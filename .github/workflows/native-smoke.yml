@@ -84,8 +84,8 @@ jobs:
           fi
 
   windows:
-    name: Windows MSI and WinGet end-to-end smoke
-    runs-on: windows-11-arm
+    name: Windows x64 MSI and WinGet end-to-end smoke
+    runs-on: windows-2025
     timeout-minutes: 45
     steps:
       - name: Check out source
@@ -117,7 +117,7 @@ jobs:
           ./scripts/release/package-windows.ps1 `
             -Binary "target/release/siorb.exe" `
             -Version $version `
-            -Architecture arm64 `
+            -Architecture x64 `
             -Output $msi
           $install = Start-Process msiexec.exe `
             -ArgumentList @('/i', $msi, '/qn', '/norestart', '/L*v', $log) `

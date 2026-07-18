@@ -352,3 +352,23 @@ See `CONTRIBUTING.md` and `SECURITY.md` for contribution and security guidance.
 - **Validation:** The original published commit passed CI, security, catalog validation, site deployment, catalog health, and every native packaging job; focused platform unit and golden-fixture tests pass with Homebrew 6.0.11, and the edited workflow parses as YAML.
 - **Known limitations or blockers:** The repaired disposable native mutation workflow has not yet been rerun on GitHub-hosted Windows and macOS runners.
 - **Next starting point:** Run every repository gate, publish the native follow-up, and repeat the installed MSI, PKG, WinGet, and Homebrew transactions.
+
+### 2026-07-18 05:42 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Publish and monitor the repaired native usability validation.
+- **Work completed:** Committed and pushed the follow-up as `e2bee95`, dispatched the opt-in native mutation workflow, and confirmed that its Windows, macOS, and Linux jobs started on the intended hosted runners.
+- **Key files changed:** `README.md` records the active hosted-runner validation; the implementation is published in commit `e2bee95`.
+- **Decisions:** Keep the test focused on installed package behavior and real package-manager transactions rather than treating successful compilation as usability proof.
+- **Validation:** All local repository gates passed before publication; the new native jobs checked out the exact published commit and began native builds successfully.
+- **Known limitations or blockers:** MSI/PKG installation and WinGet/Homebrew transaction steps are still running.
+- **Next starting point:** Continue monitoring each command-level result and repair any remaining native-only failure before declaring the pipelines usable.
+
+### 2026-07-18 05:44 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Resolve the remaining Windows usability failure without reducing platform coverage.
+- **Work completed:** Confirmed that MSI installation, the installed Windows ARM64 CLI, offline search and info, macOS PKG installation, and the full Homebrew transaction all succeed; moved the WinGet mutation test from the preview Windows 11 ARM image, which does not expose WinGet, to the generally available Windows Server 2025 x64 image and selected the matching x64 MSI.
+- **Key files changed:** `.github/workflows/native-smoke.yml` selects the GA Windows 2025 x64 runner and package architecture; `README.md` records the runner-specific diagnosis.
+- **Decisions:** Exercise WinGet on a GitHub-supported x64 Windows 2025 runner while retaining separate CI and packaging coverage for Windows ARM64.
+- **Validation:** The second native run passed macOS PKG plus Homebrew end to end and Linux APT end to end; its Windows job passed build, MSI creation, MSI installation, installed CLI startup, catalog search, catalog info, MSI removal, and failed only when the absent WinGet backend was requested.
+- **Known limitations or blockers:** The revised Windows 2025 WinGet transaction still requires one hosted rerun.
+- **Next starting point:** Verify workflow syntax and repository invariants, publish the runner adjustment, then rerun Windows installation, planning, WinGet install, verification, removal, and MSI cleanup.
