@@ -29,7 +29,8 @@ try {
     [System.IO.File]::WriteAllBytes($pfx, [Convert]::FromBase64String($env:SIORB_WINDOWS_PFX_BASE64))
     foreach ($artifact in $Artifacts) {
         $item = Get-Item -LiteralPath $artifact
-        if ($item.PSIsContainer -or $item.LinkType) { throw "Artifact must be a regular non-symlink file: $artifact" }
+        $isReparsePoint = ($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0
+        if ($item.PSIsContainer -or $isReparsePoint) { throw "Artifact must be a regular non-symlink file: $artifact" }
         & $signTool sign /fd SHA256 /td SHA256 `
             /tr $env:SIORB_WINDOWS_TIMESTAMP_URL `
             /f $pfx /p $env:SIORB_WINDOWS_PFX_PASSWORD `

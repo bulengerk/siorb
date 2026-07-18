@@ -224,6 +224,7 @@ fn verify_generated(root: &Path) -> Result<()> {
 fn verify_scripts(root: &Path) -> Result<()> {
     run(root, "python3", ["scripts/check_action_pins.py"])?;
     run(root, "python3", ["scripts/check_secrets.py"])?;
+    run(root, "python3", ["scripts/catalog/test_catalog_health.py"])?;
     run(
         root,
         "python3",

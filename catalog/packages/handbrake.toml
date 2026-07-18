@@ -19,8 +19,8 @@ dependencies = []
 optional_relationships = []
 version_normalization = "semver-loose"
 verification = "backend-signature"
-evidence = ["https://github.com/microsoft/winget-pkgs/search?q=HandBrake.HandBrake", "https://formulae.brew.sh/cask/handbrake", "https://packages.debian.org/search?keywords=handbrake&searchon=names&suite=stable&section=all", "https://flathub.org/apps/fr.handbrake.ghb"]
-reviewed_at = "2026-07-13"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=HandBrake.HandBrake", "https://formulae.brew.sh/cask/handbrake-app", "https://packages.debian.org/search?keywords=handbrake&searchon=names&suite=stable&section=all", "https://flathub.org/apps/fr.handbrake.ghb"]
+reviewed_at = "2026-07-18"
 deprecated = false
 maintainers = ["siorb-catalog-maintainers"]
 
@@ -43,7 +43,7 @@ reviewed_at = "2026-07-13"
 id = "handbrake-homebrew-cask"
 platform = "macos"
 backend = "homebrew-cask"
-package_id = "handbrake"
+package_id = "handbrake-app"
 trust = "native"
 scope = "user"
 channel = "stable"
@@ -51,8 +51,8 @@ architectures = ["x86_64", "aarch64"]
 priority = 20
 requires_privilege = false
 provenance = "backend-repository"
-evidence = "https://formulae.brew.sh/cask/handbrake"
-reviewed_at = "2026-07-13"
+evidence = "https://formulae.brew.sh/cask/handbrake-app"
+reviewed_at = "2026-07-18"
 
 [[sources]]
 id = "handbrake-apt"

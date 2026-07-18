@@ -13,7 +13,8 @@ if ($Version -notmatch '^[0-9]+\.[0-9]+\.[0-9]+$') {
     throw "Version must be stable MAJOR.MINOR.PATCH"
 }
 $binaryItem = Get-Item -LiteralPath $Binary
-if (-not $binaryItem.Exists -or $binaryItem.PSIsContainer -or $binaryItem.LinkType) {
+$binaryIsReparsePoint = ($binaryItem.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0
+if (-not $binaryItem.Exists -or $binaryItem.PSIsContainer -or $binaryIsReparsePoint) {
     throw "Binary must be a regular non-symlink file"
 }
 $wixCommand = Get-Command wix -ErrorAction SilentlyContinue

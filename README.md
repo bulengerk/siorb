@@ -262,3 +262,73 @@ See `CONTRIBUTING.md` and `SECURITY.md` for contribution and security guidance.
 - **Validation:** Documentation and repository verification passed before publication; final repository verification follows this entry.
 - **Known limitations or blockers:** The remote push remains pending until the documentation commit is created.
 - **Next starting point:** Run final verification, commit the README update, and push `main` to `origin`.
+
+### 2026-07-18 05:20 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Repair failing GitHub pipelines and prove that packaged Siorb is usable on native Windows and macOS runners.
+- **Work completed:** Corrected Windows hardlink handling, made catalog evidence probes distinguish broken links from transient provider failures, added probe regression tests, and expanded the opt-in native smoke workflow to install and exercise MSI and PKG builds.
+- **Key files changed:** `.github/workflows/catalog-health.yml`, `.github/workflows/native-smoke.yml`, `crates/siorb-xtask/src/repository.rs`, `scripts/catalog/`, `scripts/release/package-windows.ps1`, `scripts/release/authenticode-sign.ps1`, and `README.md`.
+- **Decisions:** Continue rejecting Windows reparse points while accepting ordinary Cargo hardlinks, serialize evidence probes per host, fail only on actionable catalog findings, and keep host mutation confined to an explicitly dispatched disposable-runner workflow.
+- **Validation:** Passed catalog-probe unit tests, Python compilation, formatting, workflow lint where available, diff checks, and local search, info, and dry-run planning smoke tests.
+- **Known limitations or blockers:** Native package creation, installation, and package-manager mutation still require the updated workflows to run on GitHub-hosted Windows and macOS machines.
+- **Next starting point:** Complete repository gates, publish the changes, dispatch the packaging and native mutation workflows, and repair any native-only failures they expose.
+
+### 2026-07-18 05:22 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Complete the local quality gates for the cross-platform pipeline repairs before publishing them.
+- **Work completed:** Exercised the entire all-feature workspace build, strict lint suite, unit, integration, end-to-end, documentation, schema, packaging, and repository checks against the repaired workflow and helper code.
+- **Key files changed:** `README.md` records this validation checkpoint; the validated implementation remains in `.github/workflows/`, `crates/siorb-xtask/`, and `scripts/`.
+- **Decisions:** Treat native hosted-runner results as the remaining authority for MSI, PKG, WinGet, and Homebrew behavior while requiring all deterministic local gates to pass first.
+- **Validation:** Passed `cargo build --workspace --all-features`, strict workspace Clippy, all-feature workspace tests, and `cargo xtask verify`; a throttled live catalog-evidence probe is still running independently.
+- **Known limitations or blockers:** Linux cannot execute the native PowerShell, WiX, macOS packaging, WinGet, or Homebrew paths, so those paths remain pending remote validation.
+- **Next starting point:** Inspect the completed live health report, review the diff, commit and push, then monitor all native GitHub jobs.
+
+### 2026-07-18 05:25 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Make the repaired catalog-health probe both provider-friendly and fast enough for the scheduled workflow.
+- **Work completed:** Interleaved evidence URLs across hostnames before parallel execution so per-host serialization no longer starves unrelated providers, and added a deterministic scheduling regression test.
+- **Key files changed:** `scripts/catalog/catalog_health.py`, `scripts/catalog/test_catalog_health.py`, and `README.md`.
+- **Decisions:** Preserve one in-flight request per evidence host while using the existing global worker pool across independent hosts.
+- **Validation:** Passed all five catalog-probe unit tests, formatting, diff checks, workflow lint where available, and restarted a complete live 682-URL probe.
+- **Known limitations or blockers:** The live probe is network-bound and still running; remote GitHub-hosted validation remains pending publication.
+- **Next starting point:** Finish the live probe, inspect warnings versus actionable findings, then publish and run the native workflows.
+
+### 2026-07-18 05:27 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Ensure the Windows usability workflow cannot hide an early native CLI failure behind a later successful command.
+- **Work completed:** Enabled strict native-command exit handling for the installed Siorb discovery, planning, and WinGet transaction step.
+- **Key files changed:** `.github/workflows/native-smoke.yml` and `README.md`.
+- **Decisions:** Require every PowerShell-launched Siorb invocation to fail the job immediately on a nonzero exit code.
+- **Validation:** Re-reviewed the complete workflow diff, retained the passing local repository gates, and continued the provider-throttled live evidence probe.
+- **Known limitations or blockers:** Native PowerShell execution and package installation remain pending the GitHub-hosted Windows run.
+- **Next starting point:** Complete live health validation, rerun repository checks, publish, and inspect native job logs command by command.
+
+### 2026-07-18 05:29 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Resolve the actionable catalog failures exposed by the repaired live evidence check.
+- **Work completed:** Updated six renamed or tap-hosted Homebrew mappings and evidence URLs for Bun, Docker Desktop, HandBrake, kubectl, Python, and Terraform, then regenerated the catalog, runtime TUF fixtures, and package website.
+- **Key files changed:** `catalog/packages/{bun,docker,handbrake,kubectl,python,terraform}.toml`, generated `catalog/` fixtures and indexes, corresponding `website/public/` package pages, and `README.md`.
+- **Decisions:** Use current canonical Homebrew tokens where available and explicit upstream tap identities for Bun and Terraform instead of dead formulae-site URLs.
+- **Validation:** Confirmed the replacement sources against current Homebrew APIs and upstream tap repositories; catalog validation, generation, runtime fixture generation, site generation, and site validation passed.
+- **Known limitations or blockers:** A second full live evidence pass and native GitHub runner validation are still required before publication can be considered complete.
+- **Next starting point:** Re-run the complete catalog health probe, execute final repository gates, then commit, push, and monitor the workflows.
+
+### 2026-07-18 05:31 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Revalidate the complete workspace after regenerating the corrected Homebrew catalog data.
+- **Work completed:** Rebuilt and linted every workspace target, reran all all-feature tests, verified the catalog and adversarial runtime TUF fixtures, and rebuilt and validated the static site.
+- **Key files changed:** `README.md` records the post-regeneration validation checkpoint; no additional implementation files changed in this step.
+- **Decisions:** Require catalog cryptographic attack fixtures and all workspace consumers to pass after mapping changes, not only the manifest linter.
+- **Validation:** Passed workspace build, formatting, strict Clippy, all-feature tests, `cargo xtask test-catalog`, and `cargo xtask build-site`.
+- **Known limitations or blockers:** The second full live 682-URL evidence probe is still running, followed by native hosted-runner execution.
+- **Next starting point:** Inspect the final health report, run the final repository verifier, publish, and monitor GitHub Actions.
+
+### 2026-07-18 05:31 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Confirm catalog health after the mapping repairs and prepare the complete pipeline fix for publication.
+- **Work completed:** Completed a provider-throttled live check of all 682 evidence URLs and reviewed the resulting actionable and informational classifications.
+- **Key files changed:** `README.md` records the successful live validation; the implementation and regenerated catalog diff are ready for commit.
+- **Decisions:** Preserve 429 and 403 probe results as report warnings while requiring zero stale, unsafe, invalid, 404, or 410 findings for a healthy result.
+- **Validation:** The final report is healthy with zero findings across 130 manifests and 682 unique evidence URLs; 124 provider-limit warnings remain visible in the machine-readable report.
+- **Known limitations or blockers:** Native MSI, PKG, WinGet, and Homebrew execution still require the post-push GitHub-hosted workflows.
+- **Next starting point:** Run final repository verification, commit and push the complete change, then monitor and repair all native runs to green.

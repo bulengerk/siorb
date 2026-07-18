@@ -7,13 +7,13 @@
     "snapshot": {
       "version": 1,
       "length": 482,
-      "sha256": "18483130c0abefd8d234c37dd26899c746bc8df5d82cae46ae10a441679a1839"
+      "sha256": "94f8cfc08d4525e1bf3acc99e68005ff9b81ea1631bb8343663526886f39a45f"
     }
   },
   "signatures": [
     {
       "key_id": "dev-timestamp",
-      "signature": "+VyRrc8WF6WAwUufimAdtqeY1N7BU6hoJj4DZClKnJRAongUYqxiU8U2Lzlf3jegUdEX+kN5Y9BsIWWfiyseCg=="
+      "signature": "4+A7za9FGcGcfPeCbCaneocxHWgn47wjTGopfu431FRSIU6ALb2dqB4i493T6k2BvWxPhYTuUozVNgaUkja1Bg=="
     }
   ]
 }

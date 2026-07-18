@@ -19,8 +19,8 @@ dependencies = []
 optional_relationships = []
 version_normalization = "semver-loose"
 verification = "backend-signature"
-evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Oven-sh.Bun", "https://formulae.brew.sh/formula/oven-sh/bun/bun", "https://archlinux.org/packages/?q=bun", "https://pkgs.alpinelinux.org/packages?name=bun"]
-reviewed_at = "2026-07-13"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Oven-sh.Bun", "https://github.com/oven-sh/homebrew-bun/blob/main/Formula/bun.rb", "https://archlinux.org/packages/?q=bun", "https://pkgs.alpinelinux.org/packages?name=bun"]
+reviewed_at = "2026-07-18"
 deprecated = false
 maintainers = ["siorb-catalog-maintainers"]
 
@@ -51,8 +51,8 @@ architectures = ["x86_64", "aarch64"]
 priority = 20
 requires_privilege = false
 provenance = "backend-repository"
-evidence = "https://formulae.brew.sh/formula/oven-sh/bun/bun"
-reviewed_at = "2026-07-13"
+evidence = "https://github.com/oven-sh/homebrew-bun/blob/main/Formula/bun.rb"
+reviewed_at = "2026-07-18"
 
 [[sources]]
 id = "bun-pacman"

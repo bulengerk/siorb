@@ -39,31 +39,8 @@ jobs:
           target/release/siorb --non-interactive --yes --via apt remove hyperfine
 
   macos:
-    name: macOS Homebrew install, verify, and remove
+    name: macOS PKG and Homebrew end-to-end smoke
     runs-on: macos-15
-    timeout-minutes: 30
-    steps:
-      - name: Check out source
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          persist-credentials: false
-      - name: Install pinned Rust toolchain
-        run: |
-          rustup toolchain install 1.85.0 --profile minimal
-          rustup default 1.85.0
-      - name: Build Siorb
-        run: cargo build --locked --release -p siorb-cli
-      - name: Exercise a real native transaction on the disposable runner
-        env:
-          SIORB_STATE_DIR: ${{ runner.temp }}/siorb-native-smoke
-        run: |
-          target/release/siorb --non-interactive --yes --accept-agreements --via homebrew-formula --scope user install hyperfine
-          target/release/siorb --non-interactive --via homebrew-formula verify hyperfine
-          target/release/siorb --non-interactive --yes --via homebrew-formula remove hyperfine
-
-  windows:
-    name: Windows WinGet install, verify, and remove
-    runs-on: windows-11-arm
     timeout-minutes: 35
     steps:
       - name: Check out source
@@ -71,17 +48,98 @@ jobs:
         with:
           persist-credentials: false
       - name: Install pinned Rust toolchain
+        run: |
+          rustup toolchain install 1.85.0 --profile minimal
+          rustup default 1.85.0
+      - name: Build Siorb
+        run: cargo build --locked --release -p siorb-cli
+      - name: Package and install Siorb
+        run: |
+          version=$(cargo metadata --locked --no-deps --format-version 1 | python3 -c 'import json,sys; print(next(p["version"] for p in json.load(sys.stdin)["packages"] if p["name"] == "siorb-cli"))')
+          pkg="$RUNNER_TEMP/siorb-smoke.pkg"
+          test ! -e /usr/local/bin/siorb
+          scripts/release/package-macos.sh target/release/siorb "$version" "$pkg"
+          sudo installer -pkg "$pkg" -target /
+          test -x /usr/local/bin/siorb
+          touch "$RUNNER_TEMP/siorb-package-installed"
+      - name: Exercise installed CLI discovery, planning, and a real transaction
+        env:
+          SIORB_STATE_DIR: ${{ runner.temp }}/siorb-native-smoke
+        run: |
+          siorb=/usr/local/bin/siorb
+          "$siorb" version
+          "$siorb" --offline --json search hyperfine
+          "$siorb" --offline --json info hyperfine
+          "$siorb" --non-interactive --accept-agreements --via homebrew-formula --scope user --dry-run --explain install hyperfine
+          "$siorb" --non-interactive --yes --accept-agreements --via homebrew-formula --scope user install hyperfine
+          "$siorb" --non-interactive --via homebrew-formula verify hyperfine
+          "$siorb" --non-interactive --yes --via homebrew-formula remove hyperfine
+      - name: Uninstall Siorb package
+        if: always()
+        run: |
+          if [[ -f "$RUNNER_TEMP/siorb-package-installed" ]]; then
+            sudo rm -f /usr/local/bin/siorb /usr/local/share/doc/siorb/LICENSE
+            sudo rmdir /usr/local/share/doc/siorb 2>/dev/null || true
+            sudo pkgutil --forget dev.siorb.cli || true
+          fi
+
+  windows:
+    name: Windows MSI and WinGet end-to-end smoke
+    runs-on: windows-11-arm
+    timeout-minutes: 45
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Install pinned Rust toolchain
         shell: pwsh
         run: |
           rustup toolchain install 1.85.0 --profile minimal
           rustup default 1.85.0
       - name: Build Siorb
         run: cargo build --locked --release -p siorb-cli
-      - name: Exercise a real native transaction on the disposable runner
+      - name: Install pinned WiX tool
+        shell: pwsh
+        run: dotnet tool install --global wix --version 6.0.2
+      - name: Package and install Siorb
+        shell: pwsh
+        run: |
+          $metadata = cargo metadata --locked --no-deps --format-version 1 | ConvertFrom-Json
+          $version = ($metadata.packages | Where-Object name -eq 'siorb-cli').version
+          $msi = Join-Path $env:RUNNER_TEMP "siorb-smoke.msi"
+          $installed = Join-Path $env:ProgramFiles "Siorb\siorb.exe"
+          if (Test-Path -LiteralPath $installed) { throw "Disposable runner already contains Siorb" }
+          ./scripts/release/package-windows.ps1 `
+            -Binary "target/release/siorb.exe" `
+            -Version $version `
+            -Architecture arm64 `
+            -Output $msi
+          & msiexec.exe /i $msi /qn /norestart
+          if ($LASTEXITCODE -notin @(0, 3010)) { throw "MSI install failed with exit code $LASTEXITCODE" }
+          if (-not (Test-Path -LiteralPath $installed -PathType Leaf)) { throw "MSI did not install siorb.exe" }
+          New-Item -ItemType File -Path (Join-Path $env:RUNNER_TEMP "siorb-package-installed") | Out-Null
+      - name: Exercise installed CLI discovery, planning, and a real transaction
         shell: pwsh
         env:
           SIORB_STATE_DIR: ${{ runner.temp }}\siorb-native-smoke
         run: |
-          target\release\siorb.exe --non-interactive --yes --accept-agreements --via winget --scope user install hyperfine
-          target\release\siorb.exe --non-interactive --via winget verify hyperfine
-          target\release\siorb.exe --non-interactive --yes --via winget remove hyperfine
+          $PSNativeCommandUseErrorActionPreference = $true
+          $siorb = Join-Path $env:ProgramFiles "Siorb\siorb.exe"
+          & $siorb version
+          & $siorb --offline --json search hyperfine
+          & $siorb --offline --json info hyperfine
+          & $siorb --non-interactive --accept-agreements --via winget --scope user --dry-run --explain install hyperfine
+          & $siorb --non-interactive --yes --accept-agreements --via winget --scope user install hyperfine
+          & $siorb --non-interactive --via winget verify hyperfine
+          & $siorb --non-interactive --yes --via winget remove hyperfine
+      - name: Uninstall Siorb package
+        if: always()
+        shell: pwsh
+        run: |
+          $marker = Join-Path $env:RUNNER_TEMP "siorb-package-installed"
+          $msi = Join-Path $env:RUNNER_TEMP "siorb-smoke.msi"
+          if ((Test-Path -LiteralPath $marker) -and (Test-Path -LiteralPath $msi)) {
+            & msiexec.exe /x $msi /qn /norestart
+            if ($LASTEXITCODE -notin @(0, 3010)) { throw "MSI uninstall failed with exit code $LASTEXITCODE" }
+          }

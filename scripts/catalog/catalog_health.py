@@ -10,6 +10,7 @@ import ipaddress
 import json
 import pathlib
 import socket
+import threading
 import tomllib
 import urllib.error
 import urllib.parse
@@ -32,30 +33,39 @@ def safe_https_url(value: str) -> tuple[bool, str]:
     return True, ""
 
 
-def check_link(url: str, timeout: float) -> tuple[str, str | None]:
-    valid, reason = safe_https_url(url)
-    if not valid:
-        return url, reason
-    request = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "siorb-catalog-health/1"})
+def request_url(url: str, method: str, timeout: float) -> tuple[int | None, str | None]:
+    headers = {
+        "Accept": "text/html,application/xhtml+xml,application/json;q=0.9,*/*;q=0.8",
+        "User-Agent": "siorb-catalog-health/1",
+    }
+    request = urllib.request.Request(url, method=method, headers=headers)
     try:
         with urllib.request.urlopen(request, timeout=timeout) as response:
-            if response.status >= 400:
-                return url, f"HTTP {response.status}"
+            return response.status, None
     except urllib.error.HTTPError as error:
-        if error.code not in {405, 501}:
-            return url, f"HTTP {error.code}"
-        request = urllib.request.Request(
-            url, headers={"User-Agent": "siorb-catalog-health/1", "Range": "bytes=0-0"}
-        )
-        try:
-            with urllib.request.urlopen(request, timeout=timeout) as response:
-                if response.status >= 400:
-                    return url, f"HTTP {response.status}"
-        except (OSError, urllib.error.URLError) as retry_error:
-            return url, str(retry_error)
+        return error.code, f"HTTP {error.code}"
     except (OSError, socket.timeout, urllib.error.URLError) as error:
-        return url, str(error)
-    return url, None
+        return None, str(error)
+
+
+def check_link(url: str, timeout: float) -> tuple[str, str | None, str | None]:
+    valid, reason = safe_https_url(url)
+    if not valid:
+        return url, "evidence_unreachable", reason
+
+    status, error = request_url(url, "HEAD", timeout)
+    if status is not None and status < 400:
+        return url, None, None
+
+    # A number of repository/search endpoints reject HEAD even though their
+    # browser-facing GET route is healthy. Retry with GET, but never consume the
+    # response body. urllib closes the response as soon as the context exits.
+    status, error = request_url(url, "GET", timeout)
+    if status is not None and status < 400:
+        return url, None, None
+    if status in {404, 410}:
+        return url, "evidence_unreachable", error
+    return url, "evidence_probe_inconclusive", error or "evidence probe failed"
 
 
 def parse_date(value: object) -> dt.date | None:
@@ -65,6 +75,20 @@ def parse_date(value: object) -> dt.date | None:
         return dt.date.fromisoformat(value)
     except ValueError:
         return None
+
+
+def interleave_by_hostname(urls: set[str]) -> list[str]:
+    buckets: dict[str, list[str]] = {}
+    for url in sorted(urls):
+        hostname = urllib.parse.urlsplit(url).hostname or ""
+        buckets.setdefault(hostname, []).append(url)
+    result: list[str] = []
+    while buckets:
+        for hostname in sorted(buckets):
+            values = buckets[hostname]
+            result.append(values.pop(0))
+        buckets = {hostname: values for hostname, values in buckets.items() if values}
+    return result
 
 
 def main() -> int:
@@ -80,6 +104,7 @@ def main() -> int:
         parser.error("max age and timeout must be positive")
 
     findings: list[dict[str, str]] = []
+    warnings: list[dict[str, str]] = []
     urls: set[str] = set()
     manifests = sorted(args.catalog_dir.rglob("*.toml"))
     for path in manifests:
@@ -114,12 +139,31 @@ def main() -> int:
         if not valid:
             findings.append({"kind": "unsafe_evidence_url", "subject": url, "detail": reason})
     if args.check_links:
+        host_locks = {
+            urllib.parse.urlsplit(url).hostname: threading.Lock()
+            for url in urls
+            if urllib.parse.urlsplit(url).hostname
+        }
+
+        def probe(url: str) -> tuple[str, str | None, str | None]:
+            hostname = urllib.parse.urlsplit(url).hostname
+            if hostname is None:
+                return check_link(url, args.timeout)
+            # Avoid rate-limiting evidence providers by probing at most one URL
+            # per host at a time while still checking independent hosts in
+            # parallel.
+            with host_locks[hostname]:
+                return check_link(url, args.timeout)
+
         with concurrent.futures.ThreadPoolExecutor(max_workers=8) as executor:
-            for url, error in executor.map(lambda value: check_link(value, args.timeout), sorted(urls)):
-                if error:
-                    findings.append({"kind": "evidence_unreachable", "subject": url, "detail": error})
+            for url, kind, detail in executor.map(probe, interleave_by_hostname(urls)):
+                if kind == "evidence_unreachable":
+                    findings.append({"kind": kind, "subject": url, "detail": detail or "unreachable"})
+                elif kind == "evidence_probe_inconclusive":
+                    warnings.append({"kind": kind, "subject": url, "detail": detail or "inconclusive"})
 
     findings.sort(key=lambda item: (item["kind"], item["subject"], item["detail"]))
+    warnings.sort(key=lambda item: (item["kind"], item["subject"], item["detail"]))
     report = {
         "schema_version": "1.0",
         "as_of": args.as_of.isoformat(),
@@ -128,6 +172,7 @@ def main() -> int:
         "evidence_urls": len(urls),
         "healthy": not findings,
         "findings": findings,
+        "warnings": warnings,
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")

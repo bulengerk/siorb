@@ -43,8 +43,8 @@ jobs:
           path: catalog-health.json
           if-no-files-found: error
           retention-days: 30
-      - name: Fail on stale or unreachable evidence
+      - name: Fail on actionable catalog health findings
         if: steps.health.outputs.code != '0'
         run: |
-          echo "Catalog health findings are recorded in the uploaded JSON artifact." >&2
+          echo "Actionable catalog health findings are recorded in the uploaded JSON artifact." >&2
           exit 1

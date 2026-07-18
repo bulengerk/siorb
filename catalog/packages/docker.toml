@@ -19,8 +19,8 @@ dependencies = []
 optional_relationships = []
 version_normalization = "semver-loose"
 verification = "backend-signature"
-evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Docker.DockerDesktop", "https://formulae.brew.sh/cask/docker", "https://packages.debian.org/search?keywords=docker.io&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=moby-engine", "https://archlinux.org/packages/?q=docker", "https://software.opensuse.org/search?baseproject=ALL&q=docker", "https://pkgs.alpinelinux.org/packages?name=docker"]
-reviewed_at = "2026-07-13"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Docker.DockerDesktop", "https://formulae.brew.sh/cask/docker-desktop", "https://packages.debian.org/search?keywords=docker.io&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=moby-engine", "https://archlinux.org/packages/?q=docker", "https://software.opensuse.org/search?baseproject=ALL&q=docker", "https://pkgs.alpinelinux.org/packages?name=docker"]
+reviewed_at = "2026-07-18"
 deprecated = false
 maintainers = ["siorb-catalog-maintainers"]
 
@@ -43,7 +43,7 @@ reviewed_at = "2026-07-13"
 id = "docker-homebrew-cask"
 platform = "macos"
 backend = "homebrew-cask"
-package_id = "docker"
+package_id = "docker-desktop"
 trust = "native"
 scope = "user"
 channel = "stable"
@@ -51,8 +51,8 @@ architectures = ["x86_64", "aarch64"]
 priority = 20
 requires_privilege = false
 provenance = "backend-repository"
-evidence = "https://formulae.brew.sh/cask/docker"
-reviewed_at = "2026-07-13"
+evidence = "https://formulae.brew.sh/cask/docker-desktop"
+reviewed_at = "2026-07-18"
 
 [[sources]]
 id = "docker-apt"

@@ -19,8 +19,8 @@ dependencies = []
 optional_relationships = []
 version_normalization = "semver-loose"
 verification = "backend-signature"
-evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Hashicorp.Terraform", "https://formulae.brew.sh/formula/terraform", "https://packages.debian.org/search?keywords=terraform&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=terraform", "https://archlinux.org/packages/?q=terraform", "https://software.opensuse.org/search?baseproject=ALL&q=terraform", "https://pkgs.alpinelinux.org/packages?name=terraform"]
-reviewed_at = "2026-07-13"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Hashicorp.Terraform", "https://github.com/hashicorp/homebrew-tap/blob/master/Formula/terraform.rb", "https://packages.debian.org/search?keywords=terraform&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=terraform", "https://archlinux.org/packages/?q=terraform", "https://software.opensuse.org/search?baseproject=ALL&q=terraform", "https://pkgs.alpinelinux.org/packages?name=terraform"]
+reviewed_at = "2026-07-18"
 deprecated = false
 maintainers = ["siorb-catalog-maintainers"]
 
@@ -43,7 +43,7 @@ reviewed_at = "2026-07-13"
 id = "terraform-homebrew-formula"
 platform = "macos"
 backend = "homebrew-formula"
-package_id = "terraform"
+package_id = "hashicorp/tap/terraform"
 trust = "native"
 scope = "user"
 channel = "stable"
@@ -51,8 +51,8 @@ architectures = ["x86_64", "aarch64"]
 priority = 20
 requires_privilege = false
 provenance = "backend-repository"
-evidence = "https://formulae.brew.sh/formula/terraform"
-reviewed_at = "2026-07-13"
+evidence = "https://github.com/hashicorp/homebrew-tap/blob/master/Formula/terraform.rb"
+reviewed_at = "2026-07-18"
 
 [[sources]]
 id = "terraform-apt"

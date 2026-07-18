@@ -19,8 +19,8 @@ dependencies = []
 optional_relationships = []
 version_normalization = "semver-loose"
 verification = "backend-signature"
-evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Python.Python.3.13", "https://formulae.brew.sh/formula/python", "https://packages.debian.org/search?keywords=python3&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=python3", "https://archlinux.org/packages/?q=python", "https://software.opensuse.org/search?baseproject=ALL&q=python3", "https://pkgs.alpinelinux.org/packages?name=python3"]
-reviewed_at = "2026-07-13"
+evidence = ["https://github.com/microsoft/winget-pkgs/search?q=Python.Python.3.13", "https://formulae.brew.sh/formula/python@3.14", "https://packages.debian.org/search?keywords=python3&searchon=names&suite=stable&section=all", "https://packages.fedoraproject.org/search?query=python3", "https://archlinux.org/packages/?q=python", "https://software.opensuse.org/search?baseproject=ALL&q=python3", "https://pkgs.alpinelinux.org/packages?name=python3"]
+reviewed_at = "2026-07-18"
 deprecated = false
 maintainers = ["siorb-catalog-maintainers"]
 
@@ -51,8 +51,8 @@ architectures = ["x86_64", "aarch64"]
 priority = 20
 requires_privilege = false
 provenance = "backend-repository"
-evidence = "https://formulae.brew.sh/formula/python"
-reviewed_at = "2026-07-13"
+evidence = "https://formulae.brew.sh/formula/python@3.14"
+reviewed_at = "2026-07-18"
 
 [[sources]]
 id = "python-apt"
