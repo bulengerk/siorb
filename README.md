@@ -442,3 +442,23 @@ See `CONTRIBUTING.md` and `SECURITY.md` for contribution and security guidance.
 - **Validation:** The latest Windows run passed WinGet repair, version execution, Siorb build, WiX setup, x64 MSI creation, synchronous MSI installation, installed CLI startup, catalog search and info, and MSI cleanup; Siorb rejected only the alias-backed WinGet path before any package mutation.
 - **Known limitations or blockers:** The native AppX installation path and subsequent Siorb-driven WinGet transaction require one more hosted execution.
 - **Next starting point:** Verify and publish the native-path correction, then rerun the final Windows install, verify, remove, and cleanup sequence.
+
+### 2026-07-18 06:07 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Confirm real Windows and macOS usability on the published native-path correction.
+- **Work completed:** Published commit `6c6f5f5` and completed the disposable three-platform workflow with every job green, including installed package execution and real package-manager mutations.
+- **Key files changed:** `README.md` records the successful hosted evidence; the final native workflow implementation is published in commit `6c6f5f5`.
+- **Decisions:** Treat usability as proven only after successful native package installation, installed CLI discovery and planning, package-manager mutation, post-mutation verification, removal, and package cleanup.
+- **Validation:** Windows 2025 x64 passed pinned WinGet 1.11.510 bootstrap, MSI build/install, Siorb search/info/dry-run, real `hyperfine` install/verify/remove through WinGet, and MSI uninstall; macOS 15 ARM64 passed the equivalent PKG and Homebrew cycle; Ubuntu passed APT install/verify/remove. CI and all Windows/macOS/Linux packaging jobs are green on the same commit.
+- **Known limitations or blockers:** The Security workflow on the final implementation commit is still finishing CodeQL and Rust policy jobs.
+- **Next starting point:** Wait for Security to finish, record the complete green pipeline set, verify the final work-session log, and publish the closing documentation commit.
+
+### 2026-07-18 06:09 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Close the pipeline repair with a complete green implementation commit and durable evidence.
+- **Work completed:** Monitored the final Security jobs to completion and reviewed the Windows transaction log command by command, confirming resolution to the WinGet source, successful mutation, committed receipt state, verification, absence verification after removal, and MSI cleanup.
+- **Key files changed:** `README.md` records the final validation outcome; no implementation files changed after commit `6c6f5f5` passed its workflows.
+- **Decisions:** Preserve the explicit opt-in native mutation workflow and its real host changes as the usability gate while keeping normal CI and packaging non-mutating.
+- **Validation:** On `6c6f5f5`, CI, Security, Native packaging, and Disposable native mutation smoke all completed successfully; the earlier final catalog-health, catalog validation/signing, and site deployment workflows also completed successfully after the catalog repair.
+- **Known limitations or blockers:** Production release signing, Apple notarization, and external package-repository publication still require repository credentials and a release event; unsigned disposable-runner packages and runtime behavior are verified.
+- **Next starting point:** Publish this immutable closing entry, confirm the documentation-only head remains green, then create a signed release when release credentials are available.
