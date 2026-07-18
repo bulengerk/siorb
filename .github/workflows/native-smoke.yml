@@ -97,6 +97,23 @@ jobs:
         run: |
           rustup toolchain install 1.85.0 --profile minimal
           rustup default 1.85.0
+      - name: Bootstrap stable WinGet on the disposable runner
+        shell: pwsh
+        run: |
+          $ProgressPreference = 'SilentlyContinue'
+          Install-PackageProvider -Name NuGet -Force | Out-Null
+          Install-Module `
+            -Name Microsoft.WinGet.Client `
+            -RequiredVersion 1.29.280 `
+            -Repository PSGallery `
+            -Scope CurrentUser `
+            -Force
+          Import-Module Microsoft.WinGet.Client -RequiredVersion 1.29.280
+          Repair-WinGetPackageManager -AllUsers
+          $winget = Get-Command winget.exe -ErrorAction Stop
+          $wingetDirectory = Split-Path -Parent $winget.Source
+          $wingetDirectory | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          & $winget.Source --version
       - name: Build Siorb
         run: cargo build --locked --release -p siorb-cli
       - name: Install pinned WiX tool

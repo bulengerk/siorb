@@ -372,3 +372,33 @@ See `CONTRIBUTING.md` and `SECURITY.md` for contribution and security guidance.
 - **Validation:** The second native run passed macOS PKG plus Homebrew end to end and Linux APT end to end; its Windows job passed build, MSI creation, MSI installation, installed CLI startup, catalog search, catalog info, MSI removal, and failed only when the absent WinGet backend was requested.
 - **Known limitations or blockers:** The revised Windows 2025 WinGet transaction still requires one hosted rerun.
 - **Next starting point:** Verify workflow syntax and repository invariants, publish the runner adjustment, then rerun Windows installation, planning, WinGet install, verification, removal, and MSI cleanup.
+
+### 2026-07-18 05:45 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Publish the GA Windows runner adjustment and execute the final native usability rerun.
+- **Work completed:** Committed and pushed the runner correction as `d1e38d6`, dispatched the native mutation workflow, and confirmed that Windows 2025 x64, macOS 15 ARM64, and Ubuntu 24.04 jobs started from that commit.
+- **Key files changed:** `README.md` records publication and dispatch status; the workflow correction is published in commit `d1e38d6`.
+- **Decisions:** Use the explicit `windows-2025` label instead of a floating or preview runner label for WinGet usability coverage.
+- **Validation:** Workflow YAML and full repository verification passed immediately before publication; all three new jobs completed checkout and entered native toolchain or build steps.
+- **Known limitations or blockers:** The final hosted MSI, WinGet, PKG, Homebrew, and APT transaction results are still pending.
+- **Next starting point:** Monitor the command-level results to completion, then record and publish the final evidence if every native mutation succeeds.
+
+### 2026-07-18 05:47 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Track the final native usability run through real package-manager mutations.
+- **Work completed:** Observed the macOS and Linux jobs finish successfully on the final workflow revision while the Windows 2025 x64 job continued its native release build.
+- **Key files changed:** `README.md` records the hosted-runner checkpoint; no implementation files changed during monitoring.
+- **Decisions:** Wait for the slower Windows native build and require its complete MSI and WinGet transaction rather than inferring success from the already-green package matrix.
+- **Validation:** macOS again passed PKG installation, installed CLI checks, Homebrew install, verification, removal, and package cleanup; Linux again passed the APT install, verification, and removal cycle.
+- **Known limitations or blockers:** Windows 2025 has not yet reached its MSI and WinGet steps.
+- **Next starting point:** Continue monitoring Windows through MSI installation, installed CLI discovery, WinGet mutation, verification, removal, and cleanup.
+
+### 2026-07-18 05:49 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Make the disposable Windows usability test self-contained on clean hosted runner images.
+- **Work completed:** Confirmed the Windows 2025 MSI and installed CLI work but that the ephemeral server image does not register WinGet for the runner account, then added Microsoft's documented WinGet repair bootstrap with the Microsoft module pinned to version 1.29.280 and exported the resolved executable directory explicitly.
+- **Key files changed:** `.github/workflows/native-smoke.yml` bootstraps and verifies WinGet before building Siorb; `README.md` records the clean-image prerequisite diagnosis.
+- **Decisions:** Provision the missing OS package-manager prerequisite from Microsoft's PowerShell Gallery using an exact module version instead of weakening Siorb's backend availability checks or substituting a mock.
+- **Validation:** The third native run again passed macOS and Linux end to end; Windows 2025 passed build, x64 MSI creation, synchronous MSI installation, installed CLI startup, catalog search and info, MSI removal, and failed only because the clean image had no registered WinGet executable.
+- **Known limitations or blockers:** The pinned WinGet bootstrap and subsequent real transaction still need hosted-runner execution.
+- **Next starting point:** Verify the workflow and repository, publish the self-contained test, then rerun the complete Windows MSI and WinGet sequence.
