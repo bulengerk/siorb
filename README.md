@@ -412,3 +412,33 @@ See `CONTRIBUTING.md` and `SECURITY.md` for contribution and security guidance.
 - **Validation:** The failing hosted log shows the obsolete `Install-PackageProvider NuGet` call was the only command reached and failed before any module or host mutation; the replacement retains exact source, version, and scope controls.
 - **Known limitations or blockers:** The PSResourceGet installation and WinGet repair sequence still require hosted execution.
 - **Next starting point:** Validate repository invariants, cancel the superseded failing run, publish the PowerShell 7 bootstrap, and rerun the native workflow.
+
+### 2026-07-18 05:52 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Confirm that the self-contained Windows prerequisite bootstrap works before the final native transaction.
+- **Work completed:** Committed and pushed the PowerShell 7 correction as `8238db1`, dispatched a fresh native workflow, and observed the Windows 2025 job complete the pinned PSResourceGet module installation, WinGet repair, executable discovery, and version probe successfully.
+- **Key files changed:** `README.md` records the hosted bootstrap success; the executable workflow is published in commit `8238db1`.
+- **Decisions:** Keep the now-proven pinned bootstrap and continue through the unchanged real Siorb transaction rather than adding any runner-specific bypass.
+- **Validation:** The Windows job's `Bootstrap stable WinGet on the disposable runner` step is green and the job advanced to the native Siorb build; Linux and macOS builds are running in parallel.
+- **Known limitations or blockers:** The final MSI install and Siorb-driven WinGet install, verify, and remove steps remain in progress.
+- **Next starting point:** Monitor the Windows build and package steps through the complete transaction and cleanup, then publish the final result log.
+
+### 2026-07-18 05:54 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Hold the final native workflow to complete cross-platform usability evidence.
+- **Work completed:** Observed the final macOS and Linux jobs complete successfully again while the Windows job continued its release build after the now-green WinGet bootstrap.
+- **Key files changed:** `README.md` records the latest hosted-runner checkpoint; no implementation files changed during monitoring.
+- **Decisions:** Retain the complete three-platform mutation workflow and wait for Windows rather than treating the successful prerequisite bootstrap as the final result.
+- **Validation:** macOS passed installed PKG behavior and the Homebrew transaction; Linux passed the APT transaction; Windows passed checkout, toolchain setup, and pinned WinGet bootstrap.
+- **Known limitations or blockers:** Windows is still compiling Siorb before MSI creation and the real WinGet transaction.
+- **Next starting point:** Monitor Windows through build, WiX packaging, MSI installation, Siorb planning, WinGet install, verification, removal, and MSI cleanup.
+
+### 2026-07-18 05:57 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Expose the repaired WinGet executable to Siorb as a normal validated backend path.
+- **Work completed:** Confirmed that the pinned WinGet repair succeeds and launches version 1.11.510 but that its per-user App Execution Alias is not accepted as a regular executable by Siorb's path validation, then changed the smoke bootstrap to resolve the registered Microsoft.DesktopAppInstaller package and export its native installation directory.
+- **Key files changed:** `.github/workflows/native-smoke.yml` resolves the registered AppX package's real `winget.exe`; `README.md` records the alias-versus-native-path diagnosis.
+- **Decisions:** Preserve Siorb's canonical regular-file requirement and provide the actual Microsoft package executable path instead of weakening executable validation for reparse-point aliases.
+- **Validation:** The latest Windows run passed WinGet repair, version execution, Siorb build, WiX setup, x64 MSI creation, synchronous MSI installation, installed CLI startup, catalog search and info, and MSI cleanup; Siorb rejected only the alias-backed WinGet path before any package mutation.
+- **Known limitations or blockers:** The native AppX installation path and subsequent Siorb-driven WinGet transaction require one more hosted execution.
+- **Next starting point:** Verify and publish the native-path correction, then rerun the final Windows install, verify, remove, and cleanup sequence.

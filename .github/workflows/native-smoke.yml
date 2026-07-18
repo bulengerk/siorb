@@ -110,10 +110,19 @@ jobs:
             -Quiet
           Import-Module Microsoft.WinGet.Client -RequiredVersion 1.29.280
           Repair-WinGetPackageManager -AllUsers
-          $winget = Get-Command winget.exe -ErrorAction Stop
-          $wingetDirectory = Split-Path -Parent $winget.Source
+          $appInstaller = Get-AppxPackage `
+            -AllUsers `
+            -Name Microsoft.DesktopAppInstaller |
+            Sort-Object Version -Descending |
+            Select-Object -First 1
+          if (-not $appInstaller) { throw "WinGet repair did not register Microsoft.DesktopAppInstaller" }
+          $wingetPath = Join-Path $appInstaller.InstallLocation "winget.exe"
+          if (-not (Test-Path -LiteralPath $wingetPath -PathType Leaf)) {
+            throw "WinGet repair did not install a native winget.exe"
+          }
+          $wingetDirectory = Split-Path -Parent $wingetPath
           $wingetDirectory | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-          & $winget.Source --version
+          & $wingetPath --version
       - name: Build Siorb
         run: cargo build --locked --release -p siorb-cli
       - name: Install pinned WiX tool
