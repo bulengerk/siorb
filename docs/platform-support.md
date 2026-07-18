@@ -97,7 +97,7 @@ capability allowlist empty, and its observed version retained when parseable.
 | WinGet | `>=1.6,<2` | query, install, remove, upgrade, repair, verify, non-interactive |
 | Scoop | `>=0.4,<1` | query, install, remove, upgrade, repair, verify |
 | Chocolatey | `>=2,<3` | query, install, remove, upgrade, repair, verify, non-interactive |
-| Homebrew | `>=4,<5` | query, install, remove, upgrade, repair, verify |
+| Homebrew | `>=4,<7` | query, install, remove, upgrade, repair, verify |
 | MacPorts | `>=2.8,<3` | query, install, remove, upgrade, repair, verify |
 | APT | `>=2,<4` | query, install, remove, upgrade, repair, verify, non-interactive |
 | DNF/DNF5 | `>=4,<6` | query, install, remove, upgrade, repair, verify, non-interactive |

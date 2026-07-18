@@ -108,24 +108,35 @@ jobs:
           $metadata = cargo metadata --locked --no-deps --format-version 1 | ConvertFrom-Json
           $version = ($metadata.packages | Where-Object name -eq 'siorb-cli').version
           $msi = Join-Path $env:RUNNER_TEMP "siorb-smoke.msi"
-          $installed = Join-Path $env:ProgramFiles "Siorb\siorb.exe"
-          if (Test-Path -LiteralPath $installed) { throw "Disposable runner already contains Siorb" }
+          $log = Join-Path $env:RUNNER_TEMP "siorb-smoke-msi.log"
+          $candidates = @($env:ProgramFiles, ${env:ProgramFiles(x86)}, $env:ProgramW6432) |
+            Where-Object { $_ } |
+            ForEach-Object { Join-Path $_ "Siorb\siorb.exe" } |
+            Select-Object -Unique
+          if ($candidates | Where-Object { Test-Path -LiteralPath $_ }) { throw "Disposable runner already contains Siorb" }
           ./scripts/release/package-windows.ps1 `
             -Binary "target/release/siorb.exe" `
             -Version $version `
             -Architecture arm64 `
             -Output $msi
-          & msiexec.exe /i $msi /qn /norestart
-          if ($LASTEXITCODE -notin @(0, 3010)) { throw "MSI install failed with exit code $LASTEXITCODE" }
-          if (-not (Test-Path -LiteralPath $installed -PathType Leaf)) { throw "MSI did not install siorb.exe" }
+          $install = Start-Process msiexec.exe `
+            -ArgumentList @('/i', $msi, '/qn', '/norestart', '/L*v', $log) `
+            -Wait -PassThru
+          if ($install.ExitCode -notin @(0, 3010)) { throw "MSI install failed with exit code $($install.ExitCode)" }
           New-Item -ItemType File -Path (Join-Path $env:RUNNER_TEMP "siorb-package-installed") | Out-Null
+          $installed = $candidates | Where-Object { Test-Path -LiteralPath $_ -PathType Leaf } | Select-Object -First 1
+          if (-not $installed) {
+            Get-Content -LiteralPath $log -Tail 200
+            throw "MSI did not install siorb.exe under a native Program Files directory"
+          }
+          "SIORB_SMOKE_EXE=$installed" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
       - name: Exercise installed CLI discovery, planning, and a real transaction
         shell: pwsh
         env:
           SIORB_STATE_DIR: ${{ runner.temp }}\siorb-native-smoke
         run: |
           $PSNativeCommandUseErrorActionPreference = $true
-          $siorb = Join-Path $env:ProgramFiles "Siorb\siorb.exe"
+          $siorb = $env:SIORB_SMOKE_EXE
           & $siorb version
           & $siorb --offline --json search hyperfine
           & $siorb --offline --json info hyperfine
@@ -140,6 +151,8 @@ jobs:
           $marker = Join-Path $env:RUNNER_TEMP "siorb-package-installed"
           $msi = Join-Path $env:RUNNER_TEMP "siorb-smoke.msi"
           if ((Test-Path -LiteralPath $marker) -and (Test-Path -LiteralPath $msi)) {
-            & msiexec.exe /x $msi /qn /norestart
-            if ($LASTEXITCODE -notin @(0, 3010)) { throw "MSI uninstall failed with exit code $LASTEXITCODE" }
+            $uninstall = Start-Process msiexec.exe `
+              -ArgumentList @('/x', $msi, '/qn', '/norestart') `
+              -Wait -PassThru
+            if ($uninstall.ExitCode -notin @(0, 3010)) { throw "MSI uninstall failed with exit code $($uninstall.ExitCode)" }
           }

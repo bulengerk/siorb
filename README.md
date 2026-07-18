@@ -332,3 +332,23 @@ See `CONTRIBUTING.md` and `SECURITY.md` for contribution and security guidance.
 - **Validation:** The final report is healthy with zero findings across 130 manifests and 682 unique evidence URLs; 124 provider-limit warnings remain visible in the machine-readable report.
 - **Known limitations or blockers:** Native MSI, PKG, WinGet, and Homebrew execution still require the post-push GitHub-hosted workflows.
 - **Next starting point:** Run final repository verification, commit and push the complete change, then monitor and repair all native runs to green.
+
+### 2026-07-18 05:33 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Publish the verified pipeline repair and start native Windows and macOS validation.
+- **Work completed:** Committed and pushed the complete change as `3bcb9ec`, then dispatched the catalog-health and disposable native mutation workflows alongside the automatically triggered CI, packaging, catalog, site, and security runs.
+- **Key files changed:** `README.md` records publication and dispatch status; the implementation was published in commit `3bcb9ec`.
+- **Decisions:** Validate the pushed main-branch commit on hosted runners before making any further platform-specific adjustment.
+- **Validation:** GitHub accepted the push and queued seven workflows for the published commit, including native MSI/PKG packaging and opt-in WinGet/Homebrew mutation tests.
+- **Known limitations or blockers:** Hosted jobs are currently queued or running; native usability is not yet confirmed until their logs complete successfully.
+- **Next starting point:** Monitor every job, inspect the first native failure if any, and iterate until all required workflows are green.
+
+### 2026-07-18 05:39 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Repair the platform-specific failures found by the first disposable Windows and macOS usability run.
+- **Work completed:** Made MSI installation and removal synchronous with verbose diagnostics and native Program Files discovery, expanded the reviewed Homebrew contract through major version 6, and updated macOS detector fixtures and support documentation for the runner's Homebrew 6.0.11.
+- **Key files changed:** `.github/workflows/native-smoke.yml`, `crates/siorb-platform/src/lib.rs`, `docs/platform-support.md`, macOS platform fixtures and goldens, and `README.md`.
+- **Decisions:** Keep the backend version gate bounded at `<7` while accepting the currently exercised Homebrew major versions 4 through 6; retain explicit opt-in for every host-mutating smoke test.
+- **Validation:** The original published commit passed CI, security, catalog validation, site deployment, catalog health, and every native packaging job; focused platform unit and golden-fixture tests pass with Homebrew 6.0.11, and the edited workflow parses as YAML.
+- **Known limitations or blockers:** The repaired disposable native mutation workflow has not yet been rerun on GitHub-hosted Windows and macOS runners.
+- **Next starting point:** Run every repository gate, publish the native follow-up, and repeat the installed MSI, PKG, WinGet, and Homebrew transactions.

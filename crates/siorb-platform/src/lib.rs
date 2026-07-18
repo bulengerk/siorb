@@ -432,7 +432,7 @@ fn backend_definitions(os: OsFamily) -> &'static [BackendDefinition] {
             version_arguments: &["--version"],
             capabilities: MUTATION_CAPABILITIES,
             minimum_version: &[4, 0],
-            maximum_major: 4,
+            maximum_major: 6,
         },
         BackendDefinition {
             id: "macports",
