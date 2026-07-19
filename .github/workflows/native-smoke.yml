@@ -38,6 +38,40 @@ jobs:
           target/release/siorb --non-interactive --via apt verify hyperfine
           target/release/siorb --non-interactive --yes --via apt remove hyperfine
 
+  linux-yum:
+    name: Rocky Linux Yum install, verify, and remove
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Install pinned Rust toolchain and musl linker
+        run: |
+          rustup toolchain install 1.85.0 --profile minimal
+          rustup default 1.85.0
+          rustup target add x86_64-unknown-linux-musl
+          sudo apt-get update
+          sudo apt-get install --yes musl-tools
+      - name: Build portable Siorb
+        run: cargo build --locked --release -p siorb-cli --target x86_64-unknown-linux-musl
+      - name: Exercise a real Yum transaction in disposable Rocky Linux
+        run: |
+          docker run --rm --pull=always \
+            --volume "$PWD/target/x86_64-unknown-linux-musl/release/siorb:/usr/local/bin/siorb:ro" \
+            rockylinux/rockylinux:9.6@sha256:91bbb8eb52ca462611c1f9ce5c4cede4172a31bfe64f336e82f29648694a3cfe \
+            bash -euo pipefail -c '
+              export SIORB_STATE_DIR=/tmp/siorb-native-smoke
+              siorb version
+              siorb --offline --json search git
+              siorb --offline --json info git
+              siorb --non-interactive --accept-agreements --via yum --scope system --dry-run --explain install git
+              siorb --non-interactive --yes --accept-agreements --via yum --scope system install git
+              siorb --non-interactive --via yum verify git
+              siorb --non-interactive --yes --via yum remove git
+            '
+
   macos:
     name: macOS PKG and Homebrew end-to-end smoke
     runs-on: macos-15

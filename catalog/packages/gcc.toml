@@ -70,6 +70,21 @@ evidence = "https://packages.fedoraproject.org/search?query=gcc"
 reviewed_at = "2026-07-13"
 
 [[sources]]
+id = "gcc-yum"
+platform = "fedora"
+backend = "yum"
+package_id = "gcc"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=gcc"
+reviewed_at = "2026-07-13"
+
+[[sources]]
 id = "gcc-pacman"
 platform = "arch"
 backend = "pacman"

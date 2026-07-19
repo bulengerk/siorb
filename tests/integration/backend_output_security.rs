@@ -64,7 +64,7 @@ fn every_captured_query_is_parsed_from_bounded_raw_bytes() {
             assert!(!diagnostic.contains('\u{1b}'));
         }
     }
-    assert_eq!(exercised, 7);
+    assert_eq!(exercised, 8);
 }
 
 #[cfg(unix)]
@@ -120,7 +120,7 @@ fn captured_install_failures_flow_through_the_real_executor_classifier() {
         assert!(!error.state_changed);
         assert!(state.receipts().is_ok_and(|receipts| receipts.is_empty()));
     }
-    assert_eq!(exercised, 4);
+    assert_eq!(exercised, 5);
 }
 
 fn backend_kind(value: &str) -> BackendKind {
@@ -128,6 +128,7 @@ fn backend_kind(value: &str) -> BackendKind {
         "winget" => BackendKind::Winget,
         "apt" => BackendKind::Apt,
         "dnf" => BackendKind::Dnf,
+        "yum" => BackendKind::Yum,
         "pacman" => BackendKind::Pacman,
         "brew" => BackendKind::BrewCask,
         "flatpak" => BackendKind::Flatpak,

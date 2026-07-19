@@ -20,7 +20,7 @@ This living plan follows dependency order. A checked item means implementation a
 
 - [x] Implement deterministic filtering/ranking with rejection reason codes.
 - [x] Serialize immutable plans and validate consent/flag combinations.
-- [x] Implement WinGet, Homebrew, APT, DNF, Pacman, and Flatpak adapters.
+- [x] Implement WinGet, Homebrew, APT, DNF, Yum, Pacman, and Flatpak adapters.
 - [x] Cover dry-run install/remove/upgrade with fixtures and golden tests.
 
 ## M3 - Safe execution and state

@@ -85,6 +85,21 @@ evidence = "https://packages.fedoraproject.org/search?query=dotnet-sdk-9.0"
 reviewed_at = "2026-07-13"
 
 [[sources]]
+id = "dotnet-sdk-yum"
+platform = "fedora"
+backend = "yum"
+package_id = "dotnet-sdk-9.0"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=dotnet-sdk-9.0"
+reviewed_at = "2026-07-13"
+
+[[sources]]
 id = "dotnet-sdk-pacman"
 platform = "arch"
 backend = "pacman"

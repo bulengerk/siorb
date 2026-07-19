@@ -53,7 +53,7 @@ without a new fixture and review.
 | Windows 10/11 and supported Server | x86_64; ARM64 where upstream mappings exist | WinGet, Scoop, Chocolatey, verified MSI/MSIX/EXE/ZIP | Windows runner tests, adapter contracts, signed/unsigned-local installer smoke as applicable |
 | macOS | x86_64, Apple Silicon ARM64 | Homebrew formula/cask, MacPorts, verified PKG/DMG/ZIP | both architecture builds or documented universal artifact, adapter contracts, archive/package smoke |
 | Debian/Ubuntu | x86_64, ARM64 | APT, Snap, Flatpak, verified DEB/AppImage/archive | detection fixtures for family/version, container adapter tests, DEB/archive smoke |
-| Fedora/RHEL | x86_64, ARM64 | DNF/DNF5, Flatpak, verified RPM/AppImage/archive | family/version fixtures, container adapter tests, RPM/archive smoke |
+| Fedora/RHEL | x86_64, ARM64 | DNF/DNF5, Yum, Flatpak, verified RPM/AppImage/archive | family/version fixtures, container adapter tests, RPM/archive smoke |
 | Arch Linux | x86_64; ARM64 where repositories support it | Pacman, Flatpak, verified AppImage/archive | fixtures and disposable integration test |
 | openSUSE | x86_64, ARM64 | Zypper, Flatpak, verified RPM/AppImage/archive | fixtures and disposable integration test |
 | Alpine | x86_64, ARM64 | APK, optional Flatpak, verified archive | musl detection/build evidence and disposable integration test |
@@ -101,6 +101,7 @@ capability allowlist empty, and its observed version retained when parseable.
 | MacPorts | `>=2.8,<3` | query, install, remove, upgrade, repair, verify |
 | APT | `>=2,<4` | query, install, remove, upgrade, repair, verify, non-interactive |
 | DNF/DNF5 | `>=4,<6` | query, install, remove, upgrade, repair, verify, non-interactive |
+| Yum | `>=3.4,<5` | query, install, remove, upgrade, repair, verify, non-interactive |
 | Pacman | `>=6,<8` | query, install, remove, upgrade, repair, verify, non-interactive |
 | Flatpak | `>=1.12,<2` | query, install, remove, upgrade, verify, non-interactive |
 | Snap | `>=2.58,<3` | query, install, remove, upgrade, repair, verify |

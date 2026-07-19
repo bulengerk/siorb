@@ -461,6 +461,14 @@ fn backend_definitions(os: OsFamily) -> &'static [BackendDefinition] {
             maximum_major: 5,
         },
         BackendDefinition {
+            id: "yum",
+            executables: &["yum"],
+            version_arguments: &["--version"],
+            capabilities: NON_INTERACTIVE_CAPABILITIES,
+            minimum_version: &[3, 4],
+            maximum_major: 4,
+        },
+        BackendDefinition {
             id: "pacman",
             executables: &["pacman"],
             version_arguments: &["--version"],
@@ -624,7 +632,7 @@ fn backend_applies(
     };
     match backend {
         "apt" | "snap" => belongs_to(&["debian", "ubuntu", "linuxmint", "pop"]),
-        "dnf" => belongs_to(&["fedora", "rhel", "centos", "rocky", "almalinux"]),
+        "dnf" | "yum" => belongs_to(&["fedora", "rhel", "centos", "rocky", "almalinux"]),
         "pacman" => belongs_to(&["arch", "archarm", "manjaro", "endeavouros"]),
         "zypper" => belongs_to(&["opensuse", "opensuse-leap", "suse", "sles"]),
         "apk" => belongs_to(&["alpine"]),
@@ -1173,6 +1181,15 @@ mod tests {
         assert!(backend_version_supported(apt, "3.1.0"));
         assert!(!backend_version_supported(apt, "1.9.9"));
         assert!(!backend_version_supported(apt, "4.0.0"));
+        let yum = backend_definitions(OsFamily::Linux)
+            .iter()
+            .find(|definition| definition.id == "yum");
+        assert!(yum.is_some_and(|definition| {
+            backend_version_supported(definition, "3.4.3")
+                && backend_version_supported(definition, "4.18.2")
+                && !backend_version_supported(definition, "3.3.9")
+                && !backend_version_supported(definition, "5.0.0")
+        }));
         assert!(
             backend_definitions(OsFamily::Linux)
                 .iter()
@@ -1268,6 +1285,48 @@ mod tests {
                 && backend.capabilities.is_empty()
         }));
         assert_eq!(context.support(), siorb_core::PlatformSupport::Unsupported);
+    }
+
+    #[test]
+    fn yum_is_detected_on_the_rhel_family_with_reviewed_capabilities() {
+        let directory = tempdir();
+        assert!(directory.is_ok());
+        let Some(directory) = directory.ok() else {
+            return;
+        };
+        let executable = directory.path().join("yum");
+        assert!(fs::write(&executable, "fixture").is_ok());
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::PermissionsExt;
+            assert!(fs::set_permissions(&executable, fs::Permissions::from_mode(0o700)).is_ok());
+        }
+        let release = directory.path().join("os-release");
+        assert!(
+            fs::write(
+                &release,
+                "ID=rocky\nID_LIKE=\"rhel centos fedora\"\nVERSION_ID=9.6\n"
+            )
+            .is_ok()
+        );
+        let context = SystemDetector::default()
+            .with_host(OsFamily::Linux, Architecture::X86_64)
+            .with_os_release(release)
+            .with_path(directory.path().display().to_string())
+            .with_probe(FixtureProbe {
+                output: ProbeOutput {
+                    exit_code: Some(0),
+                    stdout: b"4.18.2\n".to_vec(),
+                    ..ProbeOutput::default()
+                },
+            })
+            .detect();
+        assert!(context.backend("yum").is_some_and(|backend| {
+            backend.available
+                && backend.version.as_deref() == Some("4.18.2")
+                && backend.capabilities.contains(&"non_interactive".to_owned())
+                && backend.capabilities.contains(&"verify".to_owned())
+        }));
     }
 
     #[test]

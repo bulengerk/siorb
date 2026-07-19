@@ -128,6 +128,7 @@ pub enum BackendKind {
     MacPorts,
     Apt,
     Dnf,
+    Yum,
     Pacman,
     Flatpak,
     Snap,
@@ -146,6 +147,7 @@ impl BackendKind {
             "macports" => Ok(Self::MacPorts),
             "apt" => Ok(Self::Apt),
             "dnf" => Ok(Self::Dnf),
+            "yum" => Ok(Self::Yum),
             "pacman" => Ok(Self::Pacman),
             "flatpak" => Ok(Self::Flatpak),
             "snap" => Ok(Self::Snap),
@@ -172,6 +174,7 @@ impl BackendKind {
             Self::MacPorts => "macports",
             Self::Apt => "apt",
             Self::Dnf => "dnf",
+            Self::Yum => "yum",
             Self::Pacman => "pacman",
             Self::Flatpak => "flatpak",
             Self::Snap => "snap",
@@ -282,11 +285,11 @@ impl BackendAdapter for NativeAdapter {
             non_interactive: true,
             native_pin: matches!(
                 self.kind,
-                BackendKind::Apt | BackendKind::Dnf | BackendKind::Pacman
+                BackendKind::Apt | BackendKind::Dnf | BackendKind::Yum | BackendKind::Pacman
             ),
             native_hold: matches!(
                 self.kind,
-                BackendKind::Apt | BackendKind::Dnf | BackendKind::Pacman
+                BackendKind::Apt | BackendKind::Dnf | BackendKind::Yum | BackendKind::Pacman
             ),
         }
     }
@@ -431,6 +434,9 @@ fn arguments_with_version(
         (BackendKind::Dnf, Operation::Install) => strings(["install", "-y", "--", &package]),
         (BackendKind::Dnf, Operation::Remove) => strings(["remove", "-y", "--", &package]),
         (BackendKind::Dnf, Operation::Upgrade) => strings(["upgrade", "-y", "--", &package]),
+        (BackendKind::Yum, Operation::Install) => strings(["install", "-y", "--", &package]),
+        (BackendKind::Yum, Operation::Remove) => strings(["remove", "-y", "--", &package]),
+        (BackendKind::Yum, Operation::Upgrade) => strings(["update", "-y", "--", &package]),
         (BackendKind::Pacman, Operation::Install) => {
             strings(["-S", "--noconfirm", "--needed", "--", &package])
         }
@@ -494,6 +500,7 @@ fn arguments_with_version(
             strings(["install", "--reinstall", "--yes", "--", &selected])
         }
         (BackendKind::Dnf, Operation::Repair) => strings(["reinstall", "-y", "--", &package]),
+        (BackendKind::Yum, Operation::Repair) => strings(["reinstall", "-y", "--", &package]),
         (BackendKind::Pacman, Operation::Repair) => strings(["-S", "--noconfirm", "--", &package]),
         (BackendKind::Flatpak, Operation::Repair) => {
             return Err(adapter_error(
@@ -546,6 +553,7 @@ fn query_arguments(kind: BackendKind, package: &str) -> Vec<String> {
         BackendKind::MacPorts => strings(["installed", package]),
         BackendKind::Apt => strings(["--just-print", "install", package]),
         BackendKind::Dnf => strings(["list", "--installed", package]),
+        BackendKind::Yum => strings(["list", "installed", package]),
         BackendKind::Pacman => strings(["-Q", package]),
         BackendKind::Snap => strings(["list", package]),
         BackendKind::Zypper => strings(["search", "--installed-only", "--match-exact", package]),
@@ -713,7 +721,7 @@ pub fn parse_query_output(
         | BackendKind::Pacman => simple_package_version(&combined, native_id),
         BackendKind::MacPorts => macports_version(&combined, native_id),
         BackendKind::Apt => apt_version(&combined),
-        BackendKind::Dnf => dnf_version(&combined, native_id),
+        BackendKind::Dnf | BackendKind::Yum => dnf_version(&combined, native_id),
         BackendKind::Snap => snap_version(&combined, native_id),
         BackendKind::Zypper => zypper_version(&combined, native_id),
         BackendKind::Apk => apk_version(&combined, native_id),
@@ -1066,6 +1074,12 @@ mod tests {
                 "firefox",
                 b"Inst firefox (127.0+build2 Ubuntu:24.04/noble [amd64])\n".as_slice(),
                 "127.0+build2",
+            ),
+            (
+                BackendKind::Yum,
+                "firefox",
+                b"Installed Packages\nfirefox.x86_64 115.12.0-1.el9_4 appstream\n".as_slice(),
+                "115.12.0-1.el9_4",
             ),
             (
                 BackendKind::Apt,

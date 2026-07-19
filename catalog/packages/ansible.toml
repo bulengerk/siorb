@@ -70,6 +70,21 @@ evidence = "https://packages.fedoraproject.org/search?query=ansible-core"
 reviewed_at = "2026-07-13"
 
 [[sources]]
+id = "ansible-yum"
+platform = "fedora"
+backend = "yum"
+package_id = "ansible-core"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=ansible-core"
+reviewed_at = "2026-07-13"
+
+[[sources]]
 id = "ansible-pacman"
 platform = "arch"
 backend = "pacman"

@@ -241,6 +241,21 @@ evidence = "https://packages.fedoraproject.org/search?query=ripgrep"
 reviewed_at = "2026-07-13"
 
 [[sources]]
+id = "ripgrep-yum"
+platform = "fedora"
+backend = "yum"
+package_id = "ripgrep"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=ripgrep"
+reviewed_at = "2026-07-13"
+
+[[sources]]
 id = "ripgrep-pacman"
 platform = "arch"
 backend = "pacman"

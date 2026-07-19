@@ -2,7 +2,7 @@
 
 Siorb is a cross-platform CLI for managing software through the package manager already installed on the computer. It finds a compatible package, shows the exact plan, asks for consent, runs the native tool, and verifies the result.
 
-It supports Windows, macOS, and Linux package managers including WinGet, Chocolatey, Scoop, Homebrew, APT, DNF, Pacman, Zypper, APK, Snap, and Flatpak. Resolution uses a bundled catalog and works without accounts, telemetry, a daemon, or a hosted service.
+It supports Windows, macOS, and Linux package managers including WinGet, Chocolatey, Scoop, Homebrew, APT, DNF, Yum, Pacman, Zypper, APK, Snap, and Flatpak. Resolution uses a bundled catalog and works without accounts, telemetry, a daemon, or a hosted service.
 
 ## Build and install
 
@@ -462,3 +462,13 @@ See `CONTRIBUTING.md` and `SECURITY.md` for contribution and security guidance.
 - **Validation:** On `6c6f5f5`, CI, Security, Native packaging, and Disposable native mutation smoke all completed successfully; the earlier final catalog-health, catalog validation/signing, and site deployment workflows also completed successfully after the catalog repair.
 - **Known limitations or blockers:** Production release signing, Apple notarization, and external package-repository publication still require repository credentials and a release event; unsigned disposable-runner packages and runtime behavior are verified.
 - **Next starting point:** Publish this immutable closing entry, confirm the documentation-only head remains green, then create a signed release when release credentials are available.
+
+### 2026-07-19 09:28 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Expand Siorb's mainstream Linux package-manager coverage with a complete Yum backend.
+- **Work completed:** Added reviewed Yum detection for the Fedora/RHEL family, typed install/remove/update/reinstall/query argument vectors, bounded installed-version parsing, policy and schema support, 89 Yum catalog mappings derived from the existing reviewed DNF package identities, regenerated catalog/TUF/site outputs, and added a disposable Rocky Linux mutation job.
+- **Key files changed:** `crates/siorb-backends`, `crates/siorb-platform`, `crates/siorb-resolver`, catalog manifests/schemas/policies/generated outputs, `.github/workflows/native-smoke.yml`, backend fixtures, platform documentation, and this README.
+- **Decisions:** Treat Yum as a distinct selectable backend while preferring modern DNF when both are available; keep package identifiers as separate validated arguments; support reviewed Yum 3.4 through 4.x behavior; pin the Rocky Linux smoke image by digest; do not model low-level RPM or DPKG commands as dependency-resolving managers.
+- **Validation:** Catalog generation and site validation pass with 130 packages and 776 mappings; Yum adapter, query parser, RHEL-family detector, explicit resolver selection, captured-output security tests, full workspace build, formatting, strict Clippy, and all workspace tests pass.
+- **Known limitations or blockers:** This host has no Docker, Yum, or DNF executable, so the real Rocky Linux `git` install/verify/remove cycle remains pending on the explicit hosted native-smoke workflow.
+- **Next starting point:** Run `cargo xtask verify` with this required immutable entry, review the final diff, publish the implementation, and dispatch the opt-in Rocky Linux native mutation smoke.

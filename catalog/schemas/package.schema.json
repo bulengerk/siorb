@@ -53,7 +53,7 @@
         "id": { "$ref": "#/$defs/id" },
         "platform": { "enum": ["windows", "macos", "debian", "fedora", "arch", "opensuse", "alpine", "linux"] },
         "distributions": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
-        "backend": { "enum": ["winget", "scoop", "chocolatey", "homebrew-formula", "homebrew-cask", "macports", "apt", "dnf", "pacman", "zypper", "apk", "flatpak", "snap", "artifact"] },
+        "backend": { "enum": ["winget", "scoop", "chocolatey", "homebrew-formula", "homebrew-cask", "macports", "apt", "dnf", "yum", "pacman", "zypper", "apk", "flatpak", "snap", "artifact"] },
         "package_id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._@/+:-]*$" },
         "trust": { "enum": ["native", "sandboxed", "verified-upstream"] },
         "scope": { "enum": ["user", "system", "auto"] },

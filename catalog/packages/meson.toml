@@ -70,6 +70,21 @@ evidence = "https://packages.fedoraproject.org/pkgs/meson/meson/"
 reviewed_at = "2026-07-14"
 
 [[sources]]
+id = "meson-yum"
+platform = "fedora"
+backend = "yum"
+package_id = "meson"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/pkgs/meson/meson/"
+reviewed_at = "2026-07-14"
+
+[[sources]]
 id = "meson-pacman"
 platform = "arch"
 backend = "pacman"

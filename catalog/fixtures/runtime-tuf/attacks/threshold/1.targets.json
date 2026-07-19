@@ -6,8 +6,8 @@
     "expires_unix": 1893456000,
     "targets": {
       "catalog.json": {
-        "length": 371905,
-        "sha256": "2e0037dcd3e76d791bbe2d515d8881e15bd5fe575ac8ad25c69b1ce2d3e67b24",
+        "length": 402078,
+        "sha256": "dc86b980251f123c601c2142961f0c6faa713124074b0c2eb7b93ce111356ad1",
         "custom": {
           "catalog_version": "2026071301",
           "schema_version": "1.0"
@@ -18,7 +18,7 @@
   "signatures": [
     {
       "key_id": "dev-targets",
-      "signature": "E0EbkJQ4CLfZJW9YbqldDJM8oTkMTAXU1mEuVRw62xM5VNWO5wBHfOaIo07LzK1S3RTt4saVaNqwO4l6rOdMBw=="
+      "signature": "1uRbyqN78MdDyVua1kkhsA+V2/PQdg45nNoMwEYQOnTBh3ucRmSeAon6klhdyeHoOvfvAoxyGSTfH7h2Ig+5Cw=="
     }
   ]
 }

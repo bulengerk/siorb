@@ -656,6 +656,7 @@ fn validate_source(package: &PackageManifest, source: &PackageSource) -> Result<
         "macports",
         "apt",
         "dnf",
+        "yum",
         "pacman",
         "zypper",
         "apk",

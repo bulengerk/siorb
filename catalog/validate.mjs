@@ -22,7 +22,7 @@ const sourceFields = [
   "requires_privilege", "provenance", "evidence", "reviewed_at",
 ];
 const platforms = new Set(["windows", "macos", "debian", "fedora", "arch", "opensuse", "alpine", "linux"]);
-const backends = new Set(["winget", "scoop", "chocolatey", "homebrew-formula", "homebrew-cask", "macports", "apt", "dnf", "pacman", "zypper", "apk", "flatpak", "snap", "artifact"]);
+const backends = new Set(["winget", "scoop", "chocolatey", "homebrew-formula", "homebrew-cask", "macports", "apt", "dnf", "yum", "pacman", "zypper", "apk", "flatpak", "snap", "artifact"]);
 const trusts = new Set(["native", "sandboxed", "verified-upstream"]);
 const scopes = new Set(["user", "system", "auto"]);
 const channels = new Set(["stable", "beta", "nightly", "custom"]);

@@ -86,7 +86,7 @@ authorize installation.
 `sources.id` is globally unique. `platform` is one of `windows`, `macos`,
 `linux`, `debian`, `fedora`, `arch`, `opensuse`, or `alpine`. Current backend
 identifiers are `winget`, `scoop`, `chocolatey`, `homebrew-formula`,
-`homebrew-cask`, `macports`, `apt`, `dnf`, `pacman`, `zypper`, `apk`, `flatpak`,
+`homebrew-cask`, `macports`, `apt`, `dnf`, `yum`, `pacman`, `zypper`, `apk`, `flatpak`,
 `snap`, and `artifact`.
 
 `package_id` is the exact native ID; option-like IDs and control characters are

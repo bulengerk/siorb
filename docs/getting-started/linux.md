@@ -26,6 +26,11 @@ ID, scope, and privilege. Debian/Ubuntu, Fedora/RHEL, Arch, openSUSE, and Alpine
 have distinct mappings; a generic `linux` mapping does not override a more
 specific incompatible source.
 
+The native manager set covers APT, DNF/DNF5, Yum, Pacman, Zypper, and APK.
+Flatpak and Snap are also supported where their executable and reviewed version
+are present. Use `siorb backend list` to see the adapters accepted on the current
+host; detection never installs a missing manager.
+
 The release workflow prepares tar archives plus DEB/RPM metadata. A DEB/RPM is
 not a promise of compatibility with every derivative; consult the tagged
 [platform evidence](../platform-support.md) and verify checksums/signatures.

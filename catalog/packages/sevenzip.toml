@@ -85,6 +85,21 @@ evidence = "https://packages.fedoraproject.org/search?query=7zip"
 reviewed_at = "2026-07-13"
 
 [[sources]]
+id = "sevenzip-yum"
+platform = "fedora"
+backend = "yum"
+package_id = "7zip"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=7zip"
+reviewed_at = "2026-07-13"
+
+[[sources]]
 id = "sevenzip-pacman"
 platform = "arch"
 backend = "pacman"

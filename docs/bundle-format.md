@@ -43,7 +43,7 @@ scope = "user"
 optional = true
 features = ["development"]
 platforms = ["linux"]
-allow_backends = ["apt", "dnf", "pacman"]
+allow_backends = ["apt", "dnf", "yum", "pacman"]
 deny_backends = []
 on_conflict = "error"
 ```

@@ -65,6 +65,7 @@ impl PolicyFile {
                 "macports".to_owned(),
                 "apt".to_owned(),
                 "dnf".to_owned(),
+                "yum".to_owned(),
                 "pacman".to_owned(),
                 "zypper".to_owned(),
                 "apk".to_owned(),

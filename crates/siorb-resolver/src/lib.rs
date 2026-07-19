@@ -630,6 +630,58 @@ mod tests {
     }
 
     #[test]
+    fn bundled_catalog_resolves_an_explicit_yum_source_on_rocky_linux() {
+        let catalog = Catalog::bundled();
+        assert!(catalog.is_ok());
+        let Some(catalog) = catalog.ok() else { return };
+        let platform = PlatformContext {
+            os: siorb_core::OsFamily::Linux,
+            distribution: Some("rocky".to_owned()),
+            distribution_version: Some("9.6".to_owned()),
+            distribution_like: vec!["rhel".to_owned(), "fedora".to_owned()],
+            architecture: Architecture::X86_64,
+            backends: vec![siorb_core::BackendInfo {
+                id: "yum".to_owned(),
+                executable: "/usr/bin/yum".to_owned(),
+                version: Some("4.18.2".to_owned()),
+                available: true,
+                capabilities: vec![
+                    "query".to_owned(),
+                    "install".to_owned(),
+                    "remove".to_owned(),
+                    "upgrade".to_owned(),
+                    "repair".to_owned(),
+                    "verify".to_owned(),
+                    "non_interactive".to_owned(),
+                ],
+            }],
+            supported_scopes: vec![Scope::User, Scope::System],
+            ..PlatformContext::default()
+        };
+        let policy = LayeredPolicy::new(vec![PolicyFile::secure_defaults()]);
+        assert!(policy.is_ok());
+        let Some(policy) = policy.ok() else { return };
+        let resolver = Resolver::new(&catalog, &platform, &policy, &[]);
+        let resolution = resolver.resolve(
+            "git",
+            Operation::Install,
+            &ResolveOptions {
+                via: Some("yum".to_owned()),
+                scope: Scope::System,
+                channel: "stable".to_owned(),
+                ..ResolveOptions::default()
+            },
+        );
+        assert!(resolution.is_ok());
+        assert!(
+            resolution
+                .ok()
+                .and_then(|value| value.selected)
+                .is_some_and(|source| source.id == "git-yum" && source.backend == "yum")
+        );
+    }
+
+    #[test]
     fn parses_and_matches_typed_constraints() {
         let range = VersionConstraint::parse(">=1,<2");
         assert!(range.is_ok());

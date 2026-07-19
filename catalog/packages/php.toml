@@ -85,6 +85,21 @@ evidence = "https://packages.fedoraproject.org/search?query=php-cli"
 reviewed_at = "2026-07-13"
 
 [[sources]]
+id = "php-yum"
+platform = "fedora"
+backend = "yum"
+package_id = "php-cli"
+trust = "native"
+scope = "system"
+channel = "stable"
+architectures = ["x86_64", "aarch64"]
+priority = 20
+requires_privilege = true
+provenance = "backend-repository"
+evidence = "https://packages.fedoraproject.org/search?query=php-cli"
+reviewed_at = "2026-07-13"
+
+[[sources]]
 id = "php-pacman"
 platform = "arch"
 backend = "pacman"

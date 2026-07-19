@@ -47,7 +47,7 @@
     "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
     "ids": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/id" } },
     "strings": { "type": "array", "uniqueItems": true, "items": { "type": "string" } },
-    "backends": { "type": "array", "uniqueItems": true, "items": { "enum": ["winget", "scoop", "chocolatey", "homebrew-formula", "homebrew-cask", "macports", "apt", "dnf", "pacman", "zypper", "apk", "flatpak", "snap", "artifact"] } },
+    "backends": { "type": "array", "uniqueItems": true, "items": { "enum": ["winget", "scoop", "chocolatey", "homebrew-formula", "homebrew-cask", "macports", "apt", "dnf", "yum", "pacman", "zypper", "apk", "flatpak", "snap", "artifact"] } },
     "channels": { "type": "array", "uniqueItems": true, "items": { "enum": ["stable", "beta", "nightly", "custom"] } },
     "scopes": { "type": "array", "uniqueItems": true, "items": { "enum": ["user", "system", "auto"] } }
   }
