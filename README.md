@@ -472,3 +472,13 @@ See `CONTRIBUTING.md` and `SECURITY.md` for contribution and security guidance.
 - **Validation:** Catalog generation and site validation pass with 130 packages and 776 mappings; Yum adapter, query parser, RHEL-family detector, explicit resolver selection, captured-output security tests, full workspace build, formatting, strict Clippy, and all workspace tests pass.
 - **Known limitations or blockers:** This host has no Docker, Yum, or DNF executable, so the real Rocky Linux `git` install/verify/remove cycle remains pending on the explicit hosted native-smoke workflow.
 - **Next starting point:** Run `cargo xtask verify` with this required immutable entry, review the final diff, publish the implementation, and dispatch the opt-in Rocky Linux native mutation smoke.
+
+### 2026-07-19 09:30 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Publish the Yum implementation and start real hosted package-manager validation.
+- **Work completed:** Committed the complete backend, catalog, generated-site, documentation, and workflow update as `1d1a85a`, pushed it to `main`, and dispatched disposable native mutation run `29681686594` on that exact implementation commit.
+- **Key files changed:** The implementation commit contains the reviewed project changes; this follow-up changes only the physically final README work-session log.
+- **Decisions:** Require the new Rocky Linux job to complete the same discovery, dry-run, real install, verification, removal, and cleanup standard as the existing APT, Homebrew, and WinGet jobs.
+- **Validation:** All local repository and contract gates passed before publication; GitHub accepted the workflow dispatch and queued all native jobs from `1d1a85a`.
+- **Known limitations or blockers:** Hosted Rocky Linux Yum, Ubuntu APT, macOS Homebrew, and Windows WinGet mutation results are still pending.
+- **Next starting point:** Verify and publish this immutable checkpoint, then monitor run `29681686594` through every native transaction before claiming hosted Yum usability.
