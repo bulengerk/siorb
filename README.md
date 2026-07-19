@@ -512,3 +512,13 @@ See `CONTRIBUTING.md` and `SECURITY.md` for contribution and security guidance.
 - **Validation:** Local repository verification reports 130 packages, 776 mappings, 158 aliases, 3 policies, current generated catalog/site outputs, and passing schema, packaging, security, and Rust gates; GitHub accepted the new native-smoke dispatch.
 - **Known limitations or blockers:** Run `29681835090` is queued and has not yet proven the repaired Rocky/Yum mutation path.
 - **Next starting point:** Verify this required log entry, publish it, then inspect all four native jobs through completion with special attention to Yum install, query, receipt, and removal evidence.
+
+### 2026-07-19 09:39 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Close the Linux manager expansion with green hosted native usability evidence.
+- **Work completed:** Monitored run `29681835090` to completion and inspected the Rocky/Yum job log command by command; confirmed the second Windows MSI/WinGet, macOS PKG/Homebrew, and Ubuntu APT end-to-end jobs also completed successfully.
+- **Key files changed:** `README.md` records final evidence for the already-published Yum implementation and smoke repair; no implementation files changed after `afcddda` passed the hosted run.
+- **Decisions:** Accept Yum only after explicit `git-yum` resolution, typed mutation/query commands, observed-state verification, committed receipt state, and verified absence after removal; keep low-level RPM and DPKG outside the dependency-resolving backend set.
+- **Validation:** Run `29681835090` is fully green on `afcddda`: Rocky selected `git-yum`, installed `git`, queried installed state, committed its receipt, verified it, removed it, and verified absence; APT, Homebrew, and WinGet independently completed their real native transactions and platform package cleanup.
+- **Known limitations or blockers:** None for the requested mainstream manager expansion; actual catalog breadth remains 89 reviewed Yum mappings and can grow package by package without backend changes.
+- **Next starting point:** Publish this immutable final evidence entry, confirm the documentation-only head is clean, and use the same disposable native-smoke pattern for any future Linux manager additions.
