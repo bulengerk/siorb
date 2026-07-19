@@ -502,3 +502,13 @@ See `CONTRIBUTING.md` and `SECURITY.md` for contribution and security guidance.
 - **Validation:** Run `29681686594` proves Windows MSI plus WinGet, macOS PKG plus Homebrew, and Ubuntu APT are usable; its Rocky log proves explicit resolution to `git-yum` and the correct typed `/usr/bin/dnf-3 install -y -- git` plan before refusing mutation because no broker existed.
 - **Known limitations or blockers:** The workflow fix still needs local repository verification, publication, and a fresh hosted Rocky transaction.
 - **Next starting point:** Run the required verification gates, publish the workflow repair, and dispatch a fresh bounded native-smoke run.
+
+### 2026-07-19 09:36 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Publish the Rocky/Yum broker fix and start fresh native acceptance testing.
+- **Work completed:** Passed the full local build, formatting, strict Clippy, workspace tests, and repository verification gates; committed and pushed the workflow repair as `afcddda`; dispatched native-smoke run `29681835090` on that exact commit.
+- **Key files changed:** The published commit updates `.github/workflows/native-smoke.yml` and preserves both immutable hosted-validation entries in `README.md`; this entry records the new run.
+- **Decisions:** Judge the repair on a fresh commit-specific run while retaining the first failed run as diagnostic evidence and using bounded API checks instead of a persistent terminal watcher.
+- **Validation:** Local repository verification reports 130 packages, 776 mappings, 158 aliases, 3 policies, current generated catalog/site outputs, and passing schema, packaging, security, and Rust gates; GitHub accepted the new native-smoke dispatch.
+- **Known limitations or blockers:** Run `29681835090` is queued and has not yet proven the repaired Rocky/Yum mutation path.
+- **Next starting point:** Verify this required log entry, publish it, then inspect all four native jobs through completion with special attention to Yum install, query, receipt, and removal evidence.
