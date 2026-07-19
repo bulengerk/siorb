@@ -522,3 +522,13 @@ See `CONTRIBUTING.md` and `SECURITY.md` for contribution and security guidance.
 - **Validation:** Run `29681835090` is fully green on `afcddda`: Rocky selected `git-yum`, installed `git`, queried installed state, committed its receipt, verified it, removed it, and verified absence; APT, Homebrew, and WinGet independently completed their real native transactions and platform package cleanup.
 - **Known limitations or blockers:** None for the requested mainstream manager expansion; actual catalog breadth remains 89 reviewed Yum mappings and can grow package by package without backend changes.
 - **Next starting point:** Publish this immutable final evidence entry, confirm the documentation-only head is clean, and use the same disposable native-smoke pattern for any future Linux manager additions.
+
+### 2026-07-19 09:47 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Confirm the complete automatic pipeline set after publishing the final Yum evidence.
+- **Work completed:** Monitored the documentation head `93c540b` through CI, native packaging, CodeQL, Rust advisory and license policy, and committed-secret scanning; every applicable job completed successfully and the worktree remained clean.
+- **Key files changed:** Only `README.md` gains this immutable closing pipeline record; the backend and workflow implementation remain unchanged from the already-green commits.
+- **Decisions:** Close on the green implementation and evidence heads rather than repeatedly redispatching the host-mutating workflow after documentation-only commits; retain the explicit manual native mutation gate for safe opt-in transactions.
+- **Validation:** CI run `29681982745`, Native packaging run `29681982736`, and Security run `29681982727` are green on `93c540b`; native mutation run `29681835090` is green on `afcddda` across Rocky/Yum, Ubuntu/APT, macOS/Homebrew, and Windows/WinGet.
+- **Known limitations or blockers:** None for this request; production signing, notarization, and repository publication remain separate release-credential concerns.
+- **Next starting point:** Publish this final immutable entry and continue catalog breadth or release preparation from a clean `main` branch.
