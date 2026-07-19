@@ -482,3 +482,23 @@ See `CONTRIBUTING.md` and `SECURITY.md` for contribution and security guidance.
 - **Validation:** All local repository and contract gates passed before publication; GitHub accepted the workflow dispatch and queued all native jobs from `1d1a85a`.
 - **Known limitations or blockers:** Hosted Rocky Linux Yum, Ubuntu APT, macOS Homebrew, and Windows WinGet mutation results are still pending.
 - **Next starting point:** Verify and publish this immutable checkpoint, then monitor run `29681686594` through every native transaction before claiming hosted Yum usability.
+
+### 2026-07-19 09:32 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Monitor the first hosted four-manager mutation run without leaving a background watcher behind.
+- **Work completed:** Confirmed all four jobs started, stopped the local `gh run watch` process after taking a bounded snapshot, and observed Windows complete its pinned WinGet bootstrap while macOS completed the Siorb build and PKG installation.
+- **Key files changed:** Only this immutable README monitoring entry is new; the hosted jobs continue on implementation commit `1d1a85a`.
+- **Decisions:** Keep the real Yum transaction as the acceptance criterion and use bounded status checks instead of a persistent local background terminal.
+- **Validation:** Rocky Linux completed checkout plus the pinned toolchain/musl setup and entered the portable build; Ubuntu entered its build; Windows entered its Siorb build after WinGet bootstrap; macOS entered the Homebrew transaction step after package installation.
+- **Known limitations or blockers:** No native job has failed, but the Yum, APT, Homebrew, and WinGet mutation steps have not all completed yet.
+- **Next starting point:** Continue bounded polling of run `29681686594`, inspect any failed command directly, and record final evidence only after all four jobs finish.
+
+### 2026-07-19 09:35 UTC — Not exposed by the current Codex surface
+
+- **Objective:** Repair the Rocky Linux Yum smoke precondition without weakening Siorb's privilege model.
+- **Work completed:** Reviewed the completed hosted run, confirmed Windows WinGet, macOS Homebrew, and Ubuntu APT all passed their native end-to-end transactions, traced the Yum failure to the minimal Rocky image lacking a supported privilege broker, and added a one-time Yum bootstrap of the trusted `sudo` package inside the disposable container.
+- **Key files changed:** `.github/workflows/native-smoke.yml` provisions the broker before invoking Siorb; `README.md` records the diagnosis and completed cross-platform results.
+- **Decisions:** Keep Siorb's per-step privilege-broker requirement intact even when the disposable container starts as root; bootstrap `/usr/bin/sudo` through Yum instead of adding a direct-root execution bypass.
+- **Validation:** Run `29681686594` proves Windows MSI plus WinGet, macOS PKG plus Homebrew, and Ubuntu APT are usable; its Rocky log proves explicit resolution to `git-yum` and the correct typed `/usr/bin/dnf-3 install -y -- git` plan before refusing mutation because no broker existed.
+- **Known limitations or blockers:** The workflow fix still needs local repository verification, publication, and a fresh hosted Rocky transaction.
+- **Next starting point:** Run the required verification gates, publish the workflow repair, and dispatch a fresh bounded native-smoke run.
